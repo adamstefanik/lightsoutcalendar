@@ -42,7 +42,7 @@ struct F1CalendarWidget: Widget {
         }
         .configurationDisplayName("F1 Kalendár")
         .description("Najbližšie preteky Formula 1 2026")
-        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
+        .supportedFamilies([.systemMedium, .systemLarge])
     }
 }
 

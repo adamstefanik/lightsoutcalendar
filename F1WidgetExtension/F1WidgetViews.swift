@@ -11,7 +11,6 @@ struct F1WidgetEntryView: View {
         switch family {
         case .systemLarge:   F1LargeView(race: entry.nextRace)
         case .systemMedium:  F1MediumView(race: entry.nextRace)
-        case .systemSmall:   F1SmallView(race: entry.nextRace)
         default:             F1LargeView(race: entry.nextRace)
         }
     }
@@ -21,9 +20,12 @@ struct F1WidgetEntryView: View {
 
 struct F1LargeView: View {
     let race: Race
+    @Environment(\.widgetRenderingMode) var renderingMode
 
     var body: some View {
         VStack(spacing: 0) {
+            Spacer(minLength: 0)
+
             // HEADER
             HStack(alignment: .center, spacing: 12) {
                 // Date box with border
@@ -45,8 +47,10 @@ struct F1LargeView: View {
                 // Race info
                 VStack(alignment: .leading, spacing: 3) {
                     HStack(spacing: 6) {
-                        Text(race.countryFlag)
-                            .font(.system(size: 15))
+                        if renderingMode == .fullColor {
+                            Text(race.countryFlag)
+                                .font(.system(size: 15))
+                        }
                         Text(race.city)
                             .font(.system(size: 15, weight: .bold))
                             .foregroundColor(.f1Text)
@@ -63,14 +67,17 @@ struct F1LargeView: View {
                 // Session badge + countdown
                 VStack(alignment: .trailing, spacing: 6) {
                     Text(race.currentSessionBadge)
-                        .font(.system(size: 10, weight: .black))
-                        .foregroundColor(.white)
+                        .font(.system(size: 10, weight: .bold))
+                        .foregroundColor(renderingMode == .fullColor ? .white : .primary)
                         .padding(.horizontal, 7)
                         .padding(.vertical, 3)
-                        .background(
-                            RoundedRectangle(cornerRadius: 3)
-                                .fill(Color.f1Red)
-                        )
+                        .background {
+                            if renderingMode == .fullColor {
+                                RoundedRectangle(cornerRadius: 3).fill(Color.f1Red)
+                            } else {
+                                RoundedRectangle(cornerRadius: 3).stroke(Color.primary, lineWidth: 1)
+                            }
+                        }
 
                     HStack(alignment: .bottom, spacing: 6) {
                         CountdownUnit(value: countdownDays,  label: "DAYS")
@@ -80,7 +87,7 @@ struct F1LargeView: View {
                 }
             }
             .padding(.horizontal, 14)
-            .padding(.vertical, 12)
+            .padding(.bottom, 20)
 
             // DIVIDER
             Rectangle()
@@ -93,6 +100,7 @@ struct F1LargeView: View {
                     SessionRowView(session: session)
                 }
             }
+            .padding(.top, 20)
 
             Spacer(minLength: 0)
 
@@ -121,23 +129,26 @@ struct F1LargeView: View {
 
 struct F1MediumView: View {
     let race: Race
+    @Environment(\.widgetRenderingMode) var renderingMode
 
     var body: some View {
         VStack(spacing: 0) {
             HStack(spacing: 10) {
                 VStack(spacing: 0) {
                     Text(race.weekendDayRange)
-                        .font(.system(size: 16, weight: .bold)).foregroundColor(.f1Text)
+                        .font(.system(size: 13, weight: .bold)).foregroundColor(.f1Text)
                     Text(race.monthLabel)
-                        .font(.system(size: 11, weight: .bold)).foregroundColor(.f1Text)
+                        .font(.system(size: 15, weight: .bold)).foregroundColor(.f1Text)
                 }
                 .padding(7)
                 .overlay(RoundedRectangle(cornerRadius: 3).stroke(Color.f1Border, lineWidth: 1))
 
                 VStack(alignment: .leading, spacing: 2) {
                     HStack(spacing: 4) {
-                        Text(race.countryFlag)
-                            .font(.system(size: 13))
+                        if renderingMode == .fullColor {
+                            Text(race.countryFlag)
+                                .font(.system(size: 13))
+                        }
                         Text(race.city)
                             .font(.system(size: 13, weight: .bold)).foregroundColor(.f1Text)
                     }
@@ -149,9 +160,16 @@ struct F1MediumView: View {
 
                 VStack(alignment: .trailing, spacing: 4) {
                     Text(race.currentSessionBadge)
-                        .font(.system(size: 9, weight: .black)).foregroundColor(.white)
+                        .font(.system(size: 9, weight: .bold))
+                        .foregroundColor(renderingMode == .fullColor ? .white : .primary)
                         .padding(.horizontal, 5).padding(.vertical, 2)
-                        .background(RoundedRectangle(cornerRadius: 3).fill(Color.f1Red))
+                        .background {
+                            if renderingMode == .fullColor {
+                                RoundedRectangle(cornerRadius: 3).fill(Color.f1Red)
+                            } else {
+                                RoundedRectangle(cornerRadius: 3).stroke(Color.primary, lineWidth: 1)
+                            }
+                        }
 
                     HStack(alignment: .bottom, spacing: 5) {
                         CountdownUnit(value: mediumCountdownDays, label: "DAYS")
@@ -188,40 +206,6 @@ struct F1MediumView: View {
     }
     private var mediumCountdownMins: String {
         String(format: "%02d", (secondsUntilRace % 3600) / 60)
-    }
-}
-
-// MARK: - Small Widget
-
-struct F1SmallView: View {
-    let race: Race
-
-    var body: some View {
-        ZStack {
-            VStack(alignment: .leading, spacing: 6) {
-                HStack {
-                    Spacer()
-                    Text(race.currentSessionBadge)
-                        .font(.system(size: 9, weight: .black)).foregroundColor(.white)
-                        .padding(.horizontal, 5).padding(.vertical, 2)
-                        .background(RoundedRectangle(cornerRadius: 3).fill(Color.f1Red))
-                }
-                Spacer()
-                Text(race.roundLabel)
-                    .font(.system(size: 10, weight: .black)).foregroundColor(.f1Red)
-                HStack(spacing: 4) {
-                    Text(race.countryFlag).font(.system(size: 14))
-                    Text(race.city).font(.system(size: 14, weight: .bold)).foregroundColor(.f1Text)
-                }
-                HStack(spacing: 4) {
-                    Text(race.weekendDayRange)
-                        .font(.system(size: 11, weight: .semibold)).foregroundColor(.f1Text)
-                    Text(race.monthLabel)
-                        .font(.system(size: 11)).foregroundColor(.f1SecondaryText)
-                }
-            }
-            .padding(12)
-        }
     }
 }
 
@@ -282,12 +266,6 @@ struct CountdownUnit: View {
 }
 
 #Preview("Medium", as: .systemMedium) {
-    F1CalendarWidget()
-} timeline: {
-    F1WidgetEntry(date: .now, nextRace: F1Calendar.fallbackRaces.first!)
-}
-
-#Preview("Small", as: .systemSmall) {
     F1CalendarWidget()
 } timeline: {
     F1WidgetEntry(date: .now, nextRace: F1Calendar.fallbackRaces.first!)
