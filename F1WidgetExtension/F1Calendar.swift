@@ -52,7 +52,7 @@ struct F1Calendar {
              circuit: "Jeddah Corniche Circuit", country: "Saudi Arabia", countryFlag: "🇸🇦",
              raceDate: date(2026,5,17), qualifyingDate: date(2026,5,16),
              weekendStart: date(2026,5,15), sprint: false),
-
+        
         Race(id: 6, round: 6,
              name: "Miami Grand Prix", shortName: "MIA", city: "Miami",
              circuit: "Miami International Autodrome", country: "USA", countryFlag: "🇺🇸",

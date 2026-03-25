@@ -63,6 +63,16 @@
 			);
 			target = CC4C03C52F69B0000034CA8E /* F1WidgetExtension */;
 		};
+		CC4C03CE2F69B0000034CA8E /* Shared files from F1WidgetExtension in F1CalendarWidget target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				F1APIService.swift,
+				F1Calendar.swift,
+				F1Colors.swift,
+				Race.swift,
+			);
+			target = CC4C038A2F69A65E0034CA8E /* F1CalendarWidget */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -85,6 +95,7 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				CC4C03CD2F69B0000034CA8E /* Exceptions for "F1WidgetExtension" folder in "F1WidgetExtension" target */,
+				CC4C03CE2F69B0000034CA8E /* Shared files from F1WidgetExtension in F1CalendarWidget target */,
 			);
 			path = F1WidgetExtension;
 			sourceTree = "<group>";
