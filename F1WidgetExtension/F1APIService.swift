@@ -260,6 +260,7 @@ final class F1APIService {
         "ESP": "🇪🇸", "CAN": "🇨🇦", "AUT": "🇦🇹", "GBR": "🇬🇧",
         "BEL": "🇧🇪", "NLD": "🇳🇱", "AZE": "🇦🇿", "SGP": "🇸🇬",
         "MEX": "🇲🇽", "BRA": "🇧🇷", "QAT": "🇶🇦", "ARE": "🇦🇪",
+        "HUN": "🇭🇺",
     ]
 
     private static let countryShortNames: [String: String] = [
@@ -268,6 +269,7 @@ final class F1APIService {
         "ESP": "ESP", "CAN": "CAN", "AUT": "AUT", "GBR": "GBR",
         "BEL": "BEL", "NLD": "NED", "AZE": "AZE", "SGP": "SGP",
         "MEX": "MEX", "BRA": "BRA", "QAT": "QAT", "ARE": "ABU",
+        "HUN": "HUN",
     ]
 
     // MARK: - Race Results

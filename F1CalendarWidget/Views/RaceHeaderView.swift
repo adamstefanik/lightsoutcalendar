@@ -6,25 +6,23 @@ struct RaceHeaderView: View {
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
             // Track box
-            TrackPlaceholder()
-                .stroke(Color.f1Red, lineWidth: 2)
-                .frame(width: 96, height: 96)
-                .padding(8)
+            DynamicTrackView(raceShortName: race.shortName)
+                .frame(width: 85, height: 85)
+                .padding(2)
                 .overlay(
                     RoundedRectangle(cornerRadius: 8)
                         .stroke(Color.f1Border, lineWidth: 1)
                 )
-
+            
             // Race info
             VStack(alignment: .leading, spacing: 4) {
                 HStack(spacing: 2) {
                     Text(race.countryFlag)
                         .font(.system(size: 18))
-                        .padding(.top, 20)
+                        .padding(.top, 10)
                     Text(race.city)
                         .font(.system(size: 18, weight: .bold))
                         .foregroundColor(.f1Text)
-                        .padding(.top, 20)
                 }
                 
                 Text("FORMULA 1 \(race.name.uppercased()) 2026")
@@ -50,7 +48,7 @@ struct RaceHeaderView: View {
                     .padding(.horizontal, 7)
                     .padding(.vertical, 3)
                     .background(RoundedRectangle(cornerRadius: 3).fill(Color.f1Red))
-                    .padding(.top, 60)
+                    .padding(.top, 35)
 
                 // Countdown
                 HStack(alignment: .bottom, spacing: 6) {
@@ -102,7 +100,19 @@ private struct CountdownBlock: View {
         }
     }
 }
+// MARK: - Dynamic Track View
 
+struct DynamicTrackView: View {
+    let raceShortName: String
+
+    var body: some View {
+        Image("track\(raceShortName)")
+            .renderingMode(.template)
+            .resizable()
+            .scaledToFit()
+            .foregroundColor(.f1Red)
+    }
+}
 // MARK: - Preview
 
 #Preview {

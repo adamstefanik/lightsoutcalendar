@@ -191,7 +191,7 @@ struct F1MediumView: View {
 
             Rectangle().fill(Color.f1Divider).frame(height: 1)
 
-            ForEach(Array(race.sessions.prefix(2).enumerated()), id: \.offset) { _, session in
+            ForEach(Array(race.sessions.suffix(2).enumerated()), id: \.offset) { _, session in
                 SessionRowView(session: session)
             }
 

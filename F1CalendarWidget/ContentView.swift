@@ -12,8 +12,7 @@ struct ContentView: View {
                 }
                 .tag(0)
 
-            Text("Calendar")
-                .foregroundColor(.f1Text)
+            CalendarView()
                 .tabItem {
                     Image(systemName: "calendar")
                     Text("Calendar")
