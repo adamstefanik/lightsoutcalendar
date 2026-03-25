@@ -19,8 +19,7 @@ struct ContentView: View {
                 }
                 .tag(1)
 
-            Text("Settings")
-                .foregroundColor(.f1Text)
+            SettingsView()
                 .tabItem {
                     Image(systemName: "gearshape")
                     Text("Settings")

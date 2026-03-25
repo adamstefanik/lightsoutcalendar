@@ -4,7 +4,7 @@ struct RaceDetailView: View {
     let race: Race
     @StateObject private var settings = SettingsManager.shared
 
-    @State private var weatherState: WeatherLoadState = .noApiKey
+    @State private var weatherState: WeatherLoadState = .loading
     @State private var raceResults: [DriverResult] = []
 
     private var circuitInfo: CircuitInfo? {
@@ -23,7 +23,7 @@ struct RaceDetailView: View {
                         .fill(Color.f1Divider)
                         .frame(height: 1)
                         .padding(.top, 20)
-                        .padding(.bottom, 20)
+                        .padding(.bottom, 10)
                         .padding(.leading, 20)
                         .padding(.trailing, 20)
                     
@@ -53,12 +53,16 @@ struct RaceDetailView: View {
 
                     // Weather
                     WeatherSectionView(state: weatherState, temperatureUnit: settings.temperatureUnit)
-                        .padding(.vertical, 16)
+                        .padding(.top, 10)
+                        .padding(.leading, 20)
+                        .padding(.trailing, 20)
 
                     // Circuit info
                     if let info = circuitInfo {
                         CircuitInfoView(circuit: info)
                             .padding(.bottom, 24)
+                            .padding(.leading, 20)
+                            .padding(.trailing, 20)
                     }
                 }
             }
@@ -73,10 +77,6 @@ struct RaceDetailView: View {
     // MARK: - Weather Loading
 
     private func loadWeather() async {
-        guard !settings.weatherApiKey.isEmpty else {
-            weatherState = .noApiKey
-            return
-        }
         guard let info = circuitInfo else {
             weatherState = .error
             return
@@ -85,8 +85,7 @@ struct RaceDetailView: View {
         weatherState = .loading
         let forecasts = await WeatherService.shared.fetchForecast(
             latitude: info.latitude,
-            longitude: info.longitude,
-            apiKey: settings.weatherApiKey
+            longitude: info.longitude
         )
 
         if !forecasts.isEmpty {
@@ -108,16 +107,4 @@ struct RaceDetailView: View {
             raceResults = await F1APIService.shared.fetchResults(for: sessionKey)
         }
     }
-}
-
-// MARK: - Previews
-
-#Preview {
-    RaceDetailView(race: F1Calendar.fallbackRaces[2]) // Japan
-        .preferredColorScheme(.dark)
-}
-
-#Preview("Live") {
-    RaceDetailView(race: .previewLive)
-        .preferredColorScheme(.dark)
 }

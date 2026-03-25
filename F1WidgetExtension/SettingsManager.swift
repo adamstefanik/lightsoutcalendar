@@ -40,10 +40,6 @@ final class SettingsManager: ObservableObject {
 
     // MARK: - Weather
 
-    @Published var weatherApiKey: String {
-        didSet { defaults.set(weatherApiKey, forKey: Keys.weatherApiKey) }
-    }
-
     @Published var temperatureUnit: TemperatureUnit {
         didSet { defaults.set(temperatureUnit.rawValue, forKey: Keys.temperatureUnit) }
     }
@@ -58,7 +54,6 @@ final class SettingsManager: ObservableObject {
         self.notifySprint = d.object(forKey: Keys.notifySprint) as? Bool ?? true
         self.notifyRace = d.object(forKey: Keys.notifyRace) as? Bool ?? true
         self.reminderMinutes = d.object(forKey: Keys.reminderMinutes) as? Int ?? 30
-        self.weatherApiKey = d.string(forKey: Keys.weatherApiKey) ?? ""
         let unitRaw = d.string(forKey: Keys.temperatureUnit) ?? TemperatureUnit.celsius.rawValue
         self.temperatureUnit = TemperatureUnit(rawValue: unitRaw) ?? .celsius
     }
@@ -71,7 +66,6 @@ final class SettingsManager: ObservableObject {
         static let notifySprint = "settings.notifySprint"
         static let notifyRace = "settings.notifyRace"
         static let reminderMinutes = "settings.reminderMinutes"
-        static let weatherApiKey = "settings.weatherApiKey"
         static let temperatureUnit = "settings.temperatureUnit"
     }
 }

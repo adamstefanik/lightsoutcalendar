@@ -40,11 +40,7 @@ struct F1LargeView: View {
                 
                 // Race info
                 VStack(alignment: .leading, spacing: 3) {
-                    HStack(spacing: 6) {
-                        if renderingMode == .fullColor {
-                            Text(race.countryFlag)
-                                .font(.system(size: 15))
-                        }
+                    HStack(spacing: 6){
                         Text(race.city)
                             .font(.system(size: 15, weight: .bold))
                             .foregroundColor(.f1Text)
@@ -56,10 +52,11 @@ struct F1LargeView: View {
                         .fixedSize(horizontal: false, vertical: true)
                     
                     Text("\(race.weekendDayRange) \(race.monthLabel)")
-                        .font(.system(size: 10, weight: .regular))
+                        .font(.system(size: 10, weight: .medium))
                         .foregroundColor(.f1SecondaryText)
                         .lineLimit(1)
                 }
+                .padding(.leading, 7)
 
                 Spacer()
 
@@ -100,14 +97,14 @@ struct F1LargeView: View {
                     SessionRowView(session: session)
                 }
             }
-            .padding(.top, 20)
+            .padding(.top, 10)
 
             Spacer(minLength: 0)
 
             Text("github.com/adamstefanik")
                 .font(.system(size: 7, weight: .medium, design: .monospaced))
                 .foregroundColor(.f1SecondaryText.opacity(0.5))
-                .padding(.bottom, 6)
+                .offset(y: +10)
         }
     }
 
@@ -138,19 +135,16 @@ struct F1MediumView: View {
                 
                 // Track box
                 DynamicTrackView(raceShortName: race.shortName)
-                    .frame(width: 55, height: 55)
+                    .frame(width: 60, height: 60)
                     .padding(2)
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)
                             .stroke(Color.f1Border, lineWidth: 1)
                     )
+                    .padding(.top, 7)
                 
                 VStack(alignment: .leading, spacing: 3) {
                     HStack(spacing: 4) {
-                        if renderingMode == .fullColor {
-                            Text(race.countryFlag)
-                                .font(.system(size: 13))
-                        }
                         Text(race.city)
                             .font(.system(size: 13, weight: .bold)).foregroundColor(.f1Text)
                     }
@@ -163,6 +157,8 @@ struct F1MediumView: View {
                         .foregroundColor(.f1SecondaryText)
                         .lineLimit(1)
                 }
+                .padding(.leading, 7)
+                .padding(.top, 5)
                 
                 Spacer()
 
@@ -178,7 +174,7 @@ struct F1MediumView: View {
                                 RoundedRectangle(cornerRadius: 3).stroke(Color.primary, lineWidth: 1)
                             }
                         }
-                        .padding(.top,14)
+                        .padding(.top,24)
 
                     HStack(alignment: .bottom, spacing: 5) {
                         CountdownUnit(value: mediumCountdownDays, label: "DAYS")
@@ -195,12 +191,10 @@ struct F1MediumView: View {
                 SessionRowView(session: session)
             }
 
-            Spacer(minLength: 0)
-
             Text("github.com/adamstefanik")
                 .font(.system(size: 7, weight: .medium, design: .monospaced))
                 .foregroundColor(.f1SecondaryText.opacity(0.5))
-                .padding(.bottom, 4)
+                .offset(y: -6)
         }
     }
 

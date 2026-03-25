@@ -1,7 +1,6 @@
 import SwiftUI
 
 enum WeatherLoadState {
-    case noApiKey
     case loading
     case loaded([DayForecast])
     case error
@@ -18,13 +17,6 @@ struct WeatherSectionView: View {
                 .foregroundColor(.f1SecondaryText)
 
             switch state {
-            case .noApiKey:
-                Text("Set up in Settings")
-                    .font(.system(size: 12))
-                    .foregroundColor(.f1SecondaryText)
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .padding(.vertical, 16)
-
             case .loading:
                 HStack {
                     Spacer()
@@ -111,8 +103,8 @@ private struct WeatherDayBox: View {
     .preferredColorScheme(.dark)
 }
 
-#Preview("No API Key") {
-    WeatherSectionView(state: .noApiKey, temperatureUnit: .celsius)
+#Preview("Error") {
+    WeatherSectionView(state: .error, temperatureUnit: .celsius)
         .background(Color("f1Background"))
         .preferredColorScheme(.dark)
 }

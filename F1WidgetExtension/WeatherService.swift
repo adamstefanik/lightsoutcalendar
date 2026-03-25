@@ -9,15 +9,17 @@ class WeatherService {
     private let cacheTimestampKey = "weatherForecastTimestamp"
     private let cacheDuration: TimeInterval = 3 * 3600 // 3 hours
 
+    private static let apiKey = "37952863ba0801cf314d405d9a4a44a2"
+
     private init() {}
 
-    func fetchForecast(latitude: Double, longitude: Double, apiKey: String) async -> [DayForecast] {
+    func fetchForecast(latitude: Double, longitude: Double) async -> [DayForecast] {
         // Check cache first
         if let cached = loadFromCache() {
             return cached
         }
 
-        let urlString = "https://api.openweathermap.org/data/2.5/forecast?lat=\(latitude)&lon=\(longitude)&appid=\(apiKey)&units=metric"
+        let urlString = "https://api.openweathermap.org/data/2.5/forecast?lat=\(latitude)&lon=\(longitude)&appid=\(Self.apiKey)&units=metric"
         guard let url = URL(string: urlString) else { return [] }
 
         do {
