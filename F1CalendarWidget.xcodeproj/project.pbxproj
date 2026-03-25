@@ -66,6 +66,8 @@
 		CC4C03CE2F69B0000034CA8E /* Shared files from F1WidgetExtension in F1CalendarWidget target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				CircuitDatabase.swift,
+				CircuitInfo.swift,
 				F1APIService.swift,
 				F1Calendar.swift,
 				F1Colors.swift,
