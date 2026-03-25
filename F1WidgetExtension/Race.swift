@@ -74,19 +74,15 @@ struct Race: Identifiable, Codable {
     }
 
     var currentSessionBadge: String {
-        if let apiSessions = apiSessions {
-            let now = Date()
-            // Find the next upcoming session
-            for session in apiSessions.reversed() {
-                if let start = session.startDate, start <= now {
-                    return sessionBadgeLabel(session.name)
-                }
-            }
-            return "FP1"
-        }
         let now = Date()
-        if raceDate <= now { return "RACE" }
-        if qualifyingDate <= now { return "QUAL" }
+        // Find the next upcoming session
+        if let next = sessions.first(where: { ($0.startDate ?? .distantPast) > now }) {
+            return sessionBadgeLabel(next.name)
+        }
+        // All sessions passed — show last one
+        if let last = sessions.last {
+            return sessionBadgeLabel(last.name)
+        }
         return "FP1"
     }
 
@@ -107,23 +103,42 @@ struct Race: Identifiable, Codable {
         if let apiSessions = apiSessions, !apiSessions.isEmpty {
             return apiSessions
         }
-        // Fallback to hardcoded sessions
+        // Fallback to hardcoded sessions with computed startDate from weekendStart
+        let cal = Calendar.current
         if sprint {
+            // Sprint: FRI / FRI / SAT / SAT / SUN
             return [
-                Session(name: "PRACTICE 1",   day: "FRIDAY",   time: "13:30 - 14:30", isHighlighted: false),
-                Session(name: "SPRINT QUALI", day: "FRIDAY",   time: "17:30 - 18:30", isHighlighted: true),
-                Session(name: "SPRINT",       day: "SATURDAY", time: "12:00 - 13:00", isHighlighted: true),
-                Session(name: "QUALIFYING",   day: "SATURDAY", time: "16:00 - 17:00", isHighlighted: false),
-                Session(name: "GRAND PRIX",   day: "SUNDAY",   time: "15:00",          isHighlighted: true),
+                Session(name: "PRACTICE 1",   day: "FRIDAY",   time: "13:30 - 14:30", isHighlighted: false,
+                        startDate: cal.date(bySettingHour: 13, minute: 30, second: 0, of: weekendStart)),
+                Session(name: "SPRINT QUALI", day: "FRIDAY",   time: "17:30 - 18:30", isHighlighted: true,
+                        startDate: cal.date(bySettingHour: 17, minute: 30, second: 0, of: weekendStart)),
+                Session(name: "SPRINT",       day: "SATURDAY", time: "12:00 - 13:00", isHighlighted: true,
+                        startDate: cal.date(bySettingHour: 12, minute: 0, second: 0, of: cal.date(byAdding: .day, value: 1, to: weekendStart)!)),
+                Session(name: "QUALIFYING",   day: "SATURDAY", time: "16:00 - 17:00", isHighlighted: false,
+                        startDate: cal.date(bySettingHour: 16, minute: 0, second: 0, of: cal.date(byAdding: .day, value: 1, to: weekendStart)!)),
+                Session(name: "GRAND PRIX",   day: "SUNDAY",   time: "15:00",          isHighlighted: true,
+                        startDate: cal.date(bySettingHour: 15, minute: 0, second: 0, of: cal.date(byAdding: .day, value: 2, to: weekendStart)!)),
             ]
         } else {
+            // Regular: THU / THU / FRI / FRI / SAT
             return [
-                Session(name: "PRACTICE 1", day: "THURSDAY", time: "14:30 - 15:30", isHighlighted: false),
-                Session(name: "PRACTICE 2", day: "THURSDAY", time: "18:00 - 19:00", isHighlighted: false),
-                Session(name: "PRACTICE 3", day: "FRIDAY",   time: "14:30 - 15:30", isHighlighted: false),
-                Session(name: "QUALIFYING", day: "FRIDAY",   time: "18:00 - 19:00", isHighlighted: true),
-                Session(name: "GRAND PRIX", day: "SATURDAY", time: "18:00",          isHighlighted: true),
+                Session(name: "PRACTICE 1", day: "THURSDAY", time: "14:30 - 15:30", isHighlighted: false,
+                        startDate: cal.date(bySettingHour: 14, minute: 30, second: 0, of: weekendStart)),
+                Session(name: "PRACTICE 2", day: "THURSDAY", time: "18:00 - 19:00", isHighlighted: false,
+                        startDate: cal.date(bySettingHour: 18, minute: 0, second: 0, of: weekendStart)),
+                Session(name: "PRACTICE 3", day: "FRIDAY",   time: "14:30 - 15:30", isHighlighted: false,
+                        startDate: cal.date(bySettingHour: 14, minute: 30, second: 0, of: cal.date(byAdding: .day, value: 1, to: weekendStart)!)),
+                Session(name: "QUALIFYING", day: "FRIDAY",   time: "18:00 - 19:00", isHighlighted: true,
+                        startDate: cal.date(bySettingHour: 18, minute: 0, second: 0, of: cal.date(byAdding: .day, value: 1, to: weekendStart)!)),
+                Session(name: "GRAND PRIX", day: "SATURDAY", time: "18:00",          isHighlighted: true,
+                        startDate: cal.date(bySettingHour: 18, minute: 0, second: 0, of: cal.date(byAdding: .day, value: 2, to: weekendStart)!)),
             ]
         }
+    }
+
+    /// The next upcoming session's start date (for countdown)
+    var nextSessionDate: Date? {
+        let now = Date()
+        return sessions.first { ($0.startDate ?? .distantPast) > now }?.startDate
     }
 }

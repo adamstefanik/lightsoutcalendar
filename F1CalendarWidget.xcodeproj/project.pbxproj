@@ -63,7 +63,7 @@
 			);
 			target = CC4C03C52F69B0000034CA8E /* F1WidgetExtension */;
 		};
-		CC4C03CE2F69B0000034CA8E /* Shared files from F1WidgetExtension in F1CalendarWidget target */ = {
+		CC4C03CE2F69B0000034CA8E /* Exceptions for "F1WidgetExtension" folder in "F1CalendarWidget" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				CircuitDatabase.swift,
@@ -101,8 +101,8 @@
 		CC4C03C12F69B0000034CA8E /* F1WidgetExtension */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
+				CC4C03CE2F69B0000034CA8E /* Exceptions for "F1WidgetExtension" folder in "F1CalendarWidget" target */,
 				CC4C03CD2F69B0000034CA8E /* Exceptions for "F1WidgetExtension" folder in "F1WidgetExtension" target */,
-				CC4C03CE2F69B0000034CA8E /* Shared files from F1WidgetExtension in F1CalendarWidget target */,
 			);
 			path = F1WidgetExtension;
 			sourceTree = "<group>";
@@ -509,6 +509,7 @@
 				CODE_SIGN_ENTITLEMENTS = F1CalendarWidget/F1CalendarWidget.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 59T7JDA3W7;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
@@ -552,6 +553,7 @@
 				CODE_SIGN_ENTITLEMENTS = F1CalendarWidget/F1CalendarWidget.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 59T7JDA3W7;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
@@ -693,6 +695,7 @@
 				CODE_SIGN_ENTITLEMENTS = F1WidgetExtension/F1WidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 59T7JDA3W7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = F1WidgetExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "F1 Widget";
@@ -732,6 +735,7 @@
 				CODE_SIGN_ENTITLEMENTS = F1WidgetExtension/F1WidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 59T7JDA3W7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = F1WidgetExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "F1 Widget";
