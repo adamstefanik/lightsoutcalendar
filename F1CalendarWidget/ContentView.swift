@@ -1,24 +1,39 @@
-//
-//  ContentView.swift
-//  F1CalendarWidget
-//
-//  Created by Adam S. Štefánik on 17/03/2026.
-//
-
 import SwiftUI
 
 struct ContentView: View {
+    @Binding var selectedTab: Int
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        TabView(selection: $selectedTab) {
+            Text("Race Detail")
+                .foregroundColor(.f1Text)
+                .tabItem {
+                    Image(systemName: "car.fill")
+                    Text("Race")
+                }
+                .tag(0)
+
+            Text("Calendar")
+                .foregroundColor(.f1Text)
+                .tabItem {
+                    Image(systemName: "calendar")
+                    Text("Calendar")
+                }
+                .tag(1)
+
+            Text("Settings")
+                .foregroundColor(.f1Text)
+                .tabItem {
+                    Image(systemName: "gearshape")
+                    Text("Settings")
+                }
+                .tag(2)
         }
-        .padding()
+        .tint(Color.f1Red)
+        .preferredColorScheme(.dark)
     }
 }
 
 #Preview {
-    ContentView()
+    ContentView(selectedTab: .constant(0))
 }
