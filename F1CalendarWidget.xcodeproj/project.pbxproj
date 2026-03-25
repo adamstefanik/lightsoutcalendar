@@ -72,7 +72,9 @@
 				F1APIService.swift,
 				F1Calendar.swift,
 				F1Colors.swift,
+				NotificationManager.swift,
 				Race.swift,
+				SettingsManager.swift,
 				WeatherModels.swift,
 				WeatherService.swift,
 			);
