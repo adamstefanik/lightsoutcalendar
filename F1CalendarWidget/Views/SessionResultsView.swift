@@ -1,8 +1,15 @@
 import SwiftUI
 
+enum SessionDisplayType {
+    case race       // GP: podium P1-P3, points, fastest lap icon
+    case sprint     // Sprint: podium P1-P3, sprint points, fastest lap icon
+    case timing     // Practice, Qualifying, Sprint Quali: flat list, times + deltas, no points, no fastest lap icon
+}
+
 struct SessionResultsView: View {
     let title: String
     let results: [DriverResult]
+    var displayType: SessionDisplayType = .race
 
     private var finishers: [DriverResult] {
         results.filter { !$0.dnf }.sorted { $0.position < $1.position }
@@ -16,16 +23,24 @@ struct SessionResultsView: View {
         ScrollView {
             VStack(spacing: 0) {
                 ForEach(finishers) { driver in
-                    if driver.position <= 3 {
-                        PodiumRow(driver: driver)
-                    } else if driver.position <= 10 {
-                        PointsRow(driver: driver)
-                    } else {
-                        CompactRow(driver: driver)
+                    switch displayType {
+                    case .race, .sprint:
+                        if driver.position <= 3 {
+                            PodiumRow(driver: driver, showPoints: true, showFastestLap: true)
+                        } else if driver.position <= 10 {
+                            PointsRow(driver: driver, showPoints: true, showFastestLap: true)
+                        } else {
+                            CompactRow(driver: driver, showFastestLap: true)
+                        }
+                    case .timing:
+                        if driver.position <= 3 {
+                            PodiumRow(driver: driver, showPoints: false, showFastestLap: false, highlightFastestTime: true)
+                        } else {
+                            TimingRow(driver: driver)
+                        }
                     }
                 }
 
-                // DNFs
                 if !dnfs.isEmpty {
                     Rectangle()
                         .fill(Color.f1Divider)
@@ -49,10 +64,40 @@ struct SessionResultsView: View {
     }
 }
 
-// MARK: - P1-P3 Row
+// MARK: - Timing Row (Practice, Qualifying, Sprint Quali)
+
+private struct TimingRow: View {
+    let driver: DriverResult
+
+    var body: some View {
+        HStack(spacing: 12) {
+            Text("\(driver.position)")
+                .font(.system(size: 14, weight: .medium))
+                .foregroundColor(.white)
+                .frame(width: 36, alignment: .center)
+
+            Text(driver.driverName)
+                .font(.system(size: 13, weight: .medium))
+                .foregroundColor(.white)
+
+            Spacer()
+
+            Text(driver.time)
+                .font(.system(size: 11, weight: driver.position == 1 ? .semibold : .regular))
+                .foregroundColor(driver.position == 1 ? .purple : .white)
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 7)
+    }
+}
+
+// MARK: - P1-P3 Row (Race/Sprint)
 
 private struct PodiumRow: View {
     let driver: DriverResult
+    var showPoints: Bool = true
+    var showFastestLap: Bool = true
+    var highlightFastestTime: Bool = false
 
     private var positionColor: Color {
         switch driver.position {
@@ -74,7 +119,7 @@ private struct PodiumRow: View {
                 Text(driver.driverName)
                     .font(.system(size: 14, weight: .semibold))
                     .foregroundColor(.f1Text)
-                if driver.fastestLap {
+                if showFastestLap && driver.fastestLap {
                     Image(systemName: "stopwatch.fill")
                         .font(.system(size: 10))
                         .foregroundColor(.purple)
@@ -86,8 +131,8 @@ private struct PodiumRow: View {
             VStack(alignment: .trailing, spacing: 2) {
                 Text(driver.time)
                     .font(.system(size: 12, weight: .medium))
-                    .foregroundColor(.f1Text)
-                if driver.points > 0 {
+                    .foregroundColor(highlightFastestTime && driver.position == 1 ? .purple : .f1Text)
+                if showPoints && driver.points > 0 {
                     Text("+\(driver.points) pts")
                         .font(.system(size: 10))
                         .foregroundColor(.f1SecondaryText)
@@ -99,23 +144,25 @@ private struct PodiumRow: View {
     }
 }
 
-// MARK: - P4-P10 Row
+// MARK: - P4-P10 Row (Race/Sprint)
 
 private struct PointsRow: View {
     let driver: DriverResult
+    var showPoints: Bool = true
+    var showFastestLap: Bool = true
 
     var body: some View {
         HStack(spacing: 12) {
             Text("\(driver.position)")
                 .font(.system(size: 14, weight: .medium))
-                .foregroundColor(.f1SecondaryText)
+                .foregroundColor(.f1Text)
                 .frame(width: 36, alignment: .center)
 
             HStack(spacing: 8) {
                 Text(driver.driverName)
                     .font(.system(size: 13, weight: .medium))
                     .foregroundColor(.f1Text)
-                if driver.fastestLap {
+                if showFastestLap && driver.fastestLap {
                     Image(systemName: "stopwatch.fill")
                         .font(.system(size: 10))
                         .foregroundColor(.purple)
@@ -127,11 +174,11 @@ private struct PointsRow: View {
             HStack(spacing: 8) {
                 Text(driver.time)
                     .font(.system(size: 11))
-                    .foregroundColor(.f1SecondaryText)
-                if driver.points > 0 {
+                    .foregroundColor(.f1Text)
+                if showPoints && driver.points > 0 {
                     Text("+\(driver.points)")
                         .font(.system(size: 11, weight: .medium))
-                        .foregroundColor(.f1Text)
+                        .foregroundColor(.f1SecondaryText)
                 }
             }
         }
@@ -140,23 +187,24 @@ private struct PointsRow: View {
     }
 }
 
-// MARK: - P11+ Row
+// MARK: - P11+ Row (Race/Sprint)
 
 private struct CompactRow: View {
     let driver: DriverResult
+    var showFastestLap: Bool = true
 
     var body: some View {
         HStack(spacing: 12) {
             Text("\(driver.position)")
                 .font(.system(size: 14, weight: .medium))
-                .foregroundColor(.f1SecondaryText)
+                .foregroundColor(.f1Text)
                 .frame(width: 36, alignment: .center)
 
             HStack(spacing: 8) {
                 Text(driver.driverName)
                     .font(.system(size: 13))
-                    .foregroundColor(.f1SecondaryText)
-                if driver.fastestLap {
+                    .foregroundColor(.f1Text)
+                if showFastestLap && driver.fastestLap {
                     Image(systemName: "stopwatch.fill")
                         .font(.system(size: 10))
                         .foregroundColor(.purple)
@@ -167,7 +215,7 @@ private struct CompactRow: View {
 
             Text(driver.time)
                 .font(.system(size: 11))
-                .foregroundColor(.f1SecondaryText)
+                .foregroundColor(.f1Text)
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 7)

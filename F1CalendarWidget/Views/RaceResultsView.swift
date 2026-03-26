@@ -2,6 +2,15 @@ import SwiftUI
 
 struct RaceResultsView: View {
     let results: [DriverResult]
+    var displayType: SessionDisplayType = .race
+
+    private var showPoints: Bool {
+        displayType == .race || displayType == .sprint
+    }
+
+    private var showFastestLap: Bool {
+        displayType == .race || displayType == .sprint
+    }
 
     private var podium: [DriverResult] {
         results.filter { !$0.dnf && $0.position <= 3 }.sorted { $0.position < $1.position }
@@ -15,12 +24,12 @@ struct RaceResultsView: View {
 
             // Podium cards
             ForEach(podium) { driver in
-                PodiumCard(driver: driver)
+                PodiumCard(driver: driver, showPoints: showPoints, showFastestLap: showFastestLap)
             }
 
             // Full results link
             NavigationLink {
-                SessionResultsView(title: "Grand Prix Results", results: results)
+                SessionResultsView(title: "Results", results: results, displayType: displayType)
             } label: {
                 Text("Tap for full results")
                     .font(.system(size: 12, weight: .medium))
@@ -39,6 +48,8 @@ struct RaceResultsView: View {
 
 private struct PodiumCard: View {
     let driver: DriverResult
+    var showPoints: Bool = true
+    var showFastestLap: Bool = true
 
     private var positionColor: Color {
         switch driver.position {
@@ -61,7 +72,7 @@ private struct PodiumCard: View {
                     Text(driver.driverName)
                         .font(.system(size: 14, weight: .semibold))
                         .foregroundColor(.f1Text)
-                    if driver.fastestLap {
+                    if showFastestLap && driver.fastestLap {
                         Image(systemName: "stopwatch.fill")
                             .font(.system(size: 10))
                             .foregroundColor(.purple)
@@ -80,9 +91,11 @@ private struct PodiumCard: View {
                         .font(.system(size: 12, weight: .medium))
                         .foregroundColor(driver.dnf ? .f1Red : .f1Text)
                 }
-                Text("+\(driver.points) pts")
-                    .font(.system(size: 11, weight: .medium))
-                    .foregroundColor(.f1SecondaryText)
+                if showPoints {
+                    Text("+\(driver.points) pts")
+                        .font(.system(size: 11, weight: .medium))
+                        .foregroundColor(.f1SecondaryText)
+                }
             }
         }
         .padding(12)
