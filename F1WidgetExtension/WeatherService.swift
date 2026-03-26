@@ -8,7 +8,10 @@ class WeatherService {
     private let cacheDuration: TimeInterval = 3 * 3600 // 3 hours
 
     private static var apiKey: String {
-        Bundle.main.object(forInfoDictionaryKey: "WEATHER_API_KEY") as? String ?? ""
+        if let key = Bundle.main.object(forInfoDictionaryKey: "WEATHER_API_KEY") as? String, !key.isEmpty, !key.contains("$") {
+            return key
+        }
+        return "37952863ba0801cf314d405d9a4a44a2"
     }
 
     private init() {}
@@ -26,11 +29,17 @@ class WeatherService {
 
         do {
             let (data, response) = try await URLSession.shared.data(from: url)
-            guard let http = response as? HTTPURLResponse, http.statusCode == 200 else { return [] }
+            guard let http = response as? HTTPURLResponse, http.statusCode == 200 else {
+                print("[Weather] HTTP status: \((response as? HTTPURLResponse)?.statusCode ?? -1)")
+                return []
+            }
+            print("[Weather] API OK, data size: \(data.count)")
             let forecasts = try parseForecasts(from: data, weekendStart: weekendStart, raceDate: raceDate)
+            print("[Weather] Parsed \(forecasts.count) day forecasts")
             saveToCache(forecasts, circuitKey: circuitKey)
             return forecasts
         } catch {
+            print("[Weather] Error: \(error)")
             return []
         }
     }
@@ -38,8 +47,8 @@ class WeatherService {
     // MARK: - Cache
 
     private func loadFromCache(circuitKey: String) -> [DayForecast]? {
-        let dataKey = "weatherData_v3_\(circuitKey)"
-        let tsKey = "weatherTS_v3_\(circuitKey)"
+        let dataKey = "weatherData_v4_\(circuitKey)"
+        let tsKey = "weatherTS_v4_\(circuitKey)"
         guard
             let timestamp = defaults.object(forKey: tsKey) as? Date,
             Date().timeIntervalSince(timestamp) < cacheDuration,
@@ -52,8 +61,8 @@ class WeatherService {
     }
 
     private func saveToCache(_ forecasts: [DayForecast], circuitKey: String) {
-        let dataKey = "weatherData_v3_\(circuitKey)"
-        let tsKey = "weatherTS_v3_\(circuitKey)"
+        let dataKey = "weatherData_v4_\(circuitKey)"
+        let tsKey = "weatherTS_v4_\(circuitKey)"
         guard let data = try? JSONEncoder().encode(forecasts) else { return }
         defaults.set(data, forKey: dataKey)
         defaults.set(Date(), forKey: tsKey)
@@ -65,7 +74,8 @@ class WeatherService {
         let json = try JSONSerialization.jsonObject(with: data) as? [String: Any]
         guard let list = json?["list"] as? [[String: Any]] else { return [] }
 
-        let cal = Calendar.current
+        var cal = Calendar.current
+        cal.timeZone = TimeZone(identifier: "UTC")!
         let startDay = cal.startOfDay(for: weekendStart)
         let endDay = cal.date(byAdding: .day, value: 1, to: cal.startOfDay(for: raceDate))!
 

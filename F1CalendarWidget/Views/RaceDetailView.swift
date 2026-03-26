@@ -12,10 +12,19 @@ struct RaceDetailView: View {
 
     @State private var weatherState: WeatherLoadState = .loading
     @State private var raceResults: [DriverResult] = []
+    @State private var resultsSessionName: String = ""
     @State private var screenWidth: CGFloat = 393
 
     private var circuitInfo: CircuitInfo? {
         CircuitDatabase.info(for: race.shortName)
+    }
+
+    private var resultsDisplayType: SessionDisplayType {
+        switch resultsSessionName {
+        case "GRAND PRIX": return .race
+        case "SPRINT": return .sprint
+        default: return .timing
+        }
     }
 
     private var isWeatherAvailable: Bool {
@@ -83,8 +92,8 @@ struct RaceDetailView: View {
                         }
                     }
 
-                    // Race results (when completed)
-                    if race.isCompleted && !raceResults.isEmpty {
+                    // Race results (when any session completed)
+                    if !raceResults.isEmpty {
                         Rectangle()
                             .fill(Color.f1Divider)
                             .frame(height: 1)
@@ -92,7 +101,10 @@ struct RaceDetailView: View {
                             .padding(.leading, 34)
                             .padding(.trailing, 34)
 
-                        RaceResultsView(results: raceResults)
+                        RaceResultsView(
+                            results: raceResults,
+                            displayType: resultsDisplayType
+                        )
                     }
 
                     // Divider before weather
@@ -162,6 +174,7 @@ struct RaceDetailView: View {
                 await loadResults()
             }
             .task(id: race.id) {
+                print("[RaceDetail] .task fired for race: \(race.name), id: \(race.id)")
                 weatherState = .loading
                 raceResults = []
                 await loadWeather()
@@ -173,6 +186,8 @@ struct RaceDetailView: View {
     // MARK: - Weather Loading
 
     private func loadWeather() async {
+        print("[Weather] isCompleted=\(race.isCompleted), weekendStart=\(race.weekendStart), raceDate=\(race.raceDate), daysUntil=\(race.weekendStart.timeIntervalSinceNow / 86400)")
+        print("[Weather] isWeatherAvailable=\(isWeatherAvailable), circuitInfo=\(circuitInfo?.circuitId ?? "nil")")
         guard isWeatherAvailable, let info = circuitInfo else {
             weatherState = .error
             return
@@ -185,6 +200,7 @@ struct RaceDetailView: View {
             weekendStart: race.weekendStart,
             raceDate: race.raceDate
         )
+        print("[Weather] Got \(forecasts.count) forecasts")
 
         if !forecasts.isEmpty {
             weatherState = .loaded(forecasts)
@@ -196,12 +212,32 @@ struct RaceDetailView: View {
     // MARK: - Results Loading
 
     private func loadResults() async {
-        guard race.isCompleted else { return }
-        // Find the race (GRAND PRIX) session with a real API session key
-        let raceSession = race.sessions.last { $0.name == "GRAND PRIX" && $0.sessionKey != nil }
-            ?? race.sessions.last { $0.sessionKey != nil }
-        guard let key = raceSession?.sessionKey else { return }
-        raceResults = await F1APIService.shared.fetchResults(for: key)
+        let completedSessions = race.sessions.filter {
+            guard let end = $0.endDate else { return false }
+            return end < Date() && $0.sessionKey != nil
+        }
+        guard !completedSessions.isEmpty else { return }
+
+        // If whole weekend is done, show GP results; otherwise show latest completed session
+        let targetSession: Session
+        if race.isCompleted,
+           let gp = completedSessions.last(where: { $0.name == "GRAND PRIX" }) {
+            targetSession = gp
+        } else {
+            targetSession = completedSessions.last!
+        }
+
+        guard let key = targetSession.sessionKey else { return }
+        resultsSessionName = targetSession.name
+        raceResults = await F1APIService.shared.fetchResults(for: key, sessionType: apiSessionType(for: targetSession.name))
+    }
+
+    private func apiSessionType(for name: String) -> F1APIService.SessionType {
+        switch name {
+        case "GRAND PRIX": return .race
+        case "SPRINT": return .sprint
+        default: return .timing
+        }
     }
 }
 
