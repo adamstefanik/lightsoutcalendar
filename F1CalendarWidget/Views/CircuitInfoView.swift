@@ -2,27 +2,42 @@ import SwiftUI
 
 struct CircuitInfoView: View {
     let circuit: CircuitInfo
+    var raceName: String? = nil
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: 14) {
             Text("CIRCUIT")
                 .font(.system(size: 11, weight: .semibold))
                 .foregroundColor(.f1SecondaryText)
 
-            VStack(alignment: .leading, spacing: 8) {
-                Text(circuit.circuitId)
-                    .font(.system(size: 15, weight: .bold))
-                    .foregroundColor(.f1Text)
+            HStack(alignment: .top, spacing: 0) {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text(raceName ?? circuit.circuitId)
+                        .font(.system(size: 15, weight: .bold))
+                        .foregroundColor(.f1Text)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.6)
 
-                HStack(spacing: 16) {
-                    InfoItem(label: "Length", value: circuit.length)
-                    InfoItem(label: "Turns", value: "\(circuit.turns)")
-                    InfoItem(label: "Lap Record", value: circuit.lapRecord)
+                    HStack(spacing: 16) {
+                        InfoItem(label: "Length", value: circuit.length)
+                        InfoItem(label: "Turns", value: "\(circuit.turns)")
+                        InfoItem(label: "Lap Record", value: circuit.lapRecord)
+                    }
+
+                    Text("\(circuit.lapRecordHolder), \(String(circuit.lapRecordYear))")
+                        .font(.system(size: 11))
+                        .foregroundColor(.f1SecondaryText)
                 }
 
-                Text("\(circuit.lapRecordHolder), \(circuit.lapRecordYear)")
-                    .font(.system(size: 11))
-                    .foregroundColor(.f1SecondaryText)
+                Spacer(minLength: 8)
+
+                Image("f2026")
+                    .renderingMode(.template)
+                    .resizable()
+                    .scaledToFit()
+                    .foregroundColor(.f1Red.opacity(0.3))
+                    .frame(width: 110, height: 70)
+                    .padding(.top, 4)
             }
             .padding(14)
             .frame(maxWidth: .infinity, alignment: .leading)
