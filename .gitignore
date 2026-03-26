@@ -9,3 +9,6 @@ build/
 
 # Claude
 .claude/
+
+# Secrets
+Secrets.xcconfig

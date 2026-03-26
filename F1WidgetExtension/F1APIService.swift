@@ -194,7 +194,6 @@ final class F1APIService {
             switch api.session_type {
             case "Practice":
                 name = api.session_name.uppercased()
-                    .replacingOccurrences(of: "PRACTICE", with: "PRACTICE")
                 highlighted = false
                 timeStr = "\(startTime) - \(endTime)"
 
@@ -249,7 +248,8 @@ final class F1APIService {
 
     private func parseDate(_ str: String) -> Date {
         if let d = isoFormatter.date(from: str) { return d }
-        return Date()
+        print("[F1API] Failed to parse date: \(str)")
+        return .distantPast
     }
 
     // MARK: - Cache

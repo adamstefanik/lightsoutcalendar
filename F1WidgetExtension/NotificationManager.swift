@@ -26,7 +26,8 @@ final class NotificationManager {
         cancelAll()
 
         let reminderInterval = TimeInterval(settings.reminderMinutes * 60)
-        for race in races where !race.isCompleted {
+        let upcomingRaces = races.filter { !$0.isCompleted }.prefix(5)
+        for race in upcomingRaces {
             guard let sessions = race.apiSessions ?? Optional(race.sessions) else { continue }
 
             for session in sessions {

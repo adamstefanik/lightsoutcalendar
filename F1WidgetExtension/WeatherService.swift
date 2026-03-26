@@ -5,17 +5,19 @@ class WeatherService {
 
     private let defaults = UserDefaults(suiteName: "group.com.f1calendar.shared") ?? .standard
 
-    private let cacheDataKey = "weatherForecastData_v2"
-    private let cacheTimestampKey = "weatherForecastTimestamp_v2"
     private let cacheDuration: TimeInterval = 3 * 3600 // 3 hours
 
-    private static let apiKey = "37952863ba0801cf314d405d9a4a44a2"
+    private static var apiKey: String {
+        Bundle.main.object(forInfoDictionaryKey: "WEATHER_API_KEY") as? String ?? ""
+    }
 
     private init() {}
 
     func fetchForecast(latitude: Double, longitude: Double, weekendStart: Date, raceDate: Date) async -> [DayForecast] {
+        let circuitKey = "\(Int(latitude * 100))_\(Int(longitude * 100))"
+
         // Check cache first
-        if let cached = loadFromCache() {
+        if let cached = loadFromCache(circuitKey: circuitKey) {
             return cached
         }
 
@@ -23,9 +25,10 @@ class WeatherService {
         guard let url = URL(string: urlString) else { return [] }
 
         do {
-            let (data, _) = try await URLSession.shared.data(from: url)
+            let (data, response) = try await URLSession.shared.data(from: url)
+            guard let http = response as? HTTPURLResponse, http.statusCode == 200 else { return [] }
             let forecasts = try parseForecasts(from: data, weekendStart: weekendStart, raceDate: raceDate)
-            saveToCache(forecasts)
+            saveToCache(forecasts, circuitKey: circuitKey)
             return forecasts
         } catch {
             return []
@@ -34,11 +37,13 @@ class WeatherService {
 
     // MARK: - Cache
 
-    private func loadFromCache() -> [DayForecast]? {
+    private func loadFromCache(circuitKey: String) -> [DayForecast]? {
+        let dataKey = "weatherData_v3_\(circuitKey)"
+        let tsKey = "weatherTS_v3_\(circuitKey)"
         guard
-            let timestamp = defaults.object(forKey: cacheTimestampKey) as? Date,
+            let timestamp = defaults.object(forKey: tsKey) as? Date,
             Date().timeIntervalSince(timestamp) < cacheDuration,
-            let data = defaults.data(forKey: cacheDataKey),
+            let data = defaults.data(forKey: dataKey),
             let forecasts = try? JSONDecoder().decode([DayForecast].self, from: data)
         else {
             return nil
@@ -46,10 +51,12 @@ class WeatherService {
         return forecasts
     }
 
-    private func saveToCache(_ forecasts: [DayForecast]) {
+    private func saveToCache(_ forecasts: [DayForecast], circuitKey: String) {
+        let dataKey = "weatherData_v3_\(circuitKey)"
+        let tsKey = "weatherTS_v3_\(circuitKey)"
         guard let data = try? JSONEncoder().encode(forecasts) else { return }
-        defaults.set(data, forKey: cacheDataKey)
-        defaults.set(Date(), forKey: cacheTimestampKey)
+        defaults.set(data, forKey: dataKey)
+        defaults.set(Date(), forKey: tsKey)
     }
 
     // MARK: - Parsing

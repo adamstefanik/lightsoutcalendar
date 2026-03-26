@@ -7,12 +7,14 @@ struct F1WidgetEntry: TimelineEntry {
 }
 
 struct F1WidgetProvider: TimelineProvider {
+    private static var fallbackRace: Race { F1Calendar.fallbackRaces[0] }
+
     func placeholder(in context: Context) -> F1WidgetEntry {
-        F1WidgetEntry(date: Date(), nextRace: F1Calendar.fallbackRaces.first!)
+        F1WidgetEntry(date: Date(), nextRace: Self.fallbackRace)
     }
 
     func getSnapshot(in context: Context, completion: @escaping (F1WidgetEntry) -> Void) {
-        let race = F1Calendar.nextRace ?? F1Calendar.fallbackRaces.first!
+        let race = F1Calendar.nextRace ?? Self.fallbackRace
         completion(F1WidgetEntry(date: Date(), nextRace: race))
     }
 
@@ -21,7 +23,7 @@ struct F1WidgetProvider: TimelineProvider {
             let races = await F1APIService.shared.fetchRaces()
             F1Calendar.cachedRaces = races
 
-            let nextRace = races.first { !$0.isCompleted } ?? races.first!
+            let nextRace = races.first { !$0.isCompleted } ?? races.first ?? Self.fallbackRace
             print("[F1Widget] Next race: \(nextRace.name), sessions: \(nextRace.sessions.count), apiSessions: \(nextRace.apiSessions?.count ?? -1)")
             if let first = nextRace.sessions.first {
                 print("[F1Widget] First session: \(first.name) \(first.day) \(first.time)")
