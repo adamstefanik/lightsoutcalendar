@@ -1,41 +1,42 @@
+<p align="center">
+  <img src="assets/ui-app.png" alt="F1 Calendar App" width="300"/>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="assets/ui-widget.png" alt="F1 Calendar Widget" width="300"/>
+</p>
+
 # F1 Calendar Widget
 
-F1 2026 race calendar widget for Apple gadgets – upcoming races, countdowns, and session times in your local timezone
-
-<p align="center">
-  <img src="assets/ui-screenshot.png" alt="F1 Calendar Widget Preview" width="700"/>
-</p>
+A sleek iOS app and widget for the 2026 Formula 1 season. Track every race weekend with live countdowns, full session schedules, results, weather forecasts, and circuit info — all in your pocket.
 
 ## Features
 
-- **2 widget sizes** — medium and large to fit your Home Screen
-- **Live countdown** — days, hours, and minutes until the next race
-- **Full session schedule** — FP1, FP2, FP3, Qualifying, Sprint, and Grand Prix
-- **Sprint weekend support** — automatically detects and adjusts for sprint formats
-- **Local timezone** — all session times converted to required timezone
-- **Country flags** — emoji flags for all race locations
-- **Current session badge** — highlights which session is live or coming up next
-- **Offline-ready** — 6-hour cache with a hardcoded 2026 calendar as fallback
+**App**
+- Full 2026 race calendar with detailed race weekends
+- Live countdown to the next session (days, hours, minutes)
+- Session results with podium highlights, fastest laps, and driver standings
+- Weather forecast for upcoming race weekends
+- Circuit information with track maps
+- Push notifications before sessions start
+- Sprint weekend detection and adjusted schedules
 
-## Data Source
+**Widget**
+- Medium and large Home Screen widgets
+- Live countdown to the next race
+- Full session schedule with local times
+- Current session badge (live / upcoming)
+- Country flags for all race locations
 
-Race and session data is fetched from the [OpenF1 API](https://openf1.org). The widget refreshes every 60 minutes and caches responses for 6 hours. If the API is unavailable, it falls back to a built-in 2026 calendar.
+## Screenshots
 
-## Project Structure
+| App | Widget |
+|-----|--------|
+| ![App](assets/ui-app.png) | ![Widget](assets/ui-widget.png) |
 
-```
-F1WidgetExtension/
-├── F1WidgetBundle.swift    
-├── F1WidgetViews.swift     
-├── F1APIService.swift      
-├── F1Calendar.swift        
-├── F1Colors.swift          
-├── Race.swift              
-└── Assets.xcassets/        
-F1CalendarWidget/
-├── F1CalendarWidgetApp.swift
-└── ContentView.swift
-```
+## Data Sources
+
+- **Race & session data** — [OpenF1 API](https://openf1.org) with 6-hour cache and built-in 2026 calendar fallback
+- **Weather** — [OpenWeatherMap API](https://openweathermap.org) with per-circuit caching
+- **All times** displayed in your local timezone
 
 ## Tech Stack
 
@@ -52,12 +53,15 @@ F1CalendarWidget/
 
 1. Clone the repository
 2. Open `F1CalendarWidget.xcodeproj` in Xcode
-3. Select the `F1WidgetExtensionExtension` scheme
-4. Build and run on a simulator or device
-5. Add the widget to your Home Screen
+3. Build and run on a simulator or device
+4. Add the widget to your Home Screen
 
 ## License
 
 MIT — see [LICENSE](LICENSE) for details.
 
-Made with :checkered_flag: by [Adam Samuel Štefánik](https://github.com/adamstefanik)
+---
+
+<p align="center">
+  Made with 🏁 by <a href="https://github.com/adamstefanik">Adam Samuel Štefánik</a>
+</p>
