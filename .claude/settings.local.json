@@ -1,8 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "WebFetch(domain:www.formula1.com)",
-      "WebFetch(domain:en.wikipedia.org)"
-    ]
-  }
-}
