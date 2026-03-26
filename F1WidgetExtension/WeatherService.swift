@@ -29,17 +29,11 @@ class WeatherService {
 
         do {
             let (data, response) = try await URLSession.shared.data(from: url)
-            guard let http = response as? HTTPURLResponse, http.statusCode == 200 else {
-                print("[Weather] HTTP status: \((response as? HTTPURLResponse)?.statusCode ?? -1)")
-                return []
-            }
-            print("[Weather] API OK, data size: \(data.count)")
+            guard let http = response as? HTTPURLResponse, http.statusCode == 200 else { return [] }
             let forecasts = try parseForecasts(from: data, weekendStart: weekendStart, raceDate: raceDate)
-            print("[Weather] Parsed \(forecasts.count) day forecasts")
             saveToCache(forecasts, circuitKey: circuitKey)
             return forecasts
         } catch {
-            print("[Weather] Error: \(error)")
             return []
         }
     }

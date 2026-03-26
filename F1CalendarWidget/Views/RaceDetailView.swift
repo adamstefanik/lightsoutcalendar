@@ -174,7 +174,6 @@ struct RaceDetailView: View {
                 await loadResults()
             }
             .task(id: race.id) {
-                print("[RaceDetail] .task fired for race: \(race.name), id: \(race.id)")
                 weatherState = .loading
                 raceResults = []
                 await loadWeather()
@@ -186,8 +185,6 @@ struct RaceDetailView: View {
     // MARK: - Weather Loading
 
     private func loadWeather() async {
-        print("[Weather] isCompleted=\(race.isCompleted), weekendStart=\(race.weekendStart), raceDate=\(race.raceDate), daysUntil=\(race.weekendStart.timeIntervalSinceNow / 86400)")
-        print("[Weather] isWeatherAvailable=\(isWeatherAvailable), circuitInfo=\(circuitInfo?.circuitId ?? "nil")")
         guard isWeatherAvailable, let info = circuitInfo else {
             weatherState = .error
             return
@@ -200,8 +197,6 @@ struct RaceDetailView: View {
             weekendStart: race.weekendStart,
             raceDate: race.raceDate
         )
-        print("[Weather] Got \(forecasts.count) forecasts")
-
         if !forecasts.isEmpty {
             weatherState = .loaded(forecasts)
         } else {
