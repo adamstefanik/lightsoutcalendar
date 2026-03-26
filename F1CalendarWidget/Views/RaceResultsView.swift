@@ -8,8 +8,8 @@ struct RaceResultsView: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text("RACE RESULT")
+        VStack(alignment: .leading, spacing: 14) {
+            Text("RESULTS")
                 .font(.system(size: 11, weight: .semibold))
                 .foregroundColor(.f1SecondaryText)
 
@@ -24,13 +24,14 @@ struct RaceResultsView: View {
             } label: {
                 Text("Tap for full results")
                     .font(.system(size: 12, weight: .medium))
-                    .foregroundColor(.f1Red)
+                    .foregroundColor(.f1SecondaryText)
                     .frame(maxWidth: .infinity, alignment: .center)
                     .padding(.top, 4)
             }
         }
-        .padding(.horizontal, 14)
-        .padding(.vertical, 16)
+        .padding(.horizontal, 34)
+        .padding(.top, 16)
+        .padding(.bottom, 0)
     }
 }
 
@@ -56,9 +57,16 @@ private struct PodiumCard: View {
                 .frame(width: 40)
 
             VStack(alignment: .leading, spacing: 2) {
-                Text(driver.driverName)
-                    .font(.system(size: 14, weight: .semibold))
-                    .foregroundColor(.f1Text)
+                HStack(spacing: 8) {
+                    Text(driver.driverName)
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundColor(.f1Text)
+                    if driver.fastestLap {
+                        Image(systemName: "stopwatch.fill")
+                            .font(.system(size: 10))
+                            .foregroundColor(.purple)
+                    }
+                }
                 Text(driver.team)
                     .font(.system(size: 11))
                     .foregroundColor(.f1SecondaryText)
@@ -67,9 +75,11 @@ private struct PodiumCard: View {
             Spacer()
 
             VStack(alignment: .trailing, spacing: 2) {
-                Text(driver.time)
-                    .font(.system(size: 12, weight: .medium))
-                    .foregroundColor(.f1Text)
+                if !driver.time.isEmpty {
+                    Text(driver.time)
+                        .font(.system(size: 12, weight: .medium))
+                        .foregroundColor(driver.dnf ? .f1Red : .f1Text)
+                }
                 Text("+\(driver.points) pts")
                     .font(.system(size: 11, weight: .medium))
                     .foregroundColor(.f1SecondaryText)

@@ -70,14 +70,14 @@ private struct PodiumRow: View {
                 .foregroundColor(positionColor)
                 .frame(width: 36, alignment: .center)
 
-            HStack(spacing: 4) {
+            HStack(spacing: 8) {
                 Text(driver.driverName)
                     .font(.system(size: 14, weight: .semibold))
                     .foregroundColor(.f1Text)
                 if driver.fastestLap {
-                    Circle()
-                        .fill(Color.f1Purple)
-                        .frame(width: 7, height: 7)
+                    Image(systemName: "stopwatch.fill")
+                        .font(.system(size: 10))
+                        .foregroundColor(.purple)
                 }
             }
 
@@ -111,14 +111,14 @@ private struct PointsRow: View {
                 .foregroundColor(.f1SecondaryText)
                 .frame(width: 36, alignment: .center)
 
-            HStack(spacing: 4) {
+            HStack(spacing: 8) {
                 Text(driver.driverName)
                     .font(.system(size: 13, weight: .medium))
                     .foregroundColor(.f1Text)
                 if driver.fastestLap {
-                    Circle()
-                        .fill(Color.f1Purple)
-                        .frame(width: 7, height: 7)
+                    Image(systemName: "stopwatch.fill")
+                        .font(.system(size: 10))
+                        .foregroundColor(.purple)
                 }
             }
 
@@ -152,14 +152,14 @@ private struct CompactRow: View {
                 .foregroundColor(.f1SecondaryText)
                 .frame(width: 36, alignment: .center)
 
-            HStack(spacing: 4) {
+            HStack(spacing: 8) {
                 Text(driver.driverName)
                     .font(.system(size: 13))
                     .foregroundColor(.f1SecondaryText)
                 if driver.fastestLap {
-                    Circle()
-                        .fill(Color.f1Purple)
-                        .frame(width: 7, height: 7)
+                    Image(systemName: "stopwatch.fill")
+                        .font(.system(size: 10))
+                        .foregroundColor(.purple)
                 }
             }
 
