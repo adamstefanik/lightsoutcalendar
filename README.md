@@ -1,7 +1,5 @@
 <p align="center">
-  <img src="assets/ui-app.png" alt="F1 Calendar App" width="300"/>
-  &nbsp;&nbsp;&nbsp;&nbsp;
-  <img src="assets/ui-widget.png" alt="F1 Calendar Widget" width="300"/>
+  <img src="assets/ui-app.png" alt="F1 Calendar App" width="600"/>
 </p>
 
 # F1 Calendar Widget
@@ -28,9 +26,11 @@ A sleek iOS app and widget for the 2026 Formula 1 season. Track every race weeke
 
 ## Screenshots
 
-| App | Widget |
-|-----|--------|
-| ![App](assets/ui-app.png) | ![Widget](assets/ui-widget.png) |
+<p align="center">
+  <img src="assets/ui-widget.png" alt="F1 Calendar Widget" width="400"/>
+  &nbsp;&nbsp;
+  <img src="assets/ui-app.png" alt="F1 Calendar App" width="300"/>
+</p>
 
 ## Data Sources
 
@@ -63,5 +63,5 @@ MIT — see [LICENSE](LICENSE) for details.
 ---
 
 <p align="center">
-  Made with 🏁 by <a href="https://github.com/adamstefanik">Adam Samuel Štefánik</a>
+  Made with racing heart by <a href="https://github.com/adamstefanik">Adam Samuel Štefánik</a>
 </p>
