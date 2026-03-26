@@ -12,3 +12,4 @@ build/
 
 # Secrets
 Secrets.xcconfig
+*.xcuserstate
