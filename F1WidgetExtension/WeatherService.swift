@@ -5,15 +5,15 @@ class WeatherService {
 
     private let defaults = UserDefaults(suiteName: "group.com.f1calendar.shared") ?? .standard
 
-    private let cacheDataKey = "weatherForecastData"
-    private let cacheTimestampKey = "weatherForecastTimestamp"
+    private let cacheDataKey = "weatherForecastData_v2"
+    private let cacheTimestampKey = "weatherForecastTimestamp_v2"
     private let cacheDuration: TimeInterval = 3 * 3600 // 3 hours
 
     private static let apiKey = "37952863ba0801cf314d405d9a4a44a2"
 
     private init() {}
 
-    func fetchForecast(latitude: Double, longitude: Double) async -> [DayForecast] {
+    func fetchForecast(latitude: Double, longitude: Double, weekendStart: Date, raceDate: Date) async -> [DayForecast] {
         // Check cache first
         if let cached = loadFromCache() {
             return cached
@@ -24,7 +24,7 @@ class WeatherService {
 
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
-            let forecasts = try parseForecasts(from: data)
+            let forecasts = try parseForecasts(from: data, weekendStart: weekendStart, raceDate: raceDate)
             saveToCache(forecasts)
             return forecasts
         } catch {
@@ -54,9 +54,13 @@ class WeatherService {
 
     // MARK: - Parsing
 
-    private func parseForecasts(from data: Data) throws -> [DayForecast] {
+    private func parseForecasts(from data: Data, weekendStart: Date, raceDate: Date) throws -> [DayForecast] {
         let json = try JSONSerialization.jsonObject(with: data) as? [String: Any]
         guard let list = json?["list"] as? [[String: Any]] else { return [] }
+
+        let cal = Calendar.current
+        let startDay = cal.startOfDay(for: weekendStart)
+        let endDay = cal.date(byAdding: .day, value: 1, to: cal.startOfDay(for: raceDate))!
 
         // Group intervals by calendar day (yyyy-MM-dd)
         var grouped: [String: [(temp: Double, condition: String, pop: Double)]] = [:]
@@ -86,16 +90,19 @@ class WeatherService {
                 let conditionStr = weatherArr.first?["main"] as? String
             else { continue }
 
+            // Only include data within race weekend
+            guard date >= startDay && date < endDay else { continue }
+
             let pop = (item["pop"] as? Double) ?? 0.0
             let dayKey = dayFormatter.string(from: date)
             grouped[dayKey, default: []].append((temp: temp, condition: conditionStr, pop: pop))
         }
 
-        // Build sorted DayForecast array, take first 3 days
+        // Build sorted DayForecast array for weekend days
         let sortedKeys = grouped.keys.sorted()
         var result: [DayForecast] = []
 
-        for dayKey in sortedKeys.prefix(3) {
+        for dayKey in sortedKeys {
             guard
                 let intervals = grouped[dayKey],
                 let date = dayFormatter.date(from: dayKey)

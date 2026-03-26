@@ -10,11 +10,37 @@ struct WeatherSectionView: View {
     let state: WeatherLoadState
     let temperatureUnit: TemperatureUnit
 
+    private var updatedLabel: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        return "Updated \(formatter.string(from: Date()))"
+    }
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text("WEATHER")
-                .font(.system(size: 11, weight: .semibold))
-                .foregroundColor(.f1SecondaryText)
+        VStack(alignment: .leading, spacing: 14) {
+            HStack {
+                Text("WEATHER")
+                    .font(.system(size: 11, weight: .semibold))
+                    .foregroundColor(.f1SecondaryText)
+
+                Spacer()
+
+                if case .loaded = state {
+                    Text(updatedLabel)
+                        .font(.system(size: 9, weight: .medium))
+                        .foregroundColor(.f1SecondaryText.opacity(0.6))
+                        .padding(.horizontal, 6)
+                        .padding(.vertical, 2)
+                        .background(
+                            RoundedRectangle(cornerRadius: 3)
+                                .fill(Color("f1Surface"))
+                        )
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 3)
+                                .stroke(Color.f1Border, lineWidth: 0.5)
+                        )
+                }
+            }
 
             switch state {
             case .loading:
