@@ -117,7 +117,12 @@ final class F1APIService {
             let (sData, sResponse) = try await sessionsData
 
             guard let mHttp = mResponse as? HTTPURLResponse, mHttp.statusCode == 200,
-                  let sHttp = sResponse as? HTTPURLResponse, sHttp.statusCode == 200 else { return nil }
+                  let sHttp = sResponse as? HTTPURLResponse, sHttp.statusCode == 200 else {
+                let mCode = (mResponse as? HTTPURLResponse)?.statusCode ?? -1
+                let sCode = (sResponse as? HTTPURLResponse)?.statusCode ?? -1
+                print("[F1API] API returned status \(mCode)/\(sCode)")
+                return nil
+            }
 
             let meetings = try JSONDecoder().decode([OpenF1Meeting].self, from: mData)
             let sessions = try JSONDecoder().decode([OpenF1Session].self, from: sData)

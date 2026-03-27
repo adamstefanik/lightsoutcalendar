@@ -1,4 +1,5 @@
 import SwiftUI
+import Lottie
 
 enum WeatherLoadState {
     case loading
@@ -85,17 +86,17 @@ private struct WeatherDayBox: View {
     }
 
     var body: some View {
-        VStack(spacing: 6) {
-            HStack(spacing: 4) {
-                Text(forecast.dayLabel)
-                    .font(.system(size: 11, weight: .semibold))
-                    .foregroundColor(.f1Text)
-                Text(forecast.condition.emoji)
-                    .font(.system(size: 11))
-                Text(tempDisplay)
-                    .font(.system(size: 11, weight: .medium))
-                    .foregroundColor(.f1Text)
-            }
+        VStack(spacing: 4) {
+            Text(forecast.dayLabel)
+                .font(.system(size: 11, weight: .semibold))
+                .foregroundColor(.f1Text)
+
+            LottieView(fileName: forecast.condition.lottieFileName)
+                .frame(width: 28, height: 28)
+
+            Text(tempDisplay)
+                .font(.system(size: 11, weight: .medium))
+                .foregroundColor(.f1Text)
 
             Text("rain \(forecast.rainChance)%")
                 .font(.system(size: 10))

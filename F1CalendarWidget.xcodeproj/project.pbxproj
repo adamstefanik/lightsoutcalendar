@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CC1331102F76514A00E83C08 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = CC13310F2F76514A00E83C08 /* Lottie */; };
+		CC1331122F76515D00E83C08 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = CC1331112F76515D00E83C08 /* Lottie */; };
 		CC4C03CC2F69B0000034CA8E /* F1WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CC4C03C02F69B0000034CA8E /* F1WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
@@ -35,6 +37,26 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		CC13310C2F76512C00E83C08 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC1331162F76515F00E83C08 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CC4C03CB2F69B0000034CA8E /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -61,6 +83,25 @@
 		CC4C03CD2F69B0000034CA8E /* Exceptions for "F1WidgetExtension" folder in "F1WidgetExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				F1CalendarWidget/ContentView.swift,
+				F1CalendarWidget/F1CalendarWidgetApp.swift,
+				F1CalendarWidget/Lottie/weather_clear.json,
+				F1CalendarWidget/Lottie/weather_cloudy.json,
+				F1CalendarWidget/Lottie/weather_drizzle.json,
+				F1CalendarWidget/Lottie/weather_fog.json,
+				F1CalendarWidget/Lottie/weather_rain.json,
+				F1CalendarWidget/Lottie/weather_snow.json,
+				F1CalendarWidget/Lottie/weather_thunderstorm.json,
+				F1CalendarWidget/Views/AppSessionRowView.swift,
+				F1CalendarWidget/Views/CalendarRowView.swift,
+				F1CalendarWidget/Views/CalendarView.swift,
+				F1CalendarWidget/Views/CircuitInfoView.swift,
+				F1CalendarWidget/Views/RaceDetailView.swift,
+				F1CalendarWidget/Views/RaceHeaderView.swift,
+				F1CalendarWidget/Views/RaceResultsView.swift,
+				F1CalendarWidget/Views/SessionResultsView.swift,
+				F1CalendarWidget/Views/SettingsView.swift,
+				F1CalendarWidget/Views/WeatherSectionView.swift,
 				Info.plist,
 			);
 			target = CC4C03C52F69B0000034CA8E /* F1WidgetExtension */;
@@ -73,6 +114,28 @@
 				DriverResult.swift,
 				F1APIService.swift,
 				F1Calendar.swift,
+				F1CalendarWidget/Assets.xcassets,
+				F1CalendarWidget/ContentView.swift,
+				F1CalendarWidget/F1CalendarWidgetApp.swift,
+				F1CalendarWidget/Lottie/weather_clear.json,
+				F1CalendarWidget/Lottie/weather_cloudy.json,
+				F1CalendarWidget/Lottie/weather_drizzle.json,
+				F1CalendarWidget/Lottie/weather_fog.json,
+				F1CalendarWidget/Lottie/weather_rain.json,
+				F1CalendarWidget/Lottie/weather_snow.json,
+				F1CalendarWidget/Lottie/weather_thunderstorm.json,
+				F1CalendarWidget/Views/AppSessionRowView.swift,
+				F1CalendarWidget/Views/CalendarRowView.swift,
+				F1CalendarWidget/Views/CalendarView.swift,
+				F1CalendarWidget/Views/CircuitInfoView.swift,
+				F1CalendarWidget/Views/LottieView.swift,
+				F1CalendarWidget/Views/RaceDetailView.swift,
+				F1CalendarWidget/Views/RaceHeaderView.swift,
+				F1CalendarWidget/Views/RaceResultsView.swift,
+				F1CalendarWidget/Views/SessionResultsView.swift,
+				F1CalendarWidget/Views/SettingsView.swift,
+				F1CalendarWidget/Views/TrackShapes/TrackPlaceholder.swift,
+				F1CalendarWidget/Views/WeatherSectionView.swift,
 				F1Colors.swift,
 				NotificationManager.swift,
 				Race.swift,
@@ -82,25 +145,9 @@
 			);
 			target = CC4C038A2F69A65E0034CA8E /* F1CalendarWidget */;
 		};
-		CC755CCB2F74227800425F60 /* Exceptions for "F1CalendarWidget" folder in "F1WidgetExtension" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Assets.xcassets,
-				Views/TrackShapes/TrackPlaceholder.swift,
-			);
-			target = CC4C03C52F69B0000034CA8E /* F1WidgetExtension */;
-		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		CC4C038D2F69A65E0034CA8E /* F1CalendarWidget */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				CC755CCB2F74227800425F60 /* Exceptions for "F1CalendarWidget" folder in "F1WidgetExtension" target */,
-			);
-			path = F1CalendarWidget;
-			sourceTree = "<group>";
-		};
 		CC4C039B2F69A65F0034CA8E /* F1CalendarWidgetTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = F1CalendarWidgetTests;
@@ -132,6 +179,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CC1331102F76514A00E83C08 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -153,6 +201,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CC1331122F76515D00E83C08 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -162,7 +211,6 @@
 		CC4C03822F69A65E0034CA8E = {
 			isa = PBXGroup;
 			children = (
-				CC4C038D2F69A65E0034CA8E /* F1CalendarWidget */,
 				CC4C03C12F69B0000034CA8E /* F1WidgetExtension */,
 				CC4C039B2F69A65F0034CA8E /* F1CalendarWidgetTests */,
 				CC4C03A52F69A65F0034CA8E /* F1CalendarWidgetUITests */,
@@ -203,17 +251,16 @@
 				CC4C03882F69A65E0034CA8E /* Frameworks */,
 				CC4C03892F69A65E0034CA8E /* Resources */,
 				CC4C03CB2F69B0000034CA8E /* Embed Foundation Extensions */,
+				CC13310C2F76512C00E83C08 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				CC4C03CA2F69B0000034CA8E /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				CC4C038D2F69A65E0034CA8E /* F1CalendarWidget */,
-			);
 			name = F1CalendarWidget;
 			packageProductDependencies = (
+				CC13310F2F76514A00E83C08 /* Lottie */,
 			);
 			productName = F1CalendarWidget;
 			productReference = CC4C038B2F69A65E0034CA8E /* F1CalendarWidget.app */;
@@ -272,6 +319,7 @@
 				CC4C03C22F69B0000034CA8E /* Sources */,
 				CC4C03C32F69B0000034CA8E /* Frameworks */,
 				CC4C03C42F69B0000034CA8E /* Resources */,
+				CC1331162F76515F00E83C08 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -282,6 +330,7 @@
 			);
 			name = F1WidgetExtension;
 			packageProductDependencies = (
+				CC1331112F76515D00E83C08 /* Lottie */,
 			);
 			productName = F1WidgetExtension;
 			productReference = CC4C03C02F69B0000034CA8E /* F1WidgetExtension.appex */;
@@ -295,7 +344,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 2630;
-				LastUpgradeCheck = 2630;
+				LastUpgradeCheck = 2640;
 				TargetAttributes = {
 					CC4C038A2F69A65E0034CA8E = {
 						CreatedOnToolsVersion = 26.3;
@@ -322,6 +371,9 @@
 			);
 			mainGroup = CC4C03822F69A65E0034CA8E;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				CC13305B2F76490400E83C08 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = CC4C038C2F69A65E0034CA8E /* Products */;
 			projectDirPath = "";
@@ -450,7 +502,9 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 59T7JDA3W7;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -472,6 +526,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -511,7 +566,9 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 59T7JDA3W7;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -526,6 +583,7 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 			};
 			name = Release;
@@ -535,10 +593,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = F1CalendarWidget/F1CalendarWidget.entitlements;
+				CODE_SIGN_ENTITLEMENTS = F1WidgetExtension/F1CalendarWidget/F1CalendarWidget.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 59T7JDA3W7;
+				DEAD_CODE_STRIPPING = YES;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
@@ -580,10 +638,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = F1CalendarWidget/F1CalendarWidget.entitlements;
+				CODE_SIGN_ENTITLEMENTS = F1WidgetExtension/F1CalendarWidget/F1CalendarWidget.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 59T7JDA3W7;
+				DEAD_CODE_STRIPPING = YES;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
@@ -626,7 +684,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 59T7JDA3W7;
+				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
 				MACOSX_DEPLOYMENT_TARGET = 26.2;
@@ -652,7 +710,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 59T7JDA3W7;
+				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
 				MACOSX_DEPLOYMENT_TARGET = 26.2;
@@ -677,7 +735,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 59T7JDA3W7;
+				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
 				MACOSX_DEPLOYMENT_TARGET = 26.2;
@@ -702,7 +760,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 59T7JDA3W7;
+				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
 				MACOSX_DEPLOYMENT_TARGET = 26.2;
@@ -730,7 +788,7 @@
 				CODE_SIGN_ENTITLEMENTS = F1WidgetExtension/F1WidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 59T7JDA3W7;
+				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = F1WidgetExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "F1 Widget";
@@ -750,6 +808,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = a.F1CalendarWidget.F1WidgetExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -770,7 +829,7 @@
 				CODE_SIGN_ENTITLEMENTS = F1WidgetExtension/F1WidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 59T7JDA3W7;
+				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = F1WidgetExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "F1 Widget";
@@ -790,6 +849,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = a.F1CalendarWidget.F1WidgetExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -851,6 +911,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		CC13305B2F76490400E83C08 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios";
+			requirement = {
+				kind = exactVersion;
+				version = 4.6.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		CC13310F2F76514A00E83C08 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CC13305B2F76490400E83C08 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
+		CC1331112F76515D00E83C08 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CC13305B2F76490400E83C08 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = CC4C03832F69A65E0034CA8E /* Project object */;
 }

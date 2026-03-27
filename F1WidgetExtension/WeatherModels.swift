@@ -14,6 +14,10 @@ enum WeatherCondition: String, Codable {
         case .drizzle: return "🌦️"
         }
     }
+
+    var lottieFileName: String {
+        "weather_\(rawValue)"
+    }
 }
 
 struct DayForecast: Codable, Identifiable {
