@@ -2,6 +2,8 @@ import SwiftUI
 
 struct ContentView: View {
     @Binding var selectedTab: Int
+    @Binding var deepLinkedRaceId: Int?
+    @Binding var deepLinkedSession: Session?
     @ObservedObject var raceStore: RaceStore
 
     @State private var currentRaceIndex: Int?
@@ -24,7 +26,8 @@ struct ContentView: View {
                 canGoForward: raceIndex < raceStore.races.count - 1,
                 onBack: { withAnimation { currentRaceIndex = raceIndex - 1 } },
                 onForward: { withAnimation { currentRaceIndex = raceIndex + 1 } },
-                onRefresh: { await raceStore.loadRaces() }
+                onRefresh: { await raceStore.loadRaces() },
+                deepLinkedSession: $deepLinkedSession
             )
             .id(currentRace.id)
             .tabItem {
@@ -49,9 +52,15 @@ struct ContentView: View {
         }
         .tint(Color.f1Red)
         .preferredColorScheme(.dark)
+        .onChange(of: deepLinkedRaceId) { _, raceId in
+            guard let raceId,
+                  let index = raceStore.races.firstIndex(where: { $0.id == raceId }) else { return }
+            currentRaceIndex = index
+            deepLinkedRaceId = nil
+        }
     }
 }
 
 #Preview {
-    ContentView(selectedTab: .constant(0), raceStore: RaceStore())
+    ContentView(selectedTab: .constant(0), deepLinkedRaceId: .constant(nil), deepLinkedSession: .constant(nil), raceStore: RaceStore())
 }

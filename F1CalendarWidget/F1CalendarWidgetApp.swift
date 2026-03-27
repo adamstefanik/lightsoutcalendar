@@ -5,11 +5,13 @@ import WidgetKit
 @main
 struct F1CalendarWidgetApp: App {
     @State private var selectedTab = 0
+    @State private var deepLinkedRaceId: Int?
+    @State private var deepLinkedSession: Session?
     @StateObject private var raceStore = RaceStore()
 
     var body: some Scene {
         WindowGroup {
-            ContentView(selectedTab: $selectedTab, raceStore: raceStore)
+            ContentView(selectedTab: $selectedTab, deepLinkedRaceId: $deepLinkedRaceId, deepLinkedSession: $deepLinkedSession, raceStore: raceStore)
                 .onOpenURL { url in
                     handleDeepLink(url)
                 }
@@ -30,7 +32,25 @@ struct F1CalendarWidgetApp: App {
 
     private func handleDeepLink(_ url: URL) {
         guard url.scheme == "f1calendar" else { return }
-        selectedTab = 0
+        if url.host == "results" {
+            let components = url.pathComponents.filter { $0 != "/" }
+            if components.count >= 2,
+               let sessionKey = Int(components[0]) {
+                let sessionName = components[1].removingPercentEncoding ?? components[1]
+                deepLinkedSession = Session(
+                    name: sessionName,
+                    day: "", time: "",
+                    isHighlighted: false,
+                    sessionKey: sessionKey
+                )
+            }
+        } else if url.host == "race" {
+            selectedTab = 0
+            if let idString = url.pathComponents.last,
+               let raceId = Int(idString) {
+                deepLinkedRaceId = raceId
+            }
+        }
     }
 
     private func scheduleNotificationsIfAllowed() async {

@@ -56,7 +56,7 @@ struct CalendarView: View {
                 }
                 .navigationDestination(for: Int.self) { raceId in
                     if let race = races.first(where: { $0.id == raceId }) {
-                        RaceDetailView(race: race)
+                        RaceDetailView(race: race, deepLinkedSession: .constant(nil))
                     }
                 }
             }

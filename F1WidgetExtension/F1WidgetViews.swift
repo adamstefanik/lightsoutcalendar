@@ -98,7 +98,7 @@ struct F1LargeView: View {
             // SESSION ROWS
             VStack(spacing: 0) {
                 ForEach(Array(race.sessions.enumerated()), id: \.offset) { _, session in
-                    SessionRowView(session: session)
+                    SessionRowView(session: session, raceId: race.id)
                 }
             }
             .padding(.top, 10)
@@ -192,7 +192,7 @@ struct F1MediumView: View {
             Rectangle().fill(Color.f1Divider).frame(height: 1)
 
             ForEach(Array(race.sessions.suffix(2).enumerated()), id: \.offset) { _, session in
-                SessionRowView(session: session)
+                SessionRowView(session: session, raceId: race.id)
             }
 
             Text("github.com/adamstefanik")
@@ -221,38 +221,73 @@ struct F1MediumView: View {
 
 struct SessionRowView: View {
     let session: Session
+    let raceId: Int
+
+    private var isCompleted: Bool {
+        guard let end = session.endDate else { return false }
+        return end < Date()
+    }
+
+    private var hasResults: Bool {
+        isCompleted && session.sessionKey != nil
+    }
 
     var body: some View {
-        VStack(spacing: 0) {
-            HStack(spacing: 0) {
-                Text(session.name)
-                    .font(.system(size: 12, weight: .semibold))
-                    .foregroundColor(.f1Text)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+        let content = HStack(spacing: 0) {
+            Text(session.name)
+                .font(.system(size: 12, weight: .semibold))
+                .foregroundColor(.f1Text)
+                .frame(maxWidth: .infinity, alignment: .leading)
 
+            if isCompleted {
+                Text("COMPLETED")
+                    .font(.system(size: 10, weight: .medium))
+                    .foregroundColor(.f1SecondaryText)
+                    .frame(width: 72, alignment: .leading)
+            } else {
                 Text(session.day)
                     .font(.system(size: 10, weight: .regular))
                     .foregroundColor(.f1SecondaryText)
                     .frame(width: 72, alignment: .leading)
-
-                if session.isLive {
-                    Text("LIVE")
-                        .font(.system(size: 10, weight: .bold))
-                        .foregroundColor(.white)
-                        .padding(.horizontal, 7)
-                        .padding(.vertical, 3)
-                        .background(RoundedRectangle(cornerRadius: 3).fill(Color.f1Red))
-                        .frame(width: 100, alignment: .trailing)
-                } else {
-                    Text(session.time)
-                        .font(.system(size: 10, weight: .medium))
-                        .foregroundColor(.f1Text)
-                        .frame(width: 100, alignment: .trailing)
-                        .lineLimit(1)
-                }
             }
-            .padding(.horizontal, 14)
-            .padding(.vertical, 10)
+
+            if session.isLive {
+                Text("LIVE")
+                    .font(.system(size: 10, weight: .bold))
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 7)
+                    .padding(.vertical, 3)
+                    .background(RoundedRectangle(cornerRadius: 3).fill(Color.f1Red))
+                    .frame(width: 100, alignment: .trailing)
+            } else if hasResults {
+                HStack(spacing: 4) {
+                    Text("VIEW RESULTS")
+                        .font(.system(size: 10, weight: .medium))
+                        .foregroundColor(.f1Red)
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 8, weight: .medium))
+                        .foregroundColor(.f1Red)
+                }
+                .frame(width: 100, alignment: .trailing)
+            } else {
+                Text(session.time)
+                    .font(.system(size: 10, weight: .medium))
+                    .foregroundColor(.f1Text)
+                    .frame(width: 100, alignment: .trailing)
+                    .lineLimit(1)
+            }
+        }
+        .padding(.horizontal, 14)
+        .padding(.vertical, 10)
+        .opacity(isCompleted ? 0.45 : 1.0)
+
+        if hasResults, let key = session.sessionKey {
+            let encodedName = session.name.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? session.name
+            Link(destination: URL(string: "f1calendar://results/\(key)/\(encodedName)")!) {
+                content
+            }
+        } else {
+            content
         }
     }
 }

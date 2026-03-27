@@ -1,6 +1,7 @@
 import Foundation
 
-struct Session: Codable {
+struct Session: Codable, Identifiable, Hashable {
+    var id: String { "\(name)_\(sessionKey ?? 0)" }
     let name: String
     let day: String
     let time: String

@@ -7,8 +7,10 @@ struct RaceDetailView: View {
     var onBack: (() -> Void)? = nil
     var onForward: (() -> Void)? = nil
     var onRefresh: (() async -> Void)? = nil
+    @Binding var deepLinkedSession: Session?
 
     @StateObject private var settings = SettingsManager.shared
+    @State private var navigationPath = NavigationPath()
 
     @State private var weatherState: WeatherLoadState = .loading
     @State private var raceResults: [DriverResult] = []
@@ -34,7 +36,7 @@ struct RaceDetailView: View {
     }
 
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $navigationPath) {
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 0) {
                     // Navigation arrows + Header (swipeable)
@@ -179,6 +181,15 @@ struct RaceDetailView: View {
                 await loadWeather()
                 await loadResults()
             }
+            .navigationDestination(for: Session.self) { session in
+                SessionResultsLoader(session: session)
+            }
+            .onChange(of: deepLinkedSession) { _, session in
+                guard let session else { return }
+                navigationPath = NavigationPath()
+                navigationPath.append(session)
+                deepLinkedSession = nil
+            }
         }
     }
 
@@ -207,9 +218,10 @@ struct RaceDetailView: View {
     // MARK: - Results Loading
 
     private func loadResults() async {
+        let practiceSessions: Set<String> = ["PRACTICE 1", "PRACTICE 2", "PRACTICE 3"]
         let completedSessions = race.sessions.filter {
             guard let end = $0.endDate else { return false }
-            return end < Date() && $0.sessionKey != nil
+            return end < Date() && $0.sessionKey != nil && !practiceSessions.contains($0.name)
         }
         guard !completedSessions.isEmpty else { return }
 
