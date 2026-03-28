@@ -70,7 +70,7 @@ private struct PodiumCard: View {
 
             VStack(alignment: .leading, spacing: 2) {
                 HStack(spacing: 8) {
-                    Text(driver.driverName)
+                    Text(driver.shortName)
                         .font(.system(size: 14, weight: .semibold))
                         .foregroundColor(.f1Text)
                     if showFastestLap && driver.fastestLap {
