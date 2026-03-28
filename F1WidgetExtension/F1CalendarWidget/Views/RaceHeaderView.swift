@@ -9,10 +9,6 @@ struct RaceHeaderView: View {
             DynamicTrackView(raceShortName: race.shortName)
                 .frame(width: 85, height: 85)
                 .padding(2)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color.f1Border, lineWidth: 1)
-                )
             
             // Race info
             VStack(alignment: .leading, spacing: 4) {

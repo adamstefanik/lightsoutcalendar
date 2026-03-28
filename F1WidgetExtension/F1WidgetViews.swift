@@ -37,10 +37,6 @@ struct F1LargeView: View {
                 DynamicTrackView(raceShortName: race.shortName)
                     .frame(width: 75, height: 75)
                     .padding(2)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.f1Border, lineWidth: 1)
-                    )
                 
                 // Race info
                 VStack(alignment: .leading, spacing: 3) {
