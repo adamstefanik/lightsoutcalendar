@@ -25,6 +25,7 @@ struct RaceDetailView: View {
         switch resultsSessionName {
         case "GRAND PRIX": return .race
         case "SPRINT": return .sprint
+        case "PRACTICE 1", "PRACTICE 2", "PRACTICE 3": return .practice
         default: return .timing
         }
     }
@@ -244,6 +245,8 @@ struct RaceDetailView: View {
         switch name {
         case "GRAND PRIX": return .race
         case "SPRINT": return .sprint
+        case "PRACTICE 1", "PRACTICE 2", "PRACTICE 3": return .practice
+        case "SPRINT QUALI": return .sprintTiming
         default: return .timing
         }
     }
