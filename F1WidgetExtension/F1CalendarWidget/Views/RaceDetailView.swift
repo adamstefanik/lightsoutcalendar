@@ -105,7 +105,8 @@ struct RaceDetailView: View {
 
                         RaceResultsView(
                             results: raceResults,
-                            displayType: resultsDisplayType
+                            displayType: resultsDisplayType,
+                            sessionName: resultsSessionName
                         )
                     }
 

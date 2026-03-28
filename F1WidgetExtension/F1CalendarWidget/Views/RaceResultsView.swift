@@ -3,6 +3,7 @@ import SwiftUI
 struct RaceResultsView: View {
     let results: [DriverResult]
     var displayType: SessionDisplayType = .race
+    var sessionName: String = ""
 
     private var showPoints: Bool {
         displayType == .race || displayType == .sprint
@@ -18,7 +19,7 @@ struct RaceResultsView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
-            Text("RESULTS")
+            Text(sessionName.isEmpty ? "RESULTS" : "RESULTS FROM \(sessionName)")
                 .font(.system(size: 11, weight: .semibold))
                 .foregroundColor(.f1SecondaryText)
 
