@@ -167,11 +167,6 @@
 			path = F1WidgetExtension;
 			sourceTree = "<group>";
 		};
-		CCDD33F12F753D4D0035D47E /* F1NotificationContent */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = F1NotificationContent;
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -214,7 +209,6 @@
 				CC4C03C12F69B0000034CA8E /* F1WidgetExtension */,
 				CC4C039B2F69A65F0034CA8E /* F1CalendarWidgetTests */,
 				CC4C03A52F69A65F0034CA8E /* F1CalendarWidgetUITests */,
-				CCDD33F12F753D4D0035D47E /* F1NotificationContent */,
 				CCDD33EC2F753D4D0035D47E /* Frameworks */,
 				CC4C038C2F69A65E0034CA8E /* Products */,
 			);
