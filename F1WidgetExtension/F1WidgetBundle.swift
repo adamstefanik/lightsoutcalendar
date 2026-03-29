@@ -48,8 +48,8 @@ struct F1CalendarWidget: Widget {
             F1WidgetEntryView(entry: entry)
                 .containerBackground(Color.f1Background, for: .widget)
         }
-        .configurationDisplayName("F1 Kalendár")
-        .description("Najbližšie preteky Formula 1 2026")
+        .configurationDisplayName("F1 Calendar")
+        .description("Your essential F1 companion")
         .supportedFamilies([.systemMedium, .systemLarge])
     }
 }
