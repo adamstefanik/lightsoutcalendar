@@ -311,15 +311,15 @@ final class F1APIService {
     private static let fullTeamNames: [String: String] = [
         "Alpine": "BWT Alpine",
         "Aston Martin": "Aston Martin Aramco",
-        "Audi": "Audi",
+        "Audi": "Audi Revolut",
         "Cadillac": "Cadillac",
-        "Ferrari": "Scuderia Ferrari",
-        "Haas F1 Team": "MoneyGram Haas",
-        "McLaren": "McLaren F1 Team",
+        "Ferrari": "Scuderia Ferrari HP",
+        "Haas F1 Team": "TGR Haas",
+        "McLaren": "McLaren Mastercard",
         "Mercedes": "Mercedes-AMG Petronas",
         "Racing Bulls": "Visa Cash App Racing Bulls",
         "Red Bull Racing": "Oracle Red Bull Racing",
-        "Williams": "Williams Racing",
+        "Williams": "Atlassian Williams",
     ]
 
     // MARK: - Race Results
