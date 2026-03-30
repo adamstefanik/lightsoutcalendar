@@ -3,18 +3,6 @@ import Foundation
 enum WeatherCondition: String, Codable {
     case clear, cloudy, rain, thunderstorm, snow, fog, drizzle
 
-    var emoji: String {
-        switch self {
-        case .clear: return "☀️"
-        case .cloudy: return "☁️"
-        case .rain: return "🌧️"
-        case .thunderstorm: return "⛈️"
-        case .snow: return "❄️"
-        case .fog: return "🌫️"
-        case .drizzle: return "🌦️"
-        }
-    }
-
     var lottieFileName: String {
         "weather_\(rawValue)"
     }
@@ -26,5 +14,8 @@ struct DayForecast: Codable, Identifiable {
     let tempHigh: Int        // celsius
     let tempLow: Int         // celsius
     let condition: WeatherCondition
+    let trackTemp: Int       // celsius
+    let windSpeed: Int       // km/h
+    let windDir: String      // SE (compass points)
     let rainChance: Int      // percentage 0-100
 }
