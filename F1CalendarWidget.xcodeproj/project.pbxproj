@@ -134,6 +134,7 @@
 				F1CalendarWidget/Views/RaceResultsView.swift,
 				F1CalendarWidget/Views/SessionResultsView.swift,
 				F1CalendarWidget/Views/SettingsView.swift,
+				F1CalendarWidget/Views/StandingsView.swift,
 				F1CalendarWidget/Views/TrackShapes/TrackPlaceholder.swift,
 				F1CalendarWidget/Views/WeatherSectionView.swift,
 				F1Colors.swift,

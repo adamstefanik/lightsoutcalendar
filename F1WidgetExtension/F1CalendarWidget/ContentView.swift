@@ -36,19 +36,26 @@ struct ContentView: View {
             }
             .tag(0)
 
+            StandingsView()
+                .tabItem {
+                    Image(systemName: "trophy.fill")
+                    Text("Standings")
+                }
+                .tag(1)
+
             CalendarView(raceStore: raceStore)
                 .tabItem {
                     Image(systemName: "calendar")
                     Text("Calendar")
                 }
-                .tag(1)
+                .tag(2)
 
             SettingsView(raceStore: raceStore)
                 .tabItem {
                     Image(systemName: "gearshape")
                     Text("Settings")
                 }
-                .tag(2)
+                .tag(3)
         }
         .tint(Color.f1Red)
         .preferredColorScheme(.dark)
