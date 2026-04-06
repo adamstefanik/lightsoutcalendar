@@ -47,7 +47,7 @@ struct F1LargeView: View {
                             .lineLimit(1)
                             .minimumScaleFactor(0.5)
                     }
-                    Text("FORMULA 1 \(race.name.uppercased()) 2026")
+                    Text("\(race.name.uppercased()) 2026")
                         .font(.system(size: 8, weight: .medium))
                         .foregroundColor(.f1SecondaryText)
                         .lineLimit(3)
@@ -147,7 +147,7 @@ struct F1MediumView: View {
                         Text(race.city)
                             .font(.system(size: 13, weight: .bold)).foregroundColor(.f1Text)
                     }
-                    Text("FORMULA 1 \(race.name.uppercased()) 2026")
+                    Text("\(race.name.uppercased()) 2026")
                         .font(.system(size: 7)).foregroundColor(.f1SecondaryText).lineLimit(2)
                         .fixedSize(horizontal: false, vertical: true)
                     

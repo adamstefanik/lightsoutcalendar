@@ -19,7 +19,7 @@ struct RaceHeaderView: View {
                     .lineLimit(1)
                     .minimumScaleFactor(0.5)
                 
-                Text("FORMULA 1 \(race.name.uppercased()) 2026")
+                Text("\(race.name.uppercased()) 2026")
                     .font(.system(size: 9, weight: .medium))
                     .foregroundColor(.f1SecondaryText)
                     .lineLimit(4)
