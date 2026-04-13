@@ -3,7 +3,7 @@ import Foundation
 class WeatherService {
     static let shared = WeatherService()
 
-    private let defaults = UserDefaults(suiteName: "group.com.f1calendar.shared") ?? .standard
+    private let defaults = UserDefaults(suiteName: "group.com.lightsoutcalendar.shared") ?? .standard
 
     private let cacheDuration: TimeInterval = 3 * 3600 // 3 hours
 

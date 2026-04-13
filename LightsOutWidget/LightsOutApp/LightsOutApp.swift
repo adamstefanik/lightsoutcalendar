@@ -41,7 +41,7 @@ struct F1CalendarWidgetApp: App {
     }
 
     private func handleDeepLink(_ url: URL) {
-        guard url.scheme == "f1calendar" else { return }
+        guard url.scheme == "lightsout" else { return }
         if url.host == "results" {
             let components = url.pathComponents.filter { $0 != "/" }
             if components.count >= 2,

@@ -19,7 +19,7 @@
                BlueprintIdentifier = "CC4C03C52F69B0000034CA8E"
                BuildableName = "F1WidgetExtension.appex"
                BlueprintName = "F1WidgetExtension"
-               ReferencedContainer = "container:F1CalendarWidget.xcodeproj">
+               ReferencedContainer = "container:LightsOutCalendar.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -31,9 +31,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "CC4C038A2F69A65E0034CA8E"
-               BuildableName = "F1CalendarWidget.app"
-               BlueprintName = "F1CalendarWidget"
-               ReferencedContainer = "container:F1CalendarWidget.xcodeproj">
+               BuildableName = "LightsOutCalendar.app"
+               BlueprintName = "LightsOutCalendar"
+               ReferencedContainer = "container:LightsOutCalendar.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -51,9 +51,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "CC4C03A12F69A65F0034CA8E"
-               BuildableName = "F1CalendarWidgetUITests.xctest"
-               BlueprintName = "F1CalendarWidgetUITests"
-               ReferencedContainer = "container:F1CalendarWidget.xcodeproj">
+               BuildableName = "LightsOutCalendarUITests.xctest"
+               BlueprintName = "LightsOutCalendarUITests"
+               ReferencedContainer = "container:LightsOutCalendar.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -62,9 +62,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "CC4C03972F69A65F0034CA8E"
-               BuildableName = "F1CalendarWidgetTests.xctest"
-               BlueprintName = "F1CalendarWidgetTests"
-               ReferencedContainer = "container:F1CalendarWidget.xcodeproj">
+               BuildableName = "LightsOutCalendarTests.xctest"
+               BlueprintName = "LightsOutCalendarTests"
+               ReferencedContainer = "container:LightsOutCalendar.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -86,9 +86,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "CC4C038A2F69A65E0034CA8E"
-            BuildableName = "F1CalendarWidget.app"
-            BlueprintName = "F1CalendarWidget"
-            ReferencedContainer = "container:F1CalendarWidget.xcodeproj">
+            BuildableName = "LightsOutCalendar.app"
+            BlueprintName = "LightsOutCalendar"
+            ReferencedContainer = "container:LightsOutCalendar.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -105,9 +105,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "CC4C038A2F69A65E0034CA8E"
-            BuildableName = "F1CalendarWidget.app"
-            BlueprintName = "F1CalendarWidget"
-            ReferencedContainer = "container:F1CalendarWidget.xcodeproj">
+            BuildableName = "LightsOutCalendar.app"
+            BlueprintName = "LightsOutCalendar"
+            ReferencedContainer = "container:LightsOutCalendar.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

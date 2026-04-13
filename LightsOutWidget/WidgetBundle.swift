@@ -48,8 +48,8 @@ struct F1CalendarWidget: Widget {
             F1WidgetEntryView(entry: entry)
                 .containerBackground(Color.f1Background, for: .widget)
         }
-        .configurationDisplayName("F1 Calendar")
-        .description("Your essential F1 companion")
+        .configurationDisplayName("Lights Out")
+        .description("Your essential racing calendar")
         .supportedFamilies([.systemMedium, .systemLarge])
     }
 }

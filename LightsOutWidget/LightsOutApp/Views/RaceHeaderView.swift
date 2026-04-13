@@ -113,22 +113,3 @@ struct DynamicTrackView: View {
             .foregroundColor(.f1Red)
     }
 }
-// MARK: - Preview
-
-#Preview {
-    VStack {
-        RaceHeaderView(race: F1Calendar.fallbackRaces[2]) // Japan
-        Divider()
-    }
-    .background(Color("f1Background"))
-    .preferredColorScheme(.dark)
-}
-
-#Preview("Live") {
-    VStack {
-        RaceHeaderView(race: .previewLive)
-        Divider()
-    }
-    .background(Color("f1Background"))
-    .preferredColorScheme(.dark)
-}

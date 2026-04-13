@@ -147,25 +147,3 @@ struct SessionResultsLoader: View {
         }
     }
 }
-
-// MARK: - Previews
-
-#Preview("Upcoming") {
-    VStack(spacing: 0) {
-        ForEach(Array(F1Calendar.fallbackRaces[2].sessions.enumerated()), id: \.offset) { _, session in
-            AppSessionRowView(session: session)
-        }
-    }
-    .background(Color("f1Background"))
-    .preferredColorScheme(.dark)
-}
-
-#Preview("Live FP1") {
-    VStack(spacing: 0) {
-        ForEach(Array(Race.previewLive.sessions.enumerated()), id: \.offset) { _, session in
-            AppSessionRowView(session: session)
-        }
-    }
-    .background(Color("f1Background"))
-    .preferredColorScheme(.dark)
-}

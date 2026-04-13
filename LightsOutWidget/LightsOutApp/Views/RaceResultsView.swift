@@ -107,15 +107,3 @@ private struct PodiumCard: View {
         )
     }
 }
-
-// MARK: - Preview
-
-#Preview {
-    NavigationStack {
-        ScrollView {
-            RaceResultsView(results: DriverResult.previewResults)
-        }
-        .background(Color("f1Background"))
-    }
-    .preferredColorScheme(.dark)
-}

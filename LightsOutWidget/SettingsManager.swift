@@ -10,7 +10,7 @@ final class SettingsManager: ObservableObject {
 
     static let shared = SettingsManager()
 
-    private let defaults = UserDefaults(suiteName: "group.com.f1calendar.shared") ?? .standard
+    private let defaults = UserDefaults(suiteName: "group.com.lightsoutcalendar.shared") ?? .standard
 
     // MARK: - Notification Toggles
 
@@ -47,7 +47,7 @@ final class SettingsManager: ObservableObject {
     // MARK: - Init
 
     private init() {
-        let d = UserDefaults(suiteName: "group.com.f1calendar.shared") ?? .standard
+        let d = UserDefaults(suiteName: "group.com.lightsoutcalendar.shared") ?? .standard
 
         self.notifyPractice = d.object(forKey: Keys.notifyPractice) as? Bool ?? false
         self.notifyQualifying = d.object(forKey: Keys.notifyQualifying) as? Bool ?? true

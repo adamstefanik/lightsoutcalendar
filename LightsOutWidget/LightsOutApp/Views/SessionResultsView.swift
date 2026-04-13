@@ -504,26 +504,3 @@ private struct DNFRow: View {
         .padding(.vertical, 7)
     }
 }
-
-// MARK: - Preview
-
-#Preview("Grand Prix") {
-    NavigationStack {
-        SessionResultsView(title: "GRAND PRIX", results: DriverResult.previewResults)
-    }
-    .preferredColorScheme(.dark)
-}
-
-#Preview("Qualifying") {
-    NavigationStack {
-        SessionResultsView(title: "QUALIFYING", results: DriverResult.previewResults, displayType: .timing)
-    }
-    .preferredColorScheme(.dark)
-}
-
-#Preview("Practice") {
-    NavigationStack {
-        SessionResultsView(title: "PRACTICE 1", results: DriverResult.previewResults, displayType: .practice)
-    }
-    .preferredColorScheme(.dark)
-}

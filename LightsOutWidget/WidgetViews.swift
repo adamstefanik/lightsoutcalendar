@@ -8,7 +8,7 @@ struct F1WidgetEntryView: View {
     @Environment(\.widgetFamily) var family
 
     private var deepLinkURL: URL {
-        URL(string: "f1calendar://race/\(entry.nextRace.id)")!
+        URL(string: "lightsout://race/\(entry.nextRace.id)")!
     }
 
     var body: some View {
@@ -278,7 +278,7 @@ struct SessionRowView: View {
 
         if hasResults, let key = session.sessionKey {
             let encodedName = session.name.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? session.name
-            Link(destination: URL(string: "f1calendar://results/\(key)/\(encodedName)")!) {
+            Link(destination: URL(string: "lightsout://results/\(key)/\(encodedName)")!) {
                 content
             }
         } else {
@@ -316,29 +316,4 @@ struct DynamicTrackView: View {
             .scaledToFit()
             .foregroundColor(.f1Red)
     }
-}
-// MARK: - Previews
-
-#Preview("Large", as: .systemLarge) {
-    F1CalendarWidget()
-} timeline: {
-    F1WidgetEntry(date: .now, nextRace: F1Calendar.nextRace ?? F1Calendar.fallbackRaces[5])
-}
-
-#Preview("Large – Live FP1", as: .systemLarge) {
-    F1CalendarWidget()
-} timeline: {
-    F1WidgetEntry(date: .now, nextRace: .previewLive)
-}
-
-#Preview("Medium", as: .systemMedium) {
-    F1CalendarWidget()
-} timeline: {
-    F1WidgetEntry(date: .now, nextRace: F1Calendar.nextRace ?? F1Calendar.fallbackRaces[5])
-}
-
-#Preview("Medium – Live FP1", as: .systemMedium) {
-    F1CalendarWidget()
-} timeline: {
-    F1WidgetEntry(date: .now, nextRace: .previewLive)
 }

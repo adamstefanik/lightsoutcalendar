@@ -69,7 +69,7 @@ final class F1APIService {
     private let cacheTimestampKey = "F1CacheTimestamp_v4"
     private let cacheDuration: TimeInterval = 6 * 3600
 
-    private let defaults = UserDefaults(suiteName: "group.com.f1calendar.shared") ?? .standard
+    private let defaults = UserDefaults(suiteName: "group.com.lightsoutcalendar.shared") ?? .standard
 
     private lazy var isoFormatter: ISO8601DateFormatter = {
         let f = ISO8601DateFormatter()
