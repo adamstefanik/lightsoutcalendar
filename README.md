@@ -47,50 +47,52 @@ A sleek iOS app and widget for the 2026 season. Track every race weekend with li
 ## How to Run
 
 1. Clone the repository
-2. Open `F1CalendarWidget.xcodeproj` in Xcode
+2. Open `LightsOutCalendar.xcodeproj` in Xcode
 3. Build and run on a simulator or device
 4. Add the widget to your Home Screen
 
 ## Structure
-```                                                                                                                             
-  f1calendarwidget/                                 
-  ├── F1WidgetExtension/                                                                                                          
-  │   ├── F1CalendarWidget/                                                                                                       
-  │   │   ├── Views/                                                                                                              
-  │   │   │   ├── TrackShapes/                                                                                                    
-  │   │   │   │   └── TrackPlaceholder.swift                                                                                      
-  │   │   │   ├── AppSessionRowView.swift                  
-  │   │   │   ├── CalendarRowView.swift                                                                                           
-  │   │   │   ├── CalendarView.swift  
-  │   │   │   ├── CircuitInfoView.swift                                                                                           
-  │   │   │   ├── LottieView.swift                                                                                                
-  │   │   │   ├── RaceDetailView.swift                     
-  │   │   │   ├── RaceHeaderView.swift                                                                                            
-  │   │   │   ├── RaceResultsView.swift             
-  │   │   │   ├── SessionResultsView.swift                                                                                        
-  │   │   │   ├── SettingsView.swift  
-  │   │   │   └── WeatherSectionView.swift                                                                                        
-  │   │   ├── ContentView.swift                     
-  │   │   └── F1CalendarWidgetApp.swift                                                                                           
-  │   ├── Assets.xcassets/            
-  │   ├── CircuitDatabase.swift                                                                                                   
-  │   ├── CircuitInfo.swift                                                                                                       
-  │   ├── DriverResult.swift                               
-  │   ├── F1APIService.swift                                                                                                      
-  │   ├── F1Calendar.swift                          
-  │   ├── F1Colors.swift                                                                                                          
-  │   ├── F1WidgetBundle.swift        
-  │   ├── F1WidgetViews.swift                                                                                                     
-  │   ├── NotificationManager.swift                 
-  │   ├── Race.swift                                                                                                              
-  │   ├── SettingsManager.swift       
-  │   ├── WeatherModels.swift                                                                                                     
-  │   └── WeatherService.swift                      
-  ├── F1CalendarWidget.xcodeproj                                                                                                  
-  ├── assets/                         
-  ├── LICENSE                                                                                                                     
-  └── README.md                                     
-  ```
+```
+lightsoutcalendar/
+├── LightsOutWidget/                    # Widget extension + app source
+│   ├── LightsOutApp/
+│   │   ├── Views/
+│   │   │   ├── TrackShapes/
+│   │   │   │   └── TrackPlaceholder.swift
+│   │   │   ├── AppSessionRowView.swift
+│   │   │   ├── CalendarRowView.swift
+│   │   │   ├── CalendarView.swift
+│   │   │   ├── CircuitInfoView.swift
+│   │   │   ├── LottieView.swift
+│   │   │   ├── RaceDetailView.swift
+│   │   │   ├── RaceHeaderView.swift
+│   │   │   ├── RaceResultsView.swift
+│   │   │   ├── SessionResultsView.swift
+│   │   │   ├── SettingsView.swift
+│   │   │   ├── StandingsView.swift
+│   │   │   └── WeatherSectionView.swift
+│   │   ├── Lottie/                     # Animated weather icons
+│   │   ├── ContentView.swift
+│   │   └── LightsOutApp.swift
+│   ├── Assets.xcassets/
+│   ├── CircuitDatabase.swift
+│   ├── CircuitInfo.swift
+│   ├── DriverResult.swift
+│   ├── RacingAPIService.swift
+│   ├── RaceCalendar.swift
+│   ├── AppColors.swift
+│   ├── WidgetBundle.swift
+│   ├── WidgetViews.swift
+│   ├── NotificationManager.swift
+│   ├── Race.swift
+│   ├── SettingsManager.swift
+│   ├── WeatherModels.swift
+│   └── WeatherService.swift
+├── LightsOutCalendar.xcodeproj
+├── assets/
+├── LICENSE
+└── README.md
+```
 
 ## License
 
