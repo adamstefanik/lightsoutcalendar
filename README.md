@@ -1,8 +1,8 @@
 ![Alt text](assets/ui-app.png)
 ![Swift](https://img.shields.io/badge/Swift-5.9+-orange.svg) ![iOS](https://img.shields.io/badge/iOS-17+-black.svg) ![WidgetKit](https://img.shields.io/badge/WidgetKit-supported-red.svg) ![License](https://img.shields.io/badge/license-MIT-blue.svg) 
-# F1 Calendar Widget
+# Lights Out Calendar
 
-A sleek iOS app and widget for the 2026 Formula 1 season. Track every race weekend with live countdowns, full session schedules, results, weather forecasts, and circuit info.
+A sleek iOS app and widget for the 2026 season. Track every race weekend with live countdowns, full session schedules, results, weather forecasts, and circuit info.
 
 ## Features
 
