@@ -5,7 +5,6 @@
 A sleek iOS app and widget for the 2026 season. Track every race weekend with live countdowns, full session schedules, results, weather forecasts, and circuit info.
 
 ## Features
-d
 **App**
 - Full current season race calendar with detailed weekend schedule
 - Live countdown to the next session
