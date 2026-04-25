@@ -31,13 +31,6 @@ struct CircuitInfoView: View {
 
                 Spacer(minLength: 8)
 
-                Image(systemName: "flag.checkered")
-                    .resizable()
-                    .scaledToFit()
-                    .foregroundColor(.f1Red.opacity(0.3))
-                    .frame(width: 60, height: 60)
-                    .padding(.top, 4)
-                    .padding(.trailing, 12)
             }
             .padding(14)
             .frame(maxWidth: .infinity, alignment: .leading)
