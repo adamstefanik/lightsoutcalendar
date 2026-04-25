@@ -32,8 +32,11 @@ struct RaceDetailView: View {
 
     private var isWeatherAvailable: Bool {
         guard !race.isCompleted else { return false }
-        let daysUntilRace = race.weekendStart.timeIntervalSinceNow / 86400
-        return daysUntilRace <= 5
+        // OWM free tier returns 5-day / 120h forecast. Fetch as soon as the
+        // weekend Friday is within that window — partial days appear first,
+        // full Fri/Sat/Sun coverage typically from ~3 days before the race.
+        let daysUntilWeekend = race.weekendStart.timeIntervalSinceNow / 86400
+        return daysUntilWeekend <= 5
     }
 
     var body: some View {

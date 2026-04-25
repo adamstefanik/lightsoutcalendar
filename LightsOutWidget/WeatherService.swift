@@ -11,7 +11,7 @@ class WeatherService {
         if let key = Bundle.main.object(forInfoDictionaryKey: "WEATHER_API_KEY") as? String, !key.isEmpty, !key.contains("$") {
             return key
         }
-        return "37952863ba0801cf314d405d9a4a44a2"
+        return ""
     }
 
     private init() {}
