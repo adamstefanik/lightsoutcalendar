@@ -10,27 +10,22 @@ struct CircuitInfoView: View {
                 .font(.system(size: 11, weight: .semibold))
                 .foregroundColor(.f1SecondaryText)
 
-            HStack(alignment: .top, spacing: 0) {
-                VStack(alignment: .leading, spacing: 8) {
-                    Text(raceName ?? circuit.circuitId)
-                        .font(.system(size: 15, weight: .bold))
-                        .foregroundColor(.f1Text)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.6)
+            VStack(alignment: .leading, spacing: 8) {
+                Text(raceName ?? circuit.circuitId)
+                    .font(.system(size: 15, weight: .bold))
+                    .foregroundColor(.f1Text)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.6)
 
-                    HStack(spacing: 16) {
-                        InfoItem(label: "Length", value: circuit.length)
-                        InfoItem(label: "Turns", value: "\(circuit.turns)")
-                        InfoItem(label: "Lap Record", value: circuit.lapRecord)
-                    }
-
-                    Text("\(circuit.lapRecordHolder), \(String(circuit.lapRecordYear))")
-                        .font(.system(size: 11))
-                        .foregroundColor(.f1SecondaryText)
+                HStack(spacing: 16) {
+                    InfoItem(label: "Length", value: circuit.length)
+                    InfoItem(label: "Turns", value: "\(circuit.turns)")
+                    InfoItem(label: "Lap Record", value: circuit.lapRecord)
                 }
 
-                Spacer(minLength: 8)
-
+                Text("\(circuit.lapRecordHolder), \(String(circuit.lapRecordYear))")
+                    .font(.system(size: 11))
+                    .foregroundColor(.f1SecondaryText)
             }
             .padding(14)
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -38,10 +33,22 @@ struct CircuitInfoView: View {
                 RoundedRectangle(cornerRadius: 8)
                     .fill(Color("f1Surface"))
             )
+            .overlay(alignment: .bottomTrailing) {
+                Image("formula_silhouette")
+                    .resizable()
+                    .renderingMode(.template)
+                    .foregroundColor(.f1Red)
+                    .scaledToFit()
+                    .frame(width: 130)
+                    .opacity(0.4)
+                    .padding(.trailing, 10)
+                    .padding(.bottom, 8)
+            }
             .overlay(
                 RoundedRectangle(cornerRadius: 8)
                     .stroke(Color.f1Border, lineWidth: 1)
             )
+            .clipShape(RoundedRectangle(cornerRadius: 8))
         }
         .padding(.horizontal, 14)
     }
