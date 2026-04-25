@@ -13,7 +13,7 @@ struct CalendarView: View {
                     VStack(spacing: 0) {
                         // Title
                         HStack {
-                            Text("F1 2026")
+                            Text("SEASON 2026")
                                 .font(.system(size: 24, weight: .bold))
                                 .foregroundColor(.f1Text)
 

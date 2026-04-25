@@ -308,19 +308,9 @@ final class F1APIService {
 
     private static let canceledRaces: Set<String> = ["BRN", "KSA"]
 
-    private static let fullTeamNames: [String: String] = [
-        "Alpine": "BWT Alpine",
-        "Aston Martin": "Aston Martin Aramco",
-        "Audi": "Audi Revolut",
-        "Cadillac": "Cadillac",
-        "Ferrari": "Scuderia Ferrari HP",
-        "Haas F1 Team": "TGR Haas",
-        "McLaren": "McLaren Mastercard",
-        "Mercedes": "Mercedes-AMG Petronas",
-        "Racing Bulls": "Visa Cash App Racing Bulls",
-        "Red Bull Racing": "Oracle Red Bull Racing",
-        "Williams": "Atlassian Williams",
-    ]
+    // Use team name exactly as returned by upstream API to avoid adding
+    // sponsor/commercial trademarks ourselves.
+    private static let fullTeamNames: [String: String] = [:]
 
     // MARK: - Race Results
 
