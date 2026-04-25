@@ -137,6 +137,7 @@
 				LightsOutApp/Views/TrackShapes/TrackPlaceholder.swift,
 				LightsOutApp/Views/WeatherSectionView.swift,
 				NotificationManager.swift,
+				PrivacyInfo.xcprivacy,
 				Race.swift,
 				RaceCalendar.swift,
 				RacingAPIService.swift,
