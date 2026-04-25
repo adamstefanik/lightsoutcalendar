@@ -56,11 +56,26 @@ struct SettingsView: View {
                     HStack {
                         Text("Weather")
                         Spacer()
-                        Text("OpenWeatherMap")
+                        Text("Powered by OpenWeather")
+                            .foregroundColor(.f1SecondaryText)
+                    }
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Circuits")
+                        Text("SVG by Jules Roy — github.com/julesr0y/f1-circuits-svg\nLicensed under CC BY 4.0, modified.")
+                            .font(.footnote)
                             .foregroundColor(.f1SecondaryText)
                     }
                 } header: {
                     Text("ABOUT")
+                }
+
+                // MARK: - Disclaimer
+                Section {
+                    Text("This app is an independent project and is not affiliated with, endorsed by, sponsored by, or associated with Formula 1, FIA, Formula One Licensing BV, any Formula 1 team, driver, circuit owner, or broadcaster. All trademarks are property of their respective owners. Data is sourced from public third-party APIs.")
+                        .font(.footnote)
+                        .foregroundColor(.f1SecondaryText)
+                } header: {
+                    Text("DISCLAIMER")
                 }
             }
             .scrollContentBackground(.hidden)
