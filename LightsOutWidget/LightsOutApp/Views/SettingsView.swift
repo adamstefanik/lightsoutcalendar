@@ -70,7 +70,12 @@ struct SettingsView: View {
                         Text("Jules Roy — github.com/julesr0y, CC BY 4.0, modified")
                             .foregroundColor(.f1SecondaryText)
                     }
-                    
+                    HStack {
+                        Text("Weather Icons")
+                        Spacer()
+                        Text("Bas Milius — github.com/basmilius/meteocons, MIT")
+                            .foregroundColor(.f1SecondaryText)
+                    }
                 } header: {
                     Text("ABOUT")
                 }
