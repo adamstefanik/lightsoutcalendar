@@ -19,9 +19,14 @@ struct SettingsView: View {
 
                 // MARK: - Remind Me Before
                 Section {
-                    Picker("Remind me before", selection: $settings.reminderMinutes) {
+                    Picker("First reminder", selection: $settings.reminderMinutes) {
                         ForEach(SettingsManager.reminderOptions, id: \.self) { minutes in
                             Text(reminderLabel(minutes)).tag(minutes)
+                        }
+                    }
+                    Picker("Second reminder", selection: $settings.secondReminderMinutes) {
+                        ForEach(SettingsManager.secondReminderOptions, id: \.self) { minutes in
+                            Text(secondReminderLabel(minutes)).tag(minutes)
                         }
                     }
                 } header: {
@@ -48,7 +53,7 @@ struct SettingsView: View {
                             .foregroundColor(.f1SecondaryText)
                     }
                     HStack {
-                        Text("Data")
+                        Text("Race data")
                         Spacer()
                         Text("OpenF1 API")
                             .foregroundColor(.f1SecondaryText)
@@ -56,15 +61,16 @@ struct SettingsView: View {
                     HStack {
                         Text("Weather")
                         Spacer()
-                        Text("Powered by OpenWeather")
+                        Text("OpenWeather API")
                             .foregroundColor(.f1SecondaryText)
                     }
-                    VStack(alignment: .leading, spacing: 4) {
+                    HStack {
                         Text("Circuits")
-                        Text("SVG by Jules Roy — github.com/julesr0y/f1-circuits-svg\nLicensed under CC BY 4.0, modified.")
-                            .font(.footnote)
+                        Spacer()
+                        Text("Jules Roy — github.com/julesr0y, CC BY 4.0, modified")
                             .foregroundColor(.f1SecondaryText)
                     }
+                    
                 } header: {
                     Text("ABOUT")
                 }
@@ -87,6 +93,7 @@ struct SettingsView: View {
             .onChange(of: settings.notifySprint) { rescheduleNotifications() }
             .onChange(of: settings.notifyRace) { rescheduleNotifications() }
             .onChange(of: settings.reminderMinutes) { rescheduleNotifications() }
+            .onChange(of: settings.secondReminderMinutes) { rescheduleNotifications() }
             .task {
                 _ = await NotificationManager.shared.requestPermission()
             }
@@ -102,6 +109,12 @@ struct SettingsView: View {
             let hours = minutes / 60
             return "\(hours) hour\(hours > 1 ? "s" : "")"
         }
+    }
+
+    private func secondReminderLabel(_ minutes: Int) -> String {
+        if minutes == 0 { return "Off" }
+        if minutes == 1440 { return "1 day" }
+        return reminderLabel(minutes)
     }
 
     private var appVersion: String {

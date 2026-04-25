@@ -25,7 +25,12 @@ final class NotificationManager {
     func scheduleNotifications(for races: [Race], settings: SettingsManager) {
         cancelAll()
 
-        let reminderInterval = TimeInterval(settings.reminderMinutes * 60)
+        var reminderOffsets: [Int] = [settings.reminderMinutes]
+        if settings.secondReminderMinutes > 0,
+           settings.secondReminderMinutes != settings.reminderMinutes {
+            reminderOffsets.append(settings.secondReminderMinutes)
+        }
+
         let upcomingRaces = races.filter { !$0.isCompleted }.prefix(5)
         for race in upcomingRaces {
             guard let sessions = race.apiSessions ?? Optional(race.sessions) else { continue }
@@ -34,26 +39,28 @@ final class NotificationManager {
                 guard let startDate = session.startDate else { continue }
                 guard shouldNotify(session: session, settings: settings) else { continue }
 
-                let fireDate = startDate.addingTimeInterval(-reminderInterval)
-                guard fireDate > Date() else { continue }
+                for offsetMinutes in reminderOffsets {
+                    let fireDate = startDate.addingTimeInterval(-TimeInterval(offsetMinutes * 60))
+                    guard fireDate > Date() else { continue }
 
-                let content = UNMutableNotificationContent()
-                content.title = race.name
-                content.body = "\(session.name) starts in \(reminderLabel(settings.reminderMinutes))"
-                content.sound = .default
+                    let content = UNMutableNotificationContent()
+                    content.title = race.name
+                    content.body = "\(session.name) starts in \(reminderLabel(offsetMinutes))"
+                    content.sound = .default
 
-                let components = Calendar.current.dateComponents(
-                    [.year, .month, .day, .hour, .minute],
-                    from: fireDate
-                )
-                let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
+                    let components = Calendar.current.dateComponents(
+                        [.year, .month, .day, .hour, .minute],
+                        from: fireDate
+                    )
+                    let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
 
-                let id = "f1_\(race.id)_\(session.name.replacingOccurrences(of: " ", with: "_"))"
-                let request = UNNotificationRequest(identifier: id, content: content, trigger: trigger)
+                    let id = "f1_\(race.id)_\(session.name.replacingOccurrences(of: " ", with: "_"))_\(offsetMinutes)"
+                    let request = UNNotificationRequest(identifier: id, content: content, trigger: trigger)
 
-                center.add(request) { error in
-                    if let error = error {
-                        print("[Notifications] Schedule error: \(error)")
+                    center.add(request) { error in
+                        if let error = error {
+                            print("[Notifications] Schedule error: \(error)")
+                        }
                     }
                 }
             }
