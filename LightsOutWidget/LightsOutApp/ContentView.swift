@@ -7,6 +7,7 @@ struct ContentView: View {
     @ObservedObject var raceStore: RaceStore
 
     @State private var currentRaceIndex: Int?
+    @State private var slideForward: Bool = true
 
     private var raceIndex: Int {
         if let idx = currentRaceIndex { return idx }
@@ -20,42 +21,48 @@ struct ContentView: View {
 
     var body: some View {
         TabView(selection: $selectedTab) {
-            RaceDetailView(
-                race: currentRace,
-                canGoBack: raceIndex > 0,
-                canGoForward: raceIndex < raceStore.races.count - 1,
-                onBack: { withAnimation { currentRaceIndex = raceIndex - 1 } },
-                onForward: { withAnimation { currentRaceIndex = raceIndex + 1 } },
-                onRefresh: { await raceStore.loadRaces() },
-                deepLinkedSession: $deepLinkedSession
-            )
-            .id(currentRace.id)
+            ZStack {
+                RaceDetailView(
+                    race: currentRace,
+                    canGoBack: raceIndex > 0,
+                    canGoForward: raceIndex < raceStore.races.count - 1,
+                    onBack: {
+                        slideForward = false
+                        withAnimation(.easeInOut(duration: 0.3)) { currentRaceIndex = raceIndex - 1 }
+                    },
+                    onForward: {
+                        slideForward = true
+                        withAnimation(.easeInOut(duration: 0.3)) { currentRaceIndex = raceIndex + 1 }
+                    },
+                    onRefresh: { await raceStore.loadRaces() },
+                    deepLinkedSession: $deepLinkedSession
+                )
+                .id(currentRace.id)
+                .transition(slideForward
+                    ? .asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading))
+                    : .asymmetric(insertion: .move(edge: .leading), removal: .move(edge: .trailing))
+                )
+            }
+            .clipped()
             .tabItem {
                 Image(systemName: "flag.checkered")
                 Text("Race")
             }
             .tag(0)
 
-            StandingsView()
-                .tabItem {
-                    Image(systemName: "trophy.fill")
-                    Text("Standings")
-                }
-                .tag(1)
-
             CalendarView(raceStore: raceStore)
                 .tabItem {
                     Image(systemName: "calendar")
                     Text("Calendar")
                 }
-                .tag(2)
+                .tag(1)
 
             SettingsView(raceStore: raceStore)
                 .tabItem {
                     Image(systemName: "gearshape")
                     Text("Settings")
                 }
-                .tag(3)
+                .tag(2)
         }
         .tint(Color.f1Red)
         .preferredColorScheme(.dark)
