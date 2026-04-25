@@ -68,7 +68,6 @@ lightsoutcalendar/
 │   │   │   ├── RaceResultsView.swift
 │   │   │   ├── SessionResultsView.swift
 │   │   │   ├── SettingsView.swift
-│   │   │   ├── StandingsView.swift
 │   │   │   └── WeatherSectionView.swift
 │   │   ├── Lottie/                     # Animated weather icons
 │   │   ├── ContentView.swift
