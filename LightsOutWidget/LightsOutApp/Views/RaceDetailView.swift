@@ -43,44 +43,7 @@ struct RaceDetailView: View {
         NavigationStack(path: $navigationPath) {
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 0) {
-                    // Navigation arrows + Header (swipeable)
-                    VStack(spacing: 0) {
-                        if canGoBack || canGoForward {
-                            ZStack {
-                                Text("RACE \(race.round)")
-                                    .font(.system(size: 12, weight: .bold))
-                                    .foregroundColor(.f1SecondaryText)
-
-                                HStack {
-                                    Button { onBack?() } label: {
-                                        Image(systemName: "chevron.left")
-                                            .font(.system(size: 14, weight: .semibold))
-                                            .foregroundColor(canGoBack ? .white : .f1SecondaryText.opacity(0.3))
-                                            .frame(width: 32, height: 32)
-                                            .background(Circle().fill(Color("f1Surface")))
-                                            .overlay(Circle().stroke(Color.f1Border, lineWidth: 1))
-                                    }
-                                    .disabled(!canGoBack)
-
-                                    Spacer()
-
-                                    Button { onForward?() } label: {
-                                        Image(systemName: "chevron.right")
-                                            .font(.system(size: 14, weight: .semibold))
-                                            .foregroundColor(canGoForward ? .white : .f1SecondaryText.opacity(0.3))
-                                            .frame(width: 32, height: 32)
-                                            .background(Circle().fill(Color("f1Surface")))
-                                            .overlay(Circle().stroke(Color.f1Border, lineWidth: 1))
-                                    }
-                                    .disabled(!canGoForward)
-                                }
-                            }
-                            .padding(.horizontal, 20)
-                            .padding(.top, 12)
-                        }
-
-                        RaceHeaderView(race: race)
-                    }
+                    RaceHeaderView(race: race)
 
                     // Divider
                     Rectangle()
@@ -153,6 +116,36 @@ struct RaceDetailView: View {
                 }
             }
             .background(Color("f1Background"))
+            #if os(iOS)
+            .navigationBarTitleDisplayMode(.inline)
+            #endif
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    Text("RACE \(race.round)")
+                        .font(.system(size: 17, weight: .semibold))
+                        .foregroundColor(.f1Text)
+                }
+                #if os(iOS)
+                if canGoBack || canGoForward {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button { onBack?() } label: {
+                            Image(systemName: "chevron.left")
+                                .font(.system(size: 14, weight: .semibold))
+                                .foregroundColor(canGoBack ? .white : .f1SecondaryText.opacity(0.3))
+                        }
+                        .disabled(!canGoBack)
+                    }
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button { onForward?() } label: {
+                            Image(systemName: "chevron.right")
+                                .font(.system(size: 14, weight: .semibold))
+                                .foregroundColor(canGoForward ? .white : .f1SecondaryText.opacity(0.3))
+                        }
+                        .disabled(!canGoForward)
+                    }
+                }
+                #endif
+            }
             .tint(.f1Red)
             .overlay(GeometryReader { geo in Color.clear.preference(key: ScreenWidthKey.self, value: geo.size.width) })
             .onPreferenceChange(ScreenWidthKey.self) { screenWidth = $0 }

@@ -4,7 +4,7 @@ struct RaceHeaderView: View {
     let race: Race
 
     var body: some View {
-        HStack(alignment: .top, spacing: 12) {
+        HStack(alignment: .top, spacing: 20) {
             // Track box
             DynamicTrackView(raceShortName: race.shortName)
                 .frame(width: 85, height: 85)
@@ -22,7 +22,8 @@ struct RaceHeaderView: View {
                 Text("\(race.name.uppercased()) 2026")
                     .font(.system(size: 9, weight: .medium))
                     .foregroundColor(.f1SecondaryText)
-                    .lineLimit(4)
+                    .frame(maxWidth: 120, alignment: .leading)
+                    .lineLimit(2)
                 
                 Text("\(race.weekendDayRange) \(race.monthLabel)")
                     .font(.system(size: 10, weight: .regular))

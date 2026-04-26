@@ -8,7 +8,6 @@ struct F1CalendarWidgetApp: App {
     @State private var deepLinkedRaceId: Int?
     @State private var deepLinkedSession: Session?
     @StateObject private var raceStore = RaceStore()
-
     var body: some Scene {
         WindowGroup {
             ContentView(selectedTab: $selectedTab, deepLinkedRaceId: $deepLinkedRaceId, deepLinkedSession: $deepLinkedSession, raceStore: raceStore)

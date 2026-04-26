@@ -11,22 +11,6 @@ struct CalendarView: View {
             ScrollViewReader { proxy in
                 ScrollView {
                     VStack(spacing: 0) {
-                        // Title
-                        HStack {
-                            Text("SEASON 2026")
-                                .font(.system(size: 24, weight: .bold))
-                                .foregroundColor(.f1Text)
-
-                            Spacer()
-
-                            Text("\(races.count) RACES")
-                                .font(.system(size: 10, weight: .medium))
-                                .foregroundColor(.f1SecondaryText)
-                        }
-                        .padding(.horizontal, 20)
-                        .padding(.top, 20)
-                        .padding(.bottom, 12)
-
                         // Race list
                         ForEach(races) { race in
                             NavigationLink(value: race.id) {
@@ -46,9 +30,13 @@ struct CalendarView: View {
                             }
                         }
                     }
-                    .padding(.bottom, 20)
+                    .padding(.vertical, 20)
                 }
                 .background(Color("f1Background"))
+                .navigationTitle("2026 SEASON")
+                #if os(iOS)
+                .navigationBarTitleDisplayMode(.inline)
+                #endif
                 .onAppear {
                     if let next = nextRace {
                         proxy.scrollTo(next.id, anchor: .center)

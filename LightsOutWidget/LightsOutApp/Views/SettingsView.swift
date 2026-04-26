@@ -92,7 +92,10 @@ struct SettingsView: View {
             }
             .scrollContentBackground(.hidden)
             .background(Color("f1Background"))
-            .navigationTitle("Settings")
+            .navigationTitle("SETTINGS")
+            #if os(iOS)
+            .navigationBarTitleDisplayMode(.inline)
+            #endif
             .tint(Color.f1Red)
             .onChange(of: settings.notifyPractice) { rescheduleNotifications() }
             .onChange(of: settings.notifyQualifying) { rescheduleNotifications() }

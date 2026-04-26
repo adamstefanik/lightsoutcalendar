@@ -69,7 +69,7 @@ struct ContentView: View {
             SettingsView(raceStore: raceStore)
                 .tabItem {
                     Image(systemName: "gearshape")
-                    Text("Settings")
+                    Text("SETTINGS")
                 }
                 .tag(2)
         }

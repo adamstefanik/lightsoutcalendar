@@ -50,7 +50,8 @@ struct F1LargeView: View {
                     Text("\(race.name.uppercased()) 2026")
                         .font(.system(size: 8, weight: .medium))
                         .foregroundColor(.f1SecondaryText)
-                        .lineLimit(3)
+                        .frame(maxWidth: 100, alignment: .leading)
+                        .lineLimit(2)
                         .fixedSize(horizontal: false, vertical: true)
                     
                     Text("\(race.weekendDayRange) \(race.monthLabel)")
@@ -148,7 +149,10 @@ struct F1MediumView: View {
                             .font(.system(size: 13, weight: .bold)).foregroundColor(.f1Text)
                     }
                     Text("\(race.name.uppercased()) 2026")
-                        .font(.system(size: 7)).foregroundColor(.f1SecondaryText).lineLimit(2)
+                        .font(.system(size: 7))
+                        .foregroundColor(.f1SecondaryText)
+                        .frame(maxWidth: 100, alignment: .leading)
+                        .lineLimit(2)
                         .fixedSize(horizontal: false, vertical: true)
                     
                     Text("\(race.weekendDayRange) \(race.monthLabel)")
