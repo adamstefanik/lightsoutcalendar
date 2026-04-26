@@ -8,6 +8,7 @@ struct ContentView: View {
 
     @State private var currentRaceIndex: Int?
     @State private var slideForward: Bool = true
+    @State private var isTransitioning: Bool = false
 
     private var raceIndex: Int {
         if let idx = currentRaceIndex { return idx }
@@ -19,6 +20,21 @@ struct ContentView: View {
         raceStore.races[raceIndex]
     }
 
+    private func navigate(to newIndex: Int, forward: Bool) {
+        guard !isTransitioning,
+              newIndex >= 0, newIndex < raceStore.races.count else { return }
+        isTransitioning = true
+        slideForward = forward
+        // Defer .id() change so SwiftUI commits slideForward first → correct removal direction.
+        Task { @MainActor in
+            withAnimation(.easeInOut(duration: 0.3)) {
+                currentRaceIndex = newIndex
+            } completion: {
+                isTransitioning = false
+            }
+        }
+    }
+
     var body: some View {
         TabView(selection: $selectedTab) {
             ZStack {
@@ -26,14 +42,8 @@ struct ContentView: View {
                     race: currentRace,
                     canGoBack: raceIndex > 0,
                     canGoForward: raceIndex < raceStore.races.count - 1,
-                    onBack: {
-                        slideForward = false
-                        withAnimation(.easeInOut(duration: 0.3)) { currentRaceIndex = raceIndex - 1 }
-                    },
-                    onForward: {
-                        slideForward = true
-                        withAnimation(.easeInOut(duration: 0.3)) { currentRaceIndex = raceIndex + 1 }
-                    },
+                    onBack: { navigate(to: raceIndex - 1, forward: false) },
+                    onForward: { navigate(to: raceIndex + 1, forward: true) },
                     onRefresh: { await raceStore.loadRaces() },
                     deepLinkedSession: $deepLinkedSession
                 )
@@ -43,7 +53,6 @@ struct ContentView: View {
                     : .asymmetric(insertion: .move(edge: .leading), removal: .move(edge: .trailing))
                 )
             }
-            .clipped()
             .tabItem {
                 Image(systemName: "flag.checkered")
                 Text("Race")

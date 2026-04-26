@@ -70,7 +70,6 @@ struct WeatherSectionView: View {
                     .padding(.vertical, 16)
             }
         }
-        .padding(.horizontal, 14)
     }
 }
 

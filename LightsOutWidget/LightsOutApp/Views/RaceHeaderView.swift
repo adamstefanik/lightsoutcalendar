@@ -52,8 +52,8 @@ struct RaceHeaderView: View {
                 }
             }
         }
-        .padding(.leading, 34)
-        .padding(.trailing, 34)
+        .padding(.leading, 20)
+        .padding(.trailing, 20)
         .padding(.top, 30)
     }
 

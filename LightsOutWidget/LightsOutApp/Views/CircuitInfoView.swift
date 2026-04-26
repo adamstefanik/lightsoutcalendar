@@ -50,7 +50,6 @@ struct CircuitInfoView: View {
             )
             .clipShape(RoundedRectangle(cornerRadius: 8))
         }
-        .padding(.horizontal, 14)
     }
 }
 
