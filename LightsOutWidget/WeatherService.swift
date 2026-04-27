@@ -34,7 +34,9 @@ class WeatherService {
             // Enrich completed days with real OpenF1 weather data
             forecasts = await enrichWithOpenF1(forecasts: forecasts, sessions: sessions)
 
-            saveToCache(forecasts, circuitKey: circuitKey)
+            if !forecasts.isEmpty {
+                saveToCache(forecasts, circuitKey: circuitKey)
+            }
             return forecasts
         } catch {
             return []
@@ -151,8 +153,8 @@ class WeatherService {
     // MARK: - Cache
 
     private func loadFromCache(circuitKey: String) -> [DayForecast]? {
-        let dataKey = "weatherData_v5_\(circuitKey)"
-        let tsKey = "weatherTS_v5_\(circuitKey)"
+        let dataKey = "weatherData_v6_\(circuitKey)"
+        let tsKey = "weatherTS_v6_\(circuitKey)"
         guard
             let timestamp = defaults.object(forKey: tsKey) as? Date,
             Date().timeIntervalSince(timestamp) < cacheDuration,
@@ -165,8 +167,8 @@ class WeatherService {
     }
 
     private func saveToCache(_ forecasts: [DayForecast], circuitKey: String) {
-        let dataKey = "weatherData_v5_\(circuitKey)"
-        let tsKey = "weatherTS_v5_\(circuitKey)"
+        let dataKey = "weatherData_v6_\(circuitKey)"
+        let tsKey = "weatherTS_v6_\(circuitKey)"
         guard let data = try? JSONEncoder().encode(forecasts) else { return }
         defaults.set(data, forKey: dataKey)
         defaults.set(Date(), forKey: tsKey)

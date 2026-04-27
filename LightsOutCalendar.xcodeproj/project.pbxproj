@@ -71,6 +71,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		CC0C2DB32F9F5A5F002E58C8 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		CC4C038B2F69A65E0034CA8E /* LightsOutCalendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LightsOutCalendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC4C03982F69A65F0034CA8E /* LightsOutCalendarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LightsOutCalendarTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC4C03A22F69A65F0034CA8E /* LightsOutCalendarUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LightsOutCalendarUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -208,6 +209,7 @@
 		CC4C03822F69A65E0034CA8E = {
 			isa = PBXGroup;
 			children = (
+				CC0C2DB32F9F5A5F002E58C8 /* Secrets.xcconfig */,
 				CC4C03C12F69B0000034CA8E /* LightsOutWidget */,
 				CC4C039B2F69A65F0034CA8E /* LightsOutCalendarTests */,
 				CC4C03A52F69A65F0034CA8E /* LightsOutCalendarUITests */,
@@ -586,6 +588,7 @@
 		};
 		CC4C03AD2F69A65F0034CA8E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CC0C2DB32F9F5A5F002E58C8 /* Secrets.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -633,6 +636,7 @@
 		};
 		CC4C03AE2F69A65F0034CA8E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CC0C2DB32F9F5A5F002E58C8 /* Secrets.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -786,6 +790,7 @@
 		};
 		CC4C03C62F69B0000034CA8E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CC0C2DB32F9F5A5F002E58C8 /* Secrets.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = f1Background;
@@ -829,6 +834,7 @@
 		};
 		CC4C03C72F69B0000034CA8E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CC0C2DB32F9F5A5F002E58C8 /* Secrets.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = f1Background;
