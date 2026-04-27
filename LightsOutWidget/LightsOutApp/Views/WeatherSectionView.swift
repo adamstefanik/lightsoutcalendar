@@ -11,6 +11,13 @@ struct WeatherSectionView: View {
     let state: WeatherLoadState
     let temperatureUnit: TemperatureUnit
 
+    @Environment(\.scenePhase) private var scenePhase
+    @State private var isVisible: Bool = false
+
+    private var isPlaying: Bool {
+        isVisible && scenePhase == .active
+    }
+
     private var updatedLabel: String {
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
@@ -56,7 +63,7 @@ struct WeatherSectionView: View {
             case .loaded(let forecasts):
                 HStack(spacing: 8) {
                     ForEach(forecasts) { forecast in
-                        WeatherDayCard(forecast: forecast, temperatureUnit: temperatureUnit)
+                        WeatherDayCard(forecast: forecast, temperatureUnit: temperatureUnit, isPlaying: isPlaying)
                             .containerRelativeFrame(.horizontal, count: 3, spacing: 8)
                     }
                 }
@@ -70,6 +77,8 @@ struct WeatherSectionView: View {
                     .padding(.vertical, 16)
             }
         }
+        .onAppear { isVisible = true }
+        .onDisappear { isVisible = false }
     }
 }
 
@@ -78,6 +87,7 @@ struct WeatherSectionView: View {
 private struct WeatherDayCard: View {
     let forecast: DayForecast
     let temperatureUnit: TemperatureUnit
+    let isPlaying: Bool
 
     private func convertTemp(_ celsius: Int) -> Int {
         temperatureUnit == .fahrenheit ? Int(Double(celsius) * 9.0 / 5.0 + 32) : celsius
@@ -87,8 +97,7 @@ private struct WeatherDayCard: View {
 
     private var trackTempDisplay: String {
         guard let t = forecast.trackTemp else { return "N/A" }
-        let prefix = forecast.isTrackTempEstimated ? "~" : ""
-        return "\(prefix)\(convertTemp(t))°"
+        return "\(convertTemp(t))°"
     }
 
     private var windDisplay: String {
@@ -103,7 +112,7 @@ private struct WeatherDayCard: View {
                     .font(.system(size: 15, weight: .semibold))
                     .foregroundColor(.f1Text)
 
-                LottieView(fileName: forecast.condition.lottieFileName)
+                LottieView(fileName: forecast.condition.lottieFileName, isPlaying: isPlaying)
                     .frame(width: 35, height: 35)
                     .clipped()
 
@@ -113,9 +122,9 @@ private struct WeatherDayCard: View {
             }
 
             VStack(alignment: .leading, spacing: 6) {
-                WeatherDetailRow(label: "TRACK TEMP", value: trackTempDisplay)
+                WeatherDetailRow(label: "TRACK TEMP:", value: trackTempDisplay)
                 WeatherDetailRow(label: "WIND:", value: windDisplay)
-                WeatherDetailRow(label: "RAIN CHANCE", value: "\(forecast.rainChance)%")
+                WeatherDetailRow(label: "RAIN:", value: "\(forecast.rainChance)%")
             }
         }
         .frame(maxWidth: .infinity)
@@ -149,49 +158,4 @@ private struct WeatherDetailRow: View {
                 .lineLimit(1)
         }
     }
-}
-
-// MARK: - Previews
-
-#Preview("3 Active") {
-    WeatherSectionView(
-        state: .loaded([
-            DayForecast(id: "FRI", dayLabel: "FRI", tempHigh: 18, tempLow: 12, condition: .clear, rainChance: 5, trackTemp: 28, windSpeed: 12, windDir: "SE", isTrackTempEstimated: false),
-            DayForecast(id: "SAT", dayLabel: "SAT", tempHigh: 16, tempLow: 11, condition: .cloudy, rainChance: 20, trackTemp: 21, windSpeed: 8, windDir: "NE", isTrackTempEstimated: false),
-            DayForecast(id: "SUN", dayLabel: "SUN", tempHigh: 14, tempLow: 10, condition: .rain, rainChance: 65, trackTemp: 16, windSpeed: 22, windDir: "W", isTrackTempEstimated: false),
-        ]),
-        temperatureUnit: .celsius
-    )
-    .background(Color("f1Background"))
-    .preferredColorScheme(.dark)
-}
-
-#Preview("2 Active") {
-    WeatherSectionView(
-        state: .loaded([
-            DayForecast(id: "FRI", dayLabel: "FRI", tempHigh: 18, tempLow: 12, condition: .clear, rainChance: 5, trackTemp: 28, windSpeed: 12, windDir: "SE", isTrackTempEstimated: false),
-            DayForecast(id: "SAT", dayLabel: "SAT", tempHigh: 16, tempLow: 11, condition: .cloudy, rainChance: 20, trackTemp: 21, windSpeed: 8, windDir: "NE", isTrackTempEstimated: false),
-        ]),
-        temperatureUnit: .celsius
-    )
-    .background(Color("f1Background"))
-    .preferredColorScheme(.dark)
-}
-
-#Preview("1 Active") {
-    WeatherSectionView(
-        state: .loaded([
-            DayForecast(id: "SUN", dayLabel: "SUN", tempHigh: 14, tempLow: 10, condition: .rain, rainChance: 65, trackTemp: 16, windSpeed: 22, windDir: "W", isTrackTempEstimated: true),
-        ]),
-        temperatureUnit: .celsius
-    )
-    
-    .background(Color("f1Background"))
-    .preferredColorScheme(.dark)
-}
-
-#Preview("Error") {
-    WeatherSectionView(state: .error, temperatureUnit: .celsius)
-        .background(Color("f1Background"))
-        .preferredColorScheme(.dark)
 }

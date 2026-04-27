@@ -5,6 +5,7 @@ import Lottie
 struct LottieView: UIViewRepresentable {
     let fileName: String
     var loopMode: LottieLoopMode = .loop
+    var isPlaying: Bool = true
 
     func makeUIView(context: Context) -> UIView {
         let container = UIView()
@@ -18,8 +19,9 @@ struct LottieView: UIViewRepresentable {
         animationView.setContentHuggingPriority(.defaultLow, for: .vertical)
         animationView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         animationView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
-        animationView.play()
+        if isPlaying { animationView.play() }
 
+        context.coordinator.animationView = animationView
         container.addSubview(animationView)
         NSLayoutConstraint.activate([
             animationView.leadingAnchor.constraint(equalTo: container.leadingAnchor),
@@ -31,12 +33,26 @@ struct LottieView: UIViewRepresentable {
         return container
     }
 
-    func updateUIView(_ uiView: UIView, context: Context) {}
+    func updateUIView(_ uiView: UIView, context: Context) {
+        guard let view = context.coordinator.animationView else { return }
+        if isPlaying, !view.isAnimationPlaying {
+            view.play()
+        } else if !isPlaying, view.isAnimationPlaying {
+            view.pause()
+        }
+    }
+
+    func makeCoordinator() -> Coordinator { Coordinator() }
+
+    final class Coordinator {
+        weak var animationView: LottieAnimationView?
+    }
 }
 #elseif os(macOS)
 struct LottieView: NSViewRepresentable {
     let fileName: String
     var loopMode: LottieLoopMode = .loop
+    var isPlaying: Bool = true
 
     func makeNSView(context: Context) -> NSView {
         let container = NSView()
@@ -47,8 +63,9 @@ struct LottieView: NSViewRepresentable {
         animationView.loopMode = loopMode
         animationView.contentMode = .scaleAspectFit
         animationView.translatesAutoresizingMaskIntoConstraints = false
-        animationView.play()
+        if isPlaying { animationView.play() }
 
+        context.coordinator.animationView = animationView
         container.addSubview(animationView)
         NSLayoutConstraint.activate([
             animationView.leadingAnchor.constraint(equalTo: container.leadingAnchor),
@@ -60,6 +77,19 @@ struct LottieView: NSViewRepresentable {
         return container
     }
 
-    func updateNSView(_ nsView: NSView, context: Context) {}
+    func updateNSView(_ nsView: NSView, context: Context) {
+        guard let view = context.coordinator.animationView else { return }
+        if isPlaying, !view.isAnimationPlaying {
+            view.play()
+        } else if !isPlaying, view.isAnimationPlaying {
+            view.pause()
+        }
+    }
+
+    func makeCoordinator() -> Coordinator { Coordinator() }
+
+    final class Coordinator {
+        weak var animationView: LottieAnimationView?
+    }
 }
 #endif
