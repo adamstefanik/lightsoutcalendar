@@ -14,6 +14,10 @@ struct LottieView: UIViewRepresentable {
         animationView.loopMode = loopMode
         animationView.contentMode = .scaleAspectFit
         animationView.translatesAutoresizingMaskIntoConstraints = false
+        animationView.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        animationView.setContentHuggingPriority(.defaultLow, for: .vertical)
+        animationView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        animationView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
         animationView.play()
 
         container.addSubview(animationView)
@@ -36,6 +40,8 @@ struct LottieView: NSViewRepresentable {
 
     func makeNSView(context: Context) -> NSView {
         let container = NSView()
+        container.wantsLayer = true
+        container.layer?.masksToBounds = true
 
         let animationView = LottieAnimationView(name: fileName)
         animationView.loopMode = loopMode

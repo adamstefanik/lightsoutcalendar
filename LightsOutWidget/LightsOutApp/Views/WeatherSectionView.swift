@@ -105,6 +105,7 @@ private struct WeatherDayCard: View {
 
                 LottieView(fileName: forecast.condition.lottieFileName)
                     .frame(width: 35, height: 35)
+                    .clipped()
 
                 Text(airTempDisplay)
                     .font(.system(size: 15, weight: .semibold))
