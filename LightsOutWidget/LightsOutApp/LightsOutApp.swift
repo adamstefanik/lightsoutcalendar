@@ -4,6 +4,9 @@ import WidgetKit
 
 @main
 struct F1CalendarWidgetApp: App {
+    #if targetEnvironment(macCatalyst)
+    @UIApplicationDelegateAdaptor(CatalystAppDelegate.self) private var appDelegate
+    #endif
     @State private var selectedTab = 0
     @State private var deepLinkedRaceId: Int?
     @State private var deepLinkedSession: Session?
@@ -72,6 +75,29 @@ struct F1CalendarWidgetApp: App {
         }
     }
 }
+
+#if targetEnvironment(macCatalyst)
+final class CatalystAppDelegate: NSObject, UIApplicationDelegate {
+    func application(_ application: UIApplication,
+                     configurationForConnecting connectingSceneSession: UISceneSession,
+                     options: UIScene.ConnectionOptions) -> UISceneConfiguration {
+        let config = UISceneConfiguration(name: nil, sessionRole: connectingSceneSession.role)
+        config.delegateClass = CatalystSceneDelegate.self
+        return config
+    }
+}
+
+final class CatalystSceneDelegate: NSObject, UIWindowSceneDelegate {
+    func scene(_ scene: UIScene,
+               willConnectTo session: UISceneSession,
+               options connectionOptions: UIScene.ConnectionOptions) {
+        guard let windowScene = scene as? UIWindowScene else { return }
+        let size = CGSize(width: 393, height: 852)
+        windowScene.sizeRestrictions?.minimumSize = size
+        windowScene.sizeRestrictions?.maximumSize = size
+    }
+}
+#endif
 
 // MARK: - Race Store
 
