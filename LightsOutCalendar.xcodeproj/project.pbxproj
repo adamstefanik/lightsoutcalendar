@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		CC1331102F76514A00E83C08 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = CC13310F2F76514A00E83C08 /* Lottie */; };
 		CC1331122F76515D00E83C08 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = CC1331112F76515D00E83C08 /* Lottie */; };
-		CC4C03CC2F69B0000034CA8E /* F1WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CC4C03C02F69B0000034CA8E /* F1WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		CC4C03CC2F69B0000034CA8E /* LightsOutExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CC4C03C02F69B0000034CA8E /* LightsOutExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,7 +63,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				CC4C03CC2F69B0000034CA8E /* F1WidgetExtension.appex in Embed Foundation Extensions */,
+				CC4C03CC2F69B0000034CA8E /* LightsOutExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -75,13 +75,13 @@
 		CC4C038B2F69A65E0034CA8E /* LightsOutCalendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LightsOutCalendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC4C03982F69A65F0034CA8E /* LightsOutCalendarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LightsOutCalendarTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC4C03A22F69A65F0034CA8E /* LightsOutCalendarUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LightsOutCalendarUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		CC4C03C02F69B0000034CA8E /* F1WidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = F1WidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC4C03C02F69B0000034CA8E /* LightsOutExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = LightsOutExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCDD33ED2F753D4D0035D47E /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		CCDD33EF2F753D4D0035D47E /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		CC4C03CD2F69B0000034CA8E /* Exceptions for "LightsOutWidget" folder in "F1WidgetExtension" target */ = {
+		CC4C03CD2F69B0000034CA8E /* Exceptions for "LightsOutWidget" folder in "LightsOutExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -105,7 +105,7 @@
 				LightsOutApp/Views/SettingsView.swift,
 				LightsOutApp/Views/WeatherSectionView.swift,
 			);
-			target = CC4C03C52F69B0000034CA8E /* F1WidgetExtension */;
+			target = CC4C03C52F69B0000034CA8E /* LightsOutExtension */;
 		};
 		CC4C03CE2F69B0000034CA8E /* Exceptions for "LightsOutWidget" folder in "LightsOutCalendar" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
@@ -165,7 +165,7 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				CC4C03CE2F69B0000034CA8E /* Exceptions for "LightsOutWidget" folder in "LightsOutCalendar" target */,
-				CC4C03CD2F69B0000034CA8E /* Exceptions for "LightsOutWidget" folder in "F1WidgetExtension" target */,
+				CC4C03CD2F69B0000034CA8E /* Exceptions for "LightsOutWidget" folder in "LightsOutExtension" target */,
 			);
 			path = LightsOutWidget;
 			sourceTree = "<group>";
@@ -224,7 +224,7 @@
 				CC4C038B2F69A65E0034CA8E /* LightsOutCalendar.app */,
 				CC4C03982F69A65F0034CA8E /* LightsOutCalendarTests.xctest */,
 				CC4C03A22F69A65F0034CA8E /* LightsOutCalendarUITests.xctest */,
-				CC4C03C02F69B0000034CA8E /* F1WidgetExtension.appex */,
+				CC4C03C02F69B0000034CA8E /* LightsOutExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -310,9 +310,9 @@
 			productReference = CC4C03A22F69A65F0034CA8E /* LightsOutCalendarUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
-		CC4C03C52F69B0000034CA8E /* F1WidgetExtension */ = {
+		CC4C03C52F69B0000034CA8E /* LightsOutExtension */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CC4C03C82F69B0000034CA8E /* Build configuration list for PBXNativeTarget "F1WidgetExtension" */;
+			buildConfigurationList = CC4C03C82F69B0000034CA8E /* Build configuration list for PBXNativeTarget "LightsOutExtension" */;
 			buildPhases = (
 				CC4C03C22F69B0000034CA8E /* Sources */,
 				CC4C03C32F69B0000034CA8E /* Frameworks */,
@@ -326,12 +326,12 @@
 			fileSystemSynchronizedGroups = (
 				CC4C03C12F69B0000034CA8E /* LightsOutWidget */,
 			);
-			name = F1WidgetExtension;
+			name = LightsOutExtension;
 			packageProductDependencies = (
 				CC1331112F76515D00E83C08 /* Lottie */,
 			);
 			productName = F1WidgetExtension;
-			productReference = CC4C03C02F69B0000034CA8E /* F1WidgetExtension.appex */;
+			productReference = CC4C03C02F69B0000034CA8E /* LightsOutExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
@@ -378,7 +378,7 @@
 			projectRoot = "";
 			targets = (
 				CC4C038A2F69A65E0034CA8E /* LightsOutCalendar */,
-				CC4C03C52F69B0000034CA8E /* F1WidgetExtension */,
+				CC4C03C52F69B0000034CA8E /* LightsOutExtension */,
 				CC4C03972F69A65F0034CA8E /* LightsOutCalendarTests */,
 				CC4C03A12F69A65F0034CA8E /* LightsOutCalendarUITests */,
 			);
@@ -460,7 +460,7 @@
 		};
 		CC4C03CA2F69B0000034CA8E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = CC4C03C52F69B0000034CA8E /* F1WidgetExtension */;
+			target = CC4C03C52F69B0000034CA8E /* LightsOutExtension */;
 			targetProxy = CC4C03C92F69B0000034CA8E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -601,6 +601,8 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = LightsOutCalendar;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -611,7 +613,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
@@ -649,6 +651,8 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = LightsOutCalendar;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -659,7 +663,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
@@ -800,7 +804,7 @@
 				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = LightsOutWidget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "F1 Widget";
+				INFOPLIST_KEY_CFBundleDisplayName = LightsOut;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -844,7 +848,7 @@
 				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = LightsOutWidget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "F1 Widget";
+				INFOPLIST_KEY_CFBundleDisplayName = LightsOut;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -915,7 +919,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CC4C03C82F69B0000034CA8E /* Build configuration list for PBXNativeTarget "F1WidgetExtension" */ = {
+		CC4C03C82F69B0000034CA8E /* Build configuration list for PBXNativeTarget "LightsOutExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CC4C03C62F69B0000034CA8E /* Debug */,

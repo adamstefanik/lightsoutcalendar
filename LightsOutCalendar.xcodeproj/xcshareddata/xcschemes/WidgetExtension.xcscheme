@@ -17,8 +17,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "CC4C03C52F69B0000034CA8E"
-               BuildableName = "F1WidgetExtension.appex"
-               BlueprintName = "F1WidgetExtension"
+               BuildableName = "LightsOutExtension.appex"
+               BlueprintName = "LightsOutExtension"
                ReferencedContainer = "container:LightsOutCalendar.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -81,8 +81,19 @@
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES"
       launchAutomaticallySubstyle = "2">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <RemoteRunnable
+         runnableDebuggingMode = "1"
+         BundleIdentifier = "com.apple.widgetkit.simulator"
+         RemotePath = "/System/Library/CoreServices/WidgetKit Simulator.app/Contents/MacOS/WidgetKit Simulator">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "CC4C03C52F69B0000034CA8E"
+            BuildableName = "LightsOutExtension.appex"
+            BlueprintName = "LightsOutExtension"
+            ReferencedContainer = "container:LightsOutCalendar.xcodeproj">
+         </BuildableReference>
+      </RemoteRunnable>
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "CC4C038A2F69A65E0034CA8E"
@@ -90,7 +101,7 @@
             BlueprintName = "LightsOutCalendar"
             ReferencedContainer = "container:LightsOutCalendar.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
