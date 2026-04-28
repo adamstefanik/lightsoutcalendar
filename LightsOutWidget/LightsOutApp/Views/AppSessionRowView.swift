@@ -77,7 +77,7 @@ struct AppSessionRowView: View {
                     .lineLimit(1)
             }
         }
-        .padding(.horizontal, 20)
+        .padding(.horizontal, 34)
         .padding(.vertical, 10)
         .opacity(isCanceled ? 0.3 : (isCompleted ? 0.45 : 1.0))
     }

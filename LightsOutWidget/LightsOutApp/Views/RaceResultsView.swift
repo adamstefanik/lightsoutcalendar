@@ -36,7 +36,7 @@ struct RaceResultsView: View {
                     .frame(maxWidth: .infinity, alignment: .center)
             }
         }
-        .padding(.horizontal, 20)
+        .padding(.horizontal, 34)
         .padding(.top, 16)
         .padding(.bottom, 0)
     }

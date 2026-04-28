@@ -10,29 +10,29 @@ enum WeatherLoadState {
 struct WeatherSectionView: View {
     let state: WeatherLoadState
     let temperatureUnit: TemperatureUnit
-
+    
     @Environment(\.scenePhase) private var scenePhase
     @State private var isVisible: Bool = false
-
+    
     private var isPlaying: Bool {
         isVisible && scenePhase == .active
     }
-
+    
     private var updatedLabel: String {
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
         return "Updated \(formatter.string(from: Date()))"
     }
-
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
             HStack {
                 Text("TRACK CONDITIONS")
                     .font(.system(size: 11, weight: .semibold))
                     .foregroundColor(.f1SecondaryText)
-
+                
                 Spacer()
-
+                
                 if case .loaded = state {
                     Text(updatedLabel)
                         .font(.system(size: 9, weight: .medium))
@@ -49,7 +49,7 @@ struct WeatherSectionView: View {
                         )
                 }
             }
-
+            
             switch state {
             case .loading:
                 HStack {
@@ -59,7 +59,7 @@ struct WeatherSectionView: View {
                     Spacer()
                 }
                 .padding(.vertical, 16)
-
+                
             case .loaded(let forecasts):
                 HStack(spacing: 8) {
                     ForEach(forecasts) { forecast in
@@ -68,7 +68,7 @@ struct WeatherSectionView: View {
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
-
+                
             case .error:
                 Text("Weather unavailable")
                     .font(.system(size: 12))
@@ -79,83 +79,83 @@ struct WeatherSectionView: View {
         }
         .onAppear { isVisible = true }
         .onDisappear { isVisible = false }
+        .padding(.horizontal, 14)
     }
-}
-
-// MARK: - Day Card
-
-private struct WeatherDayCard: View {
-    let forecast: DayForecast
-    let temperatureUnit: TemperatureUnit
-    let isPlaying: Bool
-
-    private func convertTemp(_ celsius: Int) -> Int {
-        temperatureUnit == .fahrenheit ? Int(Double(celsius) * 9.0 / 5.0 + 32) : celsius
-    }
-
-    private var airTempDisplay: String { "\(convertTemp(forecast.tempHigh))°" }
-
-    private var trackTempDisplay: String {
-        guard let t = forecast.trackTemp else { return "N/A" }
-        return "\(convertTemp(t))°"
-    }
-
-    private var windDisplay: String {
-        guard let speed = forecast.windSpeed, let dir = forecast.windDir else { return "N/A" }
-        return "\(speed) km/h \(dir)"
-    }
-
-    var body: some View {
-        VStack(spacing: 4) {
-            HStack {
-                Text(forecast.dayLabel)
-                    .font(.system(size: 15, weight: .semibold))
-                    .foregroundColor(.f1Text)
-
-                LottieView(fileName: forecast.condition.lottieFileName, isPlaying: isPlaying)
-                    .frame(width: 35, height: 35)
-                    .clipped()
-
-                Text(airTempDisplay)
-                    .font(.system(size: 15, weight: .semibold))
-                    .foregroundColor(.f1Text)
-            }
-
-            VStack(alignment: .leading, spacing: 6) {
-                WeatherDetailRow(label: "TRACK TEMP:", value: trackTempDisplay)
-                WeatherDetailRow(label: "WIND:", value: windDisplay)
-                WeatherDetailRow(label: "RAIN:", value: "\(forecast.rainChance)%")
-            }
+    // MARK: - Day Card
+    
+    private struct WeatherDayCard: View {
+        let forecast: DayForecast
+        let temperatureUnit: TemperatureUnit
+        let isPlaying: Bool
+        
+        private func convertTemp(_ celsius: Int) -> Int {
+            temperatureUnit == .fahrenheit ? Int(Double(celsius) * 9.0 / 5.0 + 32) : celsius
         }
-        .frame(maxWidth: .infinity)
-        .padding(.horizontal, 6)
-        .padding(.vertical, 10)
-        .background(
-            RoundedRectangle(cornerRadius: 8)
-                .fill(Color("f1Surface"))
-        )
-        .overlay(
-            RoundedRectangle(cornerRadius: 8)
-                .stroke(Color.f1Border, lineWidth: 1)
-        )
+        
+        private var airTempDisplay: String { "\(convertTemp(forecast.tempHigh))°" }
+        
+        private var trackTempDisplay: String {
+            guard let t = forecast.trackTemp else { return "N/A" }
+            return "\(convertTemp(t))°"
+        }
+        
+        private var windDisplay: String {
+            guard let speed = forecast.windSpeed, let dir = forecast.windDir else { return "N/A" }
+            return "\(speed) km/h \(dir)"
+        }
+        
+        var body: some View {
+            VStack(spacing: 4) {
+                HStack {
+                    Text(forecast.dayLabel)
+                        .font(.system(size: 15, weight: .semibold))
+                        .foregroundColor(.f1Text)
+                    
+                    LottieView(fileName: forecast.condition.lottieFileName, isPlaying: isPlaying)
+                        .frame(width: 35, height: 35)
+                        .clipped()
+                    
+                    Text(airTempDisplay)
+                        .font(.system(size: 15, weight: .semibold))
+                        .foregroundColor(.f1Text)
+                }
+                
+                VStack(alignment: .leading, spacing: 6) {
+                    WeatherDetailRow(label: "TRACK TEMP:", value: trackTempDisplay)
+                    WeatherDetailRow(label: "WIND:", value: windDisplay)
+                    WeatherDetailRow(label: "RAIN:", value: "\(forecast.rainChance)%")
+                }
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.horizontal, 6)
+            .padding(.vertical, 10)
+            .background(
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(Color("f1Surface"))
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 8)
+                    .stroke(Color.f1Border, lineWidth: 1)
+            )
+        }
     }
-}
-
-private struct WeatherDetailRow: View {
-    let label: String
-    let value: String
-
-    var body: some View {
-        HStack(spacing: 4) {
-            Text(label)
-                .font(.system(size: 10, weight: .semibold))
-                .foregroundColor(.f1SecondaryText)
-                .lineLimit(1)
-            Spacer()
-            Text(value)
-                .font(.system(size: 12, weight: .medium))
-                .foregroundColor(.f1Text)
-                .lineLimit(1)
+    
+    private struct WeatherDetailRow: View {
+        let label: String
+        let value: String
+        
+        var body: some View {
+            HStack(spacing: 4) {
+                Text(label)
+                    .font(.system(size: 10, weight: .semibold))
+                    .foregroundColor(.f1SecondaryText)
+                    .lineLimit(1)
+                Spacer()
+                Text(value)
+                    .font(.system(size: 12, weight: .medium))
+                    .foregroundColor(.f1Text)
+                    .lineLimit(1)
+            }
         }
     }
 }

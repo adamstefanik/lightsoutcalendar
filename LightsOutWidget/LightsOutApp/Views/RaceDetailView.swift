@@ -51,8 +51,8 @@ struct RaceDetailView: View {
                         .frame(height: 1)
                         .padding(.top, 20)
                         .padding(.bottom, 10)
-                        .padding(.leading, 20)
-                        .padding(.trailing, 20)
+                        .padding(.leading, 34)
+                        .padding(.trailing, 34)
                     
                     // Session rows
                     VStack(spacing: 0) {
@@ -67,8 +67,8 @@ struct RaceDetailView: View {
                             .fill(Color.f1Divider)
                             .frame(height: 1)
                             .padding(.top, 10)
-                            .padding(.leading, 20)
-                            .padding(.trailing, 20)
+                            .padding(.leading, 34)
+                            .padding(.trailing, 34)
 
                         RaceResultsView(
                             results: raceResults,
@@ -83,8 +83,8 @@ struct RaceDetailView: View {
                             .fill(Color.f1Divider)
                             .frame(height: 1)
                             .padding(.top, 10)
-                            .padding(.leading, 20)
-                            .padding(.trailing, 20)
+                            .padding(.leading, 34)
+                            .padding(.trailing, 34)
                     }
 
                     // Weather (only available within 5 days of race weekend)
@@ -101,8 +101,8 @@ struct RaceDetailView: View {
                             .fill(Color.f1Divider)
                             .frame(height: 1)
                             .padding(.top, 10)
-                            .padding(.leading, 20)
-                            .padding(.trailing, 20)
+                            .padding(.leading, 34)
+                            .padding(.trailing, 34)
                     }
 
                     // Circuit info
@@ -149,32 +149,21 @@ struct RaceDetailView: View {
             .tint(.f1Red)
             .overlay(GeometryReader { geo in Color.clear.preference(key: ScreenWidthKey.self, value: geo.size.width) })
             .onPreferenceChange(ScreenWidthKey.self) { screenWidth = $0 }
-            .overlay(alignment: .leading) {
-                Color.clear
-                    .frame(width: screenWidth / 10)
-                    .contentShape(Rectangle())
-                    .gesture(
-                        DragGesture(minimumDistance: 20)
-                            .onEnded { value in
-                                guard abs(value.translation.width) > abs(value.translation.height),
-                                      value.translation.width > 50, canGoBack else { return }
-                                onBack?()
-                            }
-                    )
-            }
-            .overlay(alignment: .trailing) {
-                Color.clear
-                    .frame(width: screenWidth / 10)
-                    .contentShape(Rectangle())
-                    .gesture(
-                        DragGesture(minimumDistance: 20)
-                            .onEnded { value in
-                                guard abs(value.translation.width) > abs(value.translation.height),
-                                      value.translation.width < -50, canGoForward else { return }
-                                onForward?()
-                            }
-                    )
-            }
+            .simultaneousGesture(
+                DragGesture(minimumDistance: 50, coordinateSpace: .global)
+                    .onEnded { value in
+                        let startX = value.startLocation.x
+                        let horizontal = value.translation.width
+                        guard abs(horizontal) > abs(value.translation.height) else { return }
+
+                        // Only trigger from left/right 1/5 edge
+                        if startX < screenWidth / 5 && horizontal > 50 && canGoBack {
+                            onBack?()
+                        } else if startX > screenWidth * 4 / 5 && horizontal < -50 && canGoForward {
+                            onForward?()
+                        }
+                    }
+            )
             .refreshable {
                 #if os(iOS)
                 let generator = UIImpactFeedbackGenerator(style: .medium)
@@ -270,3 +259,5 @@ private struct ScreenWidthKey: PreferenceKey {
         value = nextValue()
     }
 }
+
+
