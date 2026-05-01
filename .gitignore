@@ -12,4 +12,4 @@ build/
 
 # Secrets
 Secrets.xcconfig
-*.xcuserstate
+*.xcuserstatexcode_settings.txt
