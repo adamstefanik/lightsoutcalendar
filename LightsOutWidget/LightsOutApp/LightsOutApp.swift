@@ -11,6 +11,26 @@ struct F1CalendarWidgetApp: App {
     @State private var deepLinkedRaceId: Int?
     @State private var deepLinkedSession: Session?
     @StateObject private var raceStore = RaceStore()
+
+    init() {
+        #if os(iOS)
+        let navAppearance = UINavigationBarAppearance()
+        navAppearance.configureWithTransparentBackground()
+        navAppearance.backgroundColor = .clear
+        navAppearance.shadowColor = .clear
+        UINavigationBar.appearance().standardAppearance = navAppearance
+        UINavigationBar.appearance().scrollEdgeAppearance = navAppearance
+        UINavigationBar.appearance().compactAppearance = navAppearance
+
+        let tabAppearance = UITabBarAppearance()
+        tabAppearance.configureWithTransparentBackground()
+        tabAppearance.backgroundColor = .clear
+        tabAppearance.shadowColor = .clear
+        tabAppearance.shadowImage = UIImage()
+        UITabBar.appearance().standardAppearance = tabAppearance
+        UITabBar.appearance().scrollEdgeAppearance = tabAppearance
+        #endif
+    }
     var body: some Scene {
         WindowGroup {
             ContentView(selectedTab: $selectedTab, deepLinkedRaceId: $deepLinkedRaceId, deepLinkedSession: $deepLinkedSession, raceStore: raceStore)
@@ -96,6 +116,11 @@ final class CatalystSceneDelegate: NSObject, UIWindowSceneDelegate {
         windowScene.sizeRestrictions?.minimumSize = size
         windowScene.sizeRestrictions?.maximumSize = size
     }
+
+    func sceneDidBecomeActive(_ scene: UIScene) {
+        guard let windowScene = scene as? UIWindowScene else { return }
+        windowScene.windows.forEach { $0.overrideUserInterfaceStyle = .dark }
+    }
 }
 #endif
 
@@ -114,5 +139,7 @@ final class RaceStore: ObservableObject {
             F1Calendar.cachedRaces = apiRaces
         }
         isLoading = false
+        let next = races.first { !$0.isCompleted }
+        print("[RaceStore] next race: \(next?.name ?? "none") completed=\(next?.isCompleted ?? true) raceDate=\(next?.raceDate ?? Date())")
     }
 }
