@@ -98,12 +98,21 @@ struct Race: Identifiable, Codable {
 
     var currentSessionBadge: String {
         let now = Date()
-        // Find the next upcoming session
-        if let next = sessions.first(where: { ($0.startDate ?? .distantPast) > now }) {
+        let ordered = sessions.sorted {
+            ($0.startDate ?? .distantPast) < ($1.startDate ?? .distantPast)
+        }
+        // Live session takes priority
+        if let live = ordered.first(where: {
+            ($0.startDate ?? .distantPast) <= now && ($0.endDate ?? .distantPast) > now
+        }) {
+            return sessionBadgeLabel(live.name)
+        }
+        // Otherwise next upcoming
+        if let next = ordered.first(where: { ($0.startDate ?? .distantPast) > now }) {
             return sessionBadgeLabel(next.name)
         }
         // All sessions passed — show last one
-        if let last = sessions.last {
+        if let last = ordered.last {
             return sessionBadgeLabel(last.name)
         }
         return "FP1"
@@ -178,12 +187,16 @@ struct Race: Identifiable, Codable {
     /// The next upcoming session's start date (for countdown)
     var nextSessionDate: Date? {
         let now = Date()
-        return sessions.first { ($0.startDate ?? .distantPast) > now }?.startDate
+        return sessions
+            .sorted { ($0.startDate ?? .distantPast) < ($1.startDate ?? .distantPast) }
+            .first { ($0.startDate ?? .distantPast) > now }?.startDate
     }
 
     /// Currently live session (between startDate and endDate)
     var liveSession: Session? {
-        sessions.first { $0.isLive }
+        sessions
+            .sorted { ($0.startDate ?? .distantPast) < ($1.startDate ?? .distantPast) }
+            .first { $0.isLive }
     }
 
     /// Badge label for the live session (e.g. "FP1" with LIVE indicator)
