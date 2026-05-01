@@ -41,7 +41,7 @@ struct WeatherSectionView: View {
                         .padding(.vertical, 2)
                         .background(
                             RoundedRectangle(cornerRadius: 3)
-                                .fill(Color("f1Surface"))
+                                .fill(Color.f1Carbon)
                         )
                         .overlay(
                             RoundedRectangle(cornerRadius: 3)
@@ -64,7 +64,6 @@ struct WeatherSectionView: View {
                 HStack(spacing: 8) {
                     ForEach(forecasts) { forecast in
                         WeatherDayCard(forecast: forecast, temperatureUnit: temperatureUnit, isPlaying: isPlaying)
-                            .containerRelativeFrame(.horizontal, count: 3, spacing: 8)
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
@@ -79,7 +78,6 @@ struct WeatherSectionView: View {
         }
         .onAppear { isVisible = true }
         .onDisappear { isVisible = false }
-        .padding(.horizontal, 14)
     }
     // MARK: - Day Card
     
@@ -100,38 +98,41 @@ struct WeatherSectionView: View {
         }
         
         private var windDisplay: String {
-            guard let speed = forecast.windSpeed, let dir = forecast.windDir else { return "N/A" }
-            return "\(speed) km/h \(dir)"
+            guard let speed = forecast.windSpeed else { return "N/A" }
+            return "\(speed) km/h"
         }
         
         var body: some View {
             VStack(spacing: 4) {
-                HStack {
+                HStack(spacing: 2) {
                     Text(forecast.dayLabel)
-                        .font(.system(size: 15, weight: .semibold))
+                        .font(.system(size: 13, weight: .bold))
                         .foregroundColor(.f1Text)
-                    
+                        .lineLimit(1)
+
                     LottieView(fileName: forecast.condition.lottieFileName, isPlaying: isPlaying)
-                        .frame(width: 35, height: 35)
+                        .frame(width: 30, height: 30)
                         .clipped()
-                    
+
                     Text(airTempDisplay)
-                        .font(.system(size: 15, weight: .semibold))
+                        .font(.system(size: 13, weight: .bold))
                         .foregroundColor(.f1Text)
+                        .lineLimit(1)
                 }
-                
+
                 VStack(alignment: .leading, spacing: 6) {
-                    WeatherDetailRow(label: "TRACK TEMP:", value: trackTempDisplay)
+                    WeatherDetailRow(label: "TRACK:", value: trackTempDisplay)
                     WeatherDetailRow(label: "WIND:", value: windDisplay)
                     WeatherDetailRow(label: "RAIN:", value: "\(forecast.rainChance)%")
                 }
+                .padding(.horizontal, 8)
             }
             .frame(maxWidth: .infinity)
-            .padding(.horizontal, 6)
+            .padding(.horizontal, 4)
             .padding(.vertical, 10)
             .background(
                 RoundedRectangle(cornerRadius: 8)
-                    .fill(Color("f1Surface"))
+                    .fill(Color.f1Carbon)
             )
             .overlay(
                 RoundedRectangle(cornerRadius: 8)
@@ -152,9 +153,10 @@ struct WeatherSectionView: View {
                     .lineLimit(1)
                 Spacer()
                 Text(value)
-                    .font(.system(size: 12, weight: .medium))
+                    .font(.system(size: 11, weight: .medium))
                     .foregroundColor(.f1Text)
                     .lineLimit(1)
+                    .minimumScaleFactor(0.7)
             }
         }
     }
