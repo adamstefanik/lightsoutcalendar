@@ -94,4 +94,4 @@ lightsoutcalendar/
 
 ## License
 
-Made with racing heart by <a href="https://github.com/adamstefanik">Adam Samuel Štefánik</a>. MIT — see [LICENSE](LICENSE) for details.
+Made with racing heart by <a href="https://github.com/adamstefanik">Adam Samuel Štefánik</a>.
