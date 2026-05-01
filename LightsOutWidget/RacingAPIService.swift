@@ -65,7 +65,7 @@ final class F1APIService {
     static let shared = F1APIService()
 
     private let baseURL = "https://api.openf1.org/v1"
-    private let cacheKey = "F1CachedRaces_v4"
+    private let cacheKey = "F1CachedRaces_v5"
     private let cacheTimestampKey = "F1CacheTimestamp_v4"
     private let cacheDuration: TimeInterval = 6 * 3600
 
@@ -167,7 +167,9 @@ final class F1APIService {
         let weekendStart = parseDate(fp1Session?.date_start ?? meeting.date_start)
 
         let country = meeting.country_name
-        let shortName = Self.countryShortNames[meeting.country_code] ?? meeting.country_code
+        let shortName = Self.circuitShortNameOverrides[meeting.circuit_short_name]
+            ?? Self.countryShortNames[meeting.country_code]
+            ?? meeting.country_code
         let flag = Self.countryFlags[meeting.country_code] ?? "🏁"
         let canceled = Self.canceledRaces.contains(meeting.country_code)
 
@@ -295,6 +297,12 @@ final class F1APIService {
         "BEL": "🇧🇪", "NLD": "🇳🇱", "AZE": "🇦🇿", "SGP": "🇸🇬",
         "MEX": "🇲🇽", "BRA": "🇧🇷", "QAT": "🇶🇦", "ARE": "🇦🇪",
         "UAE": "🇦🇪", "HUN": "🇭🇺", "NED": "🇳🇱", "MON": "🇲🇨",
+    ]
+
+    // Circuit-level overrides for countries with multiple races (e.g. two USA rounds)
+    private static let circuitShortNameOverrides: [String: String] = [
+        "Miami": "MIA",
+        "Austin": "USA",
     ]
 
     private static let countryShortNames: [String: String] = [
