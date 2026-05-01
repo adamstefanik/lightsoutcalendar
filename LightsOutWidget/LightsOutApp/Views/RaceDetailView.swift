@@ -8,14 +8,24 @@ struct RaceDetailView: View {
     var onForward: (() -> Void)? = nil
     var onRefresh: (() async -> Void)? = nil
     @Binding var deepLinkedSession: Session?
+    @Binding var navigationPath: NavigationPath
 
     @StateObject private var settings = SettingsManager.shared
-    @State private var navigationPath = NavigationPath()
 
     @State private var weatherState: WeatherLoadState = .loading
     @State private var raceResults: [DriverResult] = []
     @State private var resultsSessionName: String = ""
-    @State private var screenWidth: CGFloat = 393
+
+    // Define a proper PreferenceKey for the scroll offset.
+    private struct ScrollOffsetPreferenceKey: PreferenceKey {
+        static var defaultValue: CGFloat = 0
+        static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+            value = nextValue()
+        }
+    }
+    
+    @State private var scrollOffset: CGFloat = 0
+    @State private var screenWidth: CGFloat = 0
 
     private var circuitInfo: CircuitInfo? {
         CircuitDatabase.info(for: race.shortName)
@@ -32,18 +42,26 @@ struct RaceDetailView: View {
 
     private var isWeatherAvailable: Bool {
         guard !race.isCompleted else { return false }
-        // OWM free tier returns 5-day / 120h forecast. Fetch as soon as the
-        // weekend Friday is within that window — partial days appear first,
-        // full Fri/Sat/Sun coverage typically from ~3 days before the race.
         let daysUntilWeekend = race.weekendStart.timeIntervalSinceNow / 86400
         return daysUntilWeekend <= 5
     }
 
     var body: some View {
-        NavigationStack(path: $navigationPath) {
+        // Main content
+        ZStack(alignment: .top) {
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 0) {
+                    GeometryReader { geometry in
+                        Color.clear
+                            .preference(
+                                key: ScrollOffsetPreferenceKey.self,
+                                value: geometry.frame(in: .named("scroll")).minY
+                            )
+                    }
+                    .frame(height: 0)
+
                     RaceHeaderView(race: race)
+                        // .padding(.top, 90) // Removed the old padding for custom top bar
 
                     // Divider
                     Rectangle()
@@ -51,8 +69,8 @@ struct RaceDetailView: View {
                         .frame(height: 1)
                         .padding(.top, 20)
                         .padding(.bottom, 10)
-                        .padding(.leading, 34)
-                        .padding(.trailing, 34)
+                        .padding(.leading, 20)
+                        .padding(.trailing, 20)
                     
                     // Session rows
                     VStack(spacing: 0) {
@@ -61,14 +79,14 @@ struct RaceDetailView: View {
                         }
                     }
 
-                    // Race results (when any session completed)
+                    // Race results
                     if !raceResults.isEmpty {
                         Rectangle()
                             .fill(Color.f1Divider)
                             .frame(height: 1)
                             .padding(.top, 10)
-                            .padding(.leading, 34)
-                            .padding(.trailing, 34)
+                            .padding(.leading, 20)
+                            .padding(.trailing, 20)
 
                         RaceResultsView(
                             results: raceResults,
@@ -77,93 +95,40 @@ struct RaceDetailView: View {
                         )
                     }
 
-                    // Divider before weather
+                    // Weather
                     if isWeatherAvailable {
                         Rectangle()
                             .fill(Color.f1Divider)
                             .frame(height: 1)
                             .padding(.top, 10)
-                            .padding(.leading, 34)
-                            .padding(.trailing, 34)
-                    }
+                            .padding(.leading, 20)
+                            .padding(.trailing, 20)
 
-                    // Weather (only available within 5 days of race weekend)
-                    if isWeatherAvailable {
                         WeatherSectionView(state: weatherState, temperatureUnit: settings.temperatureUnit)
                             .padding(.top, 20)
                             .padding(.leading, 20)
                             .padding(.trailing, 20)
                     }
 
-                    // Divider before circuit
-                    if circuitInfo != nil {
+                    // Circuit info
+                    if let info = circuitInfo {
                         Rectangle()
                             .fill(Color.f1Divider)
                             .frame(height: 1)
                             .padding(.top, 10)
-                            .padding(.leading, 34)
-                            .padding(.trailing, 34)
-                    }
+                            .padding(.leading, 20)
+                            .padding(.trailing, 20)
 
-                    // Circuit info
-                    if let info = circuitInfo {
                         CircuitInfoView(circuit: info, raceName: race.name)
                             .padding(.top, 20)
-                            .padding(.bottom, 24)
                             .padding(.leading, 20)
                             .padding(.trailing, 20)
                     }
                 }
             }
+            .scrollContentBackground(.hidden)
             .background(Color("f1Background"))
-            #if os(iOS)
-            .navigationBarTitleDisplayMode(.inline)
-            #endif
-            .toolbar {
-                ToolbarItem(placement: .principal) {
-                    Text("RACE \(race.round)")
-                        .font(.system(size: 17, weight: .semibold))
-                        .foregroundColor(.f1Text)
-                }
-                #if os(iOS)
-                if canGoBack || canGoForward {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Button { onBack?() } label: {
-                            Image(systemName: "chevron.left")
-                                .font(.system(size: 14, weight: .semibold))
-                                .foregroundColor(canGoBack ? .white : .f1SecondaryText.opacity(0.3))
-                        }
-                        .disabled(!canGoBack)
-                    }
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button { onForward?() } label: {
-                            Image(systemName: "chevron.right")
-                                .font(.system(size: 14, weight: .semibold))
-                                .foregroundColor(canGoForward ? .white : .f1SecondaryText.opacity(0.3))
-                        }
-                        .disabled(!canGoForward)
-                    }
-                }
-                #endif
-            }
-            .tint(.f1Red)
-            .overlay(GeometryReader { geo in Color.clear.preference(key: ScreenWidthKey.self, value: geo.size.width) })
-            .onPreferenceChange(ScreenWidthKey.self) { screenWidth = $0 }
-            .simultaneousGesture(
-                DragGesture(minimumDistance: 50, coordinateSpace: .global)
-                    .onEnded { value in
-                        let startX = value.startLocation.x
-                        let horizontal = value.translation.width
-                        guard abs(horizontal) > abs(value.translation.height) else { return }
-
-                        // Only trigger from left/right 1/5 edge
-                        if startX < screenWidth / 5 && horizontal > 50 && canGoBack {
-                            onBack?()
-                        } else if startX > screenWidth * 4 / 5 && horizontal < -50 && canGoForward {
-                            onForward?()
-                        }
-                    }
-            )
+            .coordinateSpace(name: "scroll")
             .refreshable {
                 #if os(iOS)
                 let generator = UIImpactFeedbackGenerator(style: .medium)
@@ -181,16 +146,62 @@ struct RaceDetailView: View {
                 await loadWeather()
                 await loadResults()
             }
-            .navigationDestination(for: Session.self) { session in
-                SessionResultsLoader(session: session)
+            
+            // Custom Top Bar with Gradient Fade
+            HStack {
+                #if os(iOS)
+                Button { onBack?() } label: {
+                    Image(systemName: "chevron.left")
+                        .font(.system(size: 16, weight: .semibold))
+                        .foregroundColor(canGoBack ? .white : .f1SecondaryText.opacity(0.3))
+                        .frame(width: 44, height: 44)
+                        .glassEffect(.regular.interactive(), in: Circle())
+                        .contentShape(Circle())
+                }
+                .disabled(!canGoBack)
+                #endif
+                
+                Spacer()
+                
+                Text("RACE \(race.round)")
+                    .font(.system(size: 17, weight: .semibold))
+                    .foregroundColor(.white)
+                    
+                Spacer()
+                
+                #if os(iOS)
+                Button { onForward?() } label: {
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 16, weight: .semibold))
+                        .foregroundColor(canGoForward ? .white : .f1SecondaryText.opacity(0.3))
+                        .frame(width: 44, height: 44)
+                        .glassEffect(.regular.interactive(), in: Circle())
+                        .contentShape(Circle())
+                }
+                .disabled(!canGoForward)
+                #endif
             }
-            .onChange(of: deepLinkedSession) { _, session in
-                guard let session else { return }
-                navigationPath = NavigationPath()
-                navigationPath.append(session)
-                deepLinkedSession = nil
+            .padding(.horizontal, 20)
+            .padding(.top, 14)
+            .padding(.bottom, 0)
+            .frame(maxWidth: .infinity)
+            .background {
+                VStack(spacing: 0) {
+                    Color("f1Background")
+                        .ignoresSafeArea(edges: .top)
+                    LinearGradient(
+                        gradient: Gradient(colors: [
+                            Color("f1Background"),
+                            Color.clear
+                        ]),
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                    .frame(height: 40)
+                }
             }
         }
+        .toolbar(.hidden, for: .navigationBar)
     }
 
     // MARK: - Weather Loading
@@ -226,10 +237,8 @@ struct RaceDetailView: View {
         }
         guard !completedSessions.isEmpty else { return }
 
-        // If whole weekend is done, show GP results; otherwise show latest completed session
         let targetSession: Session
-        if race.isCompleted,
-           let gp = completedSessions.last(where: { $0.name == "GRAND PRIX" }) {
+        if race.isCompleted, let gp = completedSessions.last(where: { $0.name == "GRAND PRIX" }) {
             targetSession = gp
         } else {
             targetSession = completedSessions.last!
@@ -250,14 +259,3 @@ struct RaceDetailView: View {
         }
     }
 }
-
-// MARK: - Screen Width Preference Key
-
-private struct ScreenWidthKey: PreferenceKey {
-    static var defaultValue: CGFloat = 393
-    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
-        value = nextValue()
-    }
-}
-
-
