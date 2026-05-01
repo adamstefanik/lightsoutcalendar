@@ -6,9 +6,10 @@ struct SettingsView: View {
 
     var body: some View {
         NavigationStack {
-            List {
-                // MARK: - Notifications
-                Section {
+            ZStack(alignment: .top) {
+                List {
+                    // MARK: - Notifications
+                    Section {
                     Toggle("Practice Sessions", isOn: $settings.notifyPractice)
                     Toggle("Qualifying", isOn: $settings.notifyQualifying)
                     Toggle("Sprint", isOn: $settings.notifySprint)
@@ -78,24 +79,16 @@ struct SettingsView: View {
                     }
                 } header: {
                     Text("ABOUT")
-                }
-
-                // MARK: - Disclaimer
-                
-                footer: {
+                } footer: {
                     Text("This app is an independent project and is not affiliated with, endorsed by, sponsored by, or associated with Formula 1, FIA, Formula One Licensing BV, any Formula 1 team, driver, circuit owner, or broadcaster. All trademarks are property of their respective owners. Data is sourced from public third-party APIs.")
                         .font(.caption2)
                         .foregroundColor(.f1SecondaryText)
                         .padding(.top, 8)
                 }
-            
             }
+            .contentMargins(.top, 60, for: .scrollContent)
             .scrollContentBackground(.hidden)
             .background(Color("f1Background"))
-            .navigationTitle("SETTINGS")
-            #if os(iOS)
-            .navigationBarTitleDisplayMode(.inline)
-            #endif
             .tint(Color.f1Red)
             .onChange(of: settings.notifyPractice) { rescheduleNotifications() }
             .onChange(of: settings.notifyQualifying) { rescheduleNotifications() }
@@ -106,6 +99,35 @@ struct SettingsView: View {
             .task {
                 _ = await NotificationManager.shared.requestPermission()
             }
+
+            // Custom Top Bar with Gradient Fade
+            HStack {
+                Spacer()
+                Text("SETTINGS")
+                    .font(.system(size: 17, weight: .semibold))
+                    .foregroundColor(.white)
+                Spacer()
+            }
+            .padding(.horizontal, 20)
+            .padding(.vertical, 14)
+            .frame(maxWidth: .infinity)
+            .background {
+                VStack(spacing: 0) {
+                    Color("f1Background")
+                        .ignoresSafeArea(edges: .top)
+                    LinearGradient(
+                        gradient: Gradient(colors: [
+                            Color("f1Background"),
+                            Color.clear
+                        ]),
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                    .frame(height: 40)
+                }
+            }
+            }
+            .toolbar(.hidden, for: .navigationBar)
         }
     }
 
