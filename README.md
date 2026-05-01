@@ -1,5 +1,5 @@
 ![Alt text](assets/ui-app.png)
-![Swift](https://img.shields.io/badge/Swift-5.9+-orange.svg) ![iOS](https://img.shields.io/badge/iOS-17+-black.svg) ![WidgetKit](https://img.shields.io/badge/WidgetKit-supported-red.svg) ![License](https://img.shields.io/badge/license-MIT-blue.svg) 
+![Swift](https://img.shields.io/badge/Swift-5.9+-orange.svg) ![iOS](https://img.shields.io/badge/iOS-26+-black.svg) ![WidgetKit](https://img.shields.io/badge/WidgetKit-supported-red.svg) ![License](https://img.shields.io/badge/license-GPL_3.0-blue.svg) 
 # Lights Out Calendar
 
 A sleek iOS app and widget for the 2026 season. Track every race weekend with live countdowns, full session schedules, results, weather forecasts, and circuit info.
