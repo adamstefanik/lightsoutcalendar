@@ -20,16 +20,29 @@ class WeatherService {
         let circuitKey = "\(Int(latitude * 100))_\(Int(longitude * 100))"
 
         if let cached = loadFromCache(circuitKey: circuitKey) {
+            print("[Weather] cache hit \(circuitKey)")
             return cached
         }
+
+        print("[Weather] fetching OWM \(circuitKey) key=\(Self.apiKey.isEmpty ? "MISSING" : "ok")")
+
+        let config = URLSessionConfiguration.default
+        config.timeoutIntervalForRequest = 10
+        config.timeoutIntervalForResource = 15
+        let session = URLSession(configuration: config)
 
         let urlString = "https://api.openweathermap.org/data/2.5/forecast?lat=\(latitude)&lon=\(longitude)&appid=\(Self.apiKey)&units=metric"
         guard let url = URL(string: urlString) else { return [] }
 
         do {
-            let (data, response) = try await URLSession.shared.data(from: url)
-            guard let http = response as? HTTPURLResponse, http.statusCode == 200 else { return [] }
+            let (data, response) = try await session.data(from: url)
+            guard let http = response as? HTTPURLResponse, http.statusCode == 200 else {
+                print("[Weather] OWM status \((response as? HTTPURLResponse)?.statusCode ?? -1)")
+                return []
+            }
+            print("[Weather] OWM ok, parsing...")
             var forecasts = try parseForecasts(from: data, weekendStart: weekendStart, raceDate: raceDate)
+            print("[Weather] parsed \(forecasts.count) days")
 
             // Enrich completed days with real OpenF1 weather data
             forecasts = await enrichWithOpenF1(forecasts: forecasts, sessions: sessions)
@@ -39,6 +52,7 @@ class WeatherService {
             }
             return forecasts
         } catch {
+            print("[Weather] error: \(error)")
             return []
         }
     }
