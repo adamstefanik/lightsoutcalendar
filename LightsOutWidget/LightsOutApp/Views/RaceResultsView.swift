@@ -36,7 +36,7 @@ struct RaceResultsView: View {
                     .frame(maxWidth: .infinity, alignment: .center)
             }
         }
-        .padding(.horizontal, 34)
+        .padding(.horizontal, 20)
         .padding(.top, 16)
         .padding(.bottom, 0)
     }
@@ -99,7 +99,7 @@ private struct PodiumCard: View {
         .padding(12)
         .background(
             RoundedRectangle(cornerRadius: 8)
-                .fill(Color("f1Surface"))
+                .fill(Color.f1Carbon)
         )
         .overlay(
             RoundedRectangle(cornerRadius: 8)

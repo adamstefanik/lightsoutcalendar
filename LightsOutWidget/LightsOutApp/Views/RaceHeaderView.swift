@@ -31,6 +31,7 @@ struct RaceHeaderView: View {
                     .lineLimit(1)
 
             }
+            .padding(.leading, 8)
 
             Spacer()
 
@@ -53,9 +54,9 @@ struct RaceHeaderView: View {
                 }
             }
         }
-        .padding(.leading, 34)
-        .padding(.trailing, 34)
-        .padding(.top, 30)
+        .padding(.leading, 20)
+        .padding(.trailing, 20)
+        .padding(.top, 75)
     }
 
     private var badgeLabel: String {

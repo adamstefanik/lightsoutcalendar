@@ -31,7 +31,7 @@ struct CircuitInfoView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(
                 RoundedRectangle(cornerRadius: 8)
-                    .fill(Color("f1Surface"))
+                    .fill(Color.f1Carbon)
             )
             .overlay(alignment: .bottomTrailing) {
                 Image("formula_silhouette")
@@ -50,7 +50,6 @@ struct CircuitInfoView: View {
             )
             .clipShape(RoundedRectangle(cornerRadius: 8))
         }
-        .padding(.horizontal, 14)
     }
 }
 
