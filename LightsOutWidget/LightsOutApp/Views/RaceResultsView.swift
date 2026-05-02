@@ -107,3 +107,30 @@ private struct PodiumCard: View {
         )
     }
 }
+
+// MARK: - Spoiler Cover
+
+struct SpoilerCoverView: View {
+    var body: some View {
+        VStack(spacing: 10) {
+            Image(systemName: "eye.slash.fill")
+                .font(.system(size: 18))
+                .foregroundColor(.f1SecondaryText)
+            Text("RESULTS HIDDEN")
+                .font(.system(size: 10, weight: .semibold))
+                .foregroundColor(.f1SecondaryText)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 26)
+        .background(
+            RoundedRectangle(cornerRadius: 10)
+                .fill(Color.f1Carbon)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(Color.f1SecondaryText.opacity(0.2), lineWidth: 1)
+                )
+        )
+        .padding(.horizontal, 20)
+        .padding(.top, 16)
+    }
+}

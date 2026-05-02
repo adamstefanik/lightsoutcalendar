@@ -66,7 +66,7 @@ struct RaceDetailView: View {
                     Rectangle()
                         .fill(Color.f1Divider)
                         .frame(height: 1)
-                        .padding(.top, 20)
+                        .padding(.top, 10)
                         .padding(.bottom, 10)
                         .padding(.leading, 20)
                         .padding(.trailing, 20)
@@ -87,7 +87,9 @@ struct RaceDetailView: View {
                             .padding(.leading, 20)
                             .padding(.trailing, 20)
 
-                        if !settings.hideSpoilers {
+                        if settings.hideSpoilers {
+                            SpoilerCoverView()
+                        } else {
                             RaceResultsView(
                                 results: raceResults,
                                 displayType: resultsDisplayType,
@@ -107,6 +109,7 @@ struct RaceDetailView: View {
 
                         WeatherSectionView(state: weatherState, temperatureUnit: settings.temperatureUnit)
                             .padding(.top, 20)
+                            .padding(.bottom, 10)
                             .padding(.leading, 20)
                             .padding(.trailing, 20)
                     }
@@ -127,6 +130,7 @@ struct RaceDetailView: View {
                     }
                 }
             }
+            .tint(.clear)
             .scrollContentBackground(.hidden)
             .background(Color("f1Background"))
             .coordinateSpace(name: "scroll")
@@ -255,7 +259,7 @@ struct RaceDetailView: View {
         case "GRAND PRIX": return .race
         case "SPRINT": return .sprint
         case "PRACTICE 1", "PRACTICE 2", "PRACTICE 3": return .practice
-        case "SPRINT QUALI": return .sprintTiming
+        case "SPRINT QUALIFYING": return .sprintTiming
         default: return .timing
         }
     }
