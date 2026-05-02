@@ -94,6 +94,7 @@ struct F1LargeView: View {
             Rectangle()
                 .fill(Color.f1Divider)
                 .frame(height: 1)
+                .padding(.horizontal, 10)
 
             // SESSION ROWS
             VStack(spacing: 0) {
@@ -135,14 +136,13 @@ struct F1MediumView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            HStack(spacing: 10) {
-                
+            HStack(alignment: .center, spacing: 10) {
+
                 // Track box
                 DynamicTrackView(raceShortName: race.shortName)
                     .frame(width: 60, height: 60)
                     .padding(2)
-                    .padding(.top, 7)
-                
+
                 VStack(alignment: .leading, spacing: 3) {
                     HStack(spacing: 4) {
                         Text(race.city)
@@ -154,14 +154,13 @@ struct F1MediumView: View {
                         .frame(maxWidth: 100, alignment: .leading)
                         .lineLimit(2)
                         .fixedSize(horizontal: false, vertical: true)
-                    
+
                     Text("\(race.weekendDayRange) \(race.monthLabel)")
                         .font(.system(size: 8, weight: .regular))
                         .foregroundColor(.f1SecondaryText)
                         .lineLimit(1)
                 }
                 .padding(.leading, 7)
-                .padding(.top, 5)
                 
                 Spacer()
 
@@ -177,8 +176,6 @@ struct F1MediumView: View {
                                 RoundedRectangle(cornerRadius: 3).stroke(Color.primary, lineWidth: 1)
                             }
                         }
-                        .padding(.top,24)
-
                     HStack(alignment: .bottom, spacing: 5) {
                         CountdownUnit(value: mediumCountdownDays, label: "DAYS")
                         CountdownUnit(value: mediumCountdownHours, label: "HRS")
@@ -186,9 +183,10 @@ struct F1MediumView: View {
                     }
                 }
             }
-            .padding(.horizontal, 12).padding(.vertical, 10)
+            .padding(.horizontal, 12).padding(.top, 6).padding(.bottom, 0)
 
             Rectangle().fill(Color.f1Divider).frame(height: 1)
+                .padding(.horizontal, 12)
 
             ForEach(Array(race.sessions.suffix(2).enumerated()), id: \.offset) { _, session in
                 SessionRowView(session: session, raceId: race.id)
@@ -197,7 +195,6 @@ struct F1MediumView: View {
             Text("github.com/adamstefanik")
                 .font(.system(size: 7, weight: .medium, design: .monospaced))
                 .foregroundColor(.f1SecondaryText.opacity(0.5))
-                .offset(y: -8)
         }
     }
 
@@ -321,3 +318,19 @@ struct DynamicTrackView: View {
             .foregroundColor(.f1Red)
     }
 }
+
+// MARK: - Previews
+
+#if DEBUG
+#Preview("Large", as: .systemLarge) {
+    F1CalendarWidget()
+} timeline: {
+    F1WidgetEntry(date: .now, nextRace: F1Calendar.fallbackRaces[3])
+}
+
+#Preview("Medium", as: .systemMedium) {
+    F1CalendarWidget()
+} timeline: {
+    F1WidgetEntry(date: .now, nextRace: F1Calendar.fallbackRaces[3])
+}
+#endif
