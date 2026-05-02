@@ -34,6 +34,12 @@ struct SettingsView: View {
                     Text("REMIND ME BEFORE")
                 }
 
+                // MARK: - Spoiler Protection
+                Section {
+                    Toggle("Hide Results", isOn: $settings.hideSpoilers)
+                } header: {
+                    Text("SPOILER PROTECTION")
+                }
                 // MARK: - Weather
                 Section {
                     Picker("Temperature", selection: $settings.temperatureUnit) {

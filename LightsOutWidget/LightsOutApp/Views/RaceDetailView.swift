@@ -88,11 +88,13 @@ struct RaceDetailView: View {
                             .padding(.leading, 20)
                             .padding(.trailing, 20)
 
-                        RaceResultsView(
-                            results: raceResults,
-                            displayType: resultsDisplayType,
-                            sessionName: resultsSessionName
-                        )
+                        if !settings.hideSpoilers {
+                            RaceResultsView(
+                                results: raceResults,
+                                displayType: resultsDisplayType,
+                                sessionName: resultsSessionName
+                            )
+                        }
                     }
 
                     // Weather

@@ -44,6 +44,12 @@ final class SettingsManager: ObservableObject {
     static let reminderOptions = [15, 30, 60, 120]
     static let secondReminderOptions = [0, 15, 30, 60, 120, 240, 1440]  // 0 = Off, 1440 = 1 day
 
+    // MARK: - Spoiler Protection
+
+    @Published var hideSpoilers: Bool {
+        didSet { defaults.set(hideSpoilers, forKey: Keys.hideSpoilers) }
+    }
+
     // MARK: - Weather
 
     @Published var temperatureUnit: TemperatureUnit {
@@ -61,6 +67,7 @@ final class SettingsManager: ObservableObject {
         self.notifyRace = d.object(forKey: Keys.notifyRace) as? Bool ?? true
         self.reminderMinutes = d.object(forKey: Keys.reminderMinutes) as? Int ?? 30
         self.secondReminderMinutes = d.object(forKey: Keys.secondReminderMinutes) as? Int ?? 0
+        self.hideSpoilers = d.object(forKey: Keys.hideSpoilers) as? Bool ?? false
         let unitRaw = d.string(forKey: Keys.temperatureUnit) ?? TemperatureUnit.celsius.rawValue
         self.temperatureUnit = TemperatureUnit(rawValue: unitRaw) ?? .celsius
     }
@@ -74,6 +81,7 @@ final class SettingsManager: ObservableObject {
         static let notifyRace = "settings.notifyRace"
         static let reminderMinutes = "settings.reminderMinutes"
         static let secondReminderMinutes = "settings.secondReminderMinutes"
+        static let hideSpoilers = "settings.hideSpoilers"
         static let temperatureUnit = "settings.temperatureUnit"
     }
 }
