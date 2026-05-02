@@ -3,6 +3,7 @@ import SwiftUI
 struct CircuitInfoView: View {
     let circuit: CircuitInfo
     var raceName: String? = nil
+    var showQualifyingRecord: Bool = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
@@ -20,12 +21,20 @@ struct CircuitInfoView: View {
                 HStack(spacing: 16) {
                     InfoItem(label: "Length", value: circuit.length)
                     InfoItem(label: "Turns", value: "\(circuit.turns)")
-                    InfoItem(label: "Lap Record", value: circuit.lapRecord)
+                    InfoItem(label: "Lap Record", value: showQualifyingRecord ? circuit.qualifyingRecord : circuit.lapRecord)
                 }
 
-                Text("\(circuit.lapRecordHolder), \(String(circuit.lapRecordYear))")
-                    .font(.system(size: 11))
-                    .foregroundColor(.f1SecondaryText)
+                HStack(spacing: 4) {
+                    Text(showQualifyingRecord ? "\(circuit.qualifyingRecordHolder), \(String(format: "%d", circuit.qualifyingRecordYear))" : "\(circuit.lapRecordHolder), \(String(format: "%d", circuit.lapRecordYear))")
+                        .font(.system(size: 11))
+                        .foregroundColor(.f1SecondaryText)
+                    Text("·")
+                        .font(.system(size: 11))
+                        .foregroundColor(.f1SecondaryText.opacity(0.5))
+                    Text(showQualifyingRecord ? "Qualifying" : circuit.lapRecordSession)
+                        .font(.system(size: 11))
+                        .foregroundColor(.f1SecondaryText.opacity(0.7))
+                }
             }
             .padding(14)
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -75,12 +84,15 @@ private struct InfoItem: View {
 
 #Preview {
     CircuitInfoView(circuit: CircuitInfo(
-        circuitId: "Suzuka International Racing Course",
+        circuitId: "JPN",
         length: "5.807 km",
         turns: 18,
-        lapRecord: "1:30.983",
-        lapRecordHolder: "Lewis Hamilton",
-        lapRecordYear: 2019,
+        lapRecord: "1:30.965",
+        lapRecordHolder: "Kimi Antonelli",
+        lapRecordYear: 2025,
+        qualifyingRecord: "1:26.983",
+        qualifyingRecordHolder: "Max Verstappen",
+        qualifyingRecordYear: 2025,
         latitude: 34.8431,
         longitude: 136.5407
     ))
