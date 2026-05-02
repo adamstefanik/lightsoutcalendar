@@ -90,7 +90,7 @@ final class NotificationManager {
             return settings.notifyPractice
         case "QUALIFYING":
             return settings.notifyQualifying
-        case "SPRINT QUALI", "SPRINT":
+        case "SPRINT QUALIFYING", "SPRINT":
             return settings.notifySprint
         case "GRAND PRIX":
             return settings.notifyRace

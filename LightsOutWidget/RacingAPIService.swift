@@ -65,8 +65,8 @@ final class F1APIService {
     static let shared = F1APIService()
 
     private let baseURL = "https://api.openf1.org/v1"
-    private let cacheKey = "F1CachedRaces_v5"
-    private let cacheTimestampKey = "F1CacheTimestamp_v4"
+    private let cacheKey = "F1CachedRaces_v6"
+    private let cacheTimestampKey = "F1CacheTimestamp_v6"
     private let cacheDuration: TimeInterval = 6 * 3600
 
     private let defaults = UserDefaults(suiteName: "group.com.lightsoutcalendar.shared") ?? .standard
@@ -215,7 +215,7 @@ final class F1APIService {
 
             case "Qualifying":
                 if api.session_name.lowercased().contains("sprint") {
-                    name = "SPRINT QUALI"
+                    name = "SPRINT QUALIFYING"
                     highlighted = true
                 } else {
                     name = "QUALIFYING"
@@ -224,7 +224,7 @@ final class F1APIService {
                 timeStr = "\(startTime) - \(endTime)"
 
             case "Sprint Qualifying", "Sprint Shootout":
-                name = "SPRINT QUALI"
+                name = "SPRINT QUALIFYING"
                 highlighted = true
                 timeStr = "\(startTime) - \(endTime)"
 

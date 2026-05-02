@@ -118,7 +118,7 @@ struct Race: Identifiable, Codable {
         case "PRACTICE 2": return "FP2"
         case "PRACTICE 3": return "FP3"
         case "QUALIFYING": return "QUAL"
-        case "SPRINT QUALI": return "SQ"
+        case "SPRINT QUALIFYING": return "SQ"
         case "SPRINT": return "SPRINT"
         case "GRAND PRIX": return "RACE"
         default: return "FP1"
@@ -140,7 +140,7 @@ struct Race: Identifiable, Codable {
                 Session(name: "PRACTICE 1",   day: "FRIDAY",   time: "13:30 - 14:30", isHighlighted: false,
                         startDate: cal.date(bySettingHour: 13, minute: 30, second: 0, of: day1),
                         endDate:   cal.date(bySettingHour: 14, minute: 30, second: 0, of: day1)),
-                Session(name: "SPRINT QUALI", day: "FRIDAY",   time: "17:30 - 18:30", isHighlighted: true,
+                Session(name: "SPRINT QUALIFYING", day: "FRIDAY",   time: "17:30 - 18:30", isHighlighted: true,
                         startDate: cal.date(bySettingHour: 17, minute: 30, second: 0, of: day1),
                         endDate:   cal.date(bySettingHour: 18, minute: 30, second: 0, of: day1)),
                 Session(name: "SPRINT",       day: "SATURDAY", time: "12:00 - 13:00", isHighlighted: true,
