@@ -87,10 +87,10 @@ struct CalendarRowView: View {
                 if isNextRace {
                     VStack(alignment: .trailing, spacing: 2) {
                         Text(countdownText(now: context.date))
-                            .font(.system(size: 13, weight: .bold, design: .monospaced))
+                            .font(.system(size: 15, weight: .bold, design: .monospaced))
                             .foregroundColor(.f1Red)
                         Text(nextSessionLabel)
-                            .font(.system(size: 8, weight: .medium))
+                            .font(.system(size: 9, weight: .medium))
                             .foregroundColor(.f1Red)
                             .lineLimit(1)
                     }

@@ -212,7 +212,7 @@ private struct TimingRow: View {
             Spacer()
 
             HStack(spacing: 0) {
-                let showSegment = !driver.segment.isEmpty && driver.segment != "Q3" && driver.segment != "SQ3"
+                let showSegment = !driver.segment.isEmpty
                 Text(showSegment ? "\(driver.segment):" : "")
                     .font(.system(size: 11, weight: .medium))
                     .foregroundColor(.f1SecondaryText)
@@ -315,7 +315,7 @@ private struct PodiumRow: View {
                     Spacer()
 
                     HStack(spacing: 0) {
-                        let showSegment = !driver.segment.isEmpty && driver.segment != "Q3" && driver.segment != "SQ3"
+                        let showSegment = !driver.segment.isEmpty
                         Text(showSegment ? "\(driver.segment):" : "")
                             .font(.system(size: 11, weight: .medium))
                             .foregroundColor(.f1SecondaryText)

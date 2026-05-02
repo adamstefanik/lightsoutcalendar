@@ -23,7 +23,7 @@ struct RaceResultsView: View {
 
             // Podium cards
             ForEach(podium) { driver in
-                PodiumCard(driver: driver, showPoints: showPoints, showFastestLap: showFastestLap)
+                PodiumCard(driver: driver, showPoints: showPoints, showFastestLap: showFastestLap, sessionName: sessionName)
             }
 
             // Full results link
@@ -48,6 +48,7 @@ private struct PodiumCard: View {
     let driver: DriverResult
     var showPoints: Bool = true
     var showFastestLap: Bool = true
+    var sessionName: String = ""
 
     private var positionColor: Color {
         switch driver.position {
@@ -66,16 +67,11 @@ private struct PodiumCard: View {
                 .frame(width: 40)
 
             VStack(alignment: .leading, spacing: 2) {
-                HStack(spacing: 8) {
-                    Text(driver.shortName)
-                        .font(.system(size: 14, weight: .semibold))
-                        .foregroundColor(.f1Text)
-                    if showFastestLap && driver.fastestLap {
-                        Image(systemName: "stopwatch.fill")
-                            .font(.system(size: 10))
-                            .foregroundColor(.purple)
-                    }
-                }
+                Text(driver.driverName)
+                    .font(.system(size: 14, weight: .semibold))
+                    .foregroundColor(.f1Text)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
                 Text(driver.team)
                     .font(.system(size: 11))
                     .foregroundColor(.f1SecondaryText)
