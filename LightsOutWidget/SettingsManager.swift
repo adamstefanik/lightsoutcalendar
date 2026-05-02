@@ -30,7 +30,7 @@ final class SettingsManager: ObservableObject {
         didSet { defaults.set(notifyRace, forKey: Keys.notifyRace) }
     }
 
-    // MARK: - Reminder Time
+// MARK: - Reminder Time
 
     @Published var reminderMinutes: Int {
         didSet { defaults.set(reminderMinutes, forKey: Keys.reminderMinutes) }
@@ -41,7 +41,7 @@ final class SettingsManager: ObservableObject {
         didSet { defaults.set(secondReminderMinutes, forKey: Keys.secondReminderMinutes) }
     }
 
-    static let reminderOptions = [15, 30, 60, 120]
+    static let reminderOptions = [5, 15, 30, 60, 120]
     static let secondReminderOptions = [0, 15, 30, 60, 120, 240, 1440]  // 0 = Off, 1440 = 1 day
 
     // MARK: - Spoiler Protection

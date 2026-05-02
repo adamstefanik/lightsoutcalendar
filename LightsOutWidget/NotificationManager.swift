@@ -45,7 +45,7 @@ final class NotificationManager {
 
                     let content = UNMutableNotificationContent()
                     content.title = race.name
-                    content.body = "\(session.name) starts in \(reminderLabel(offsetMinutes))"
+                    content.body = "\(session.name.capitalized) starts in \(reminderLabel(offsetMinutes))"
                     content.sound = .default
 
                     let components = Calendar.current.dateComponents(
@@ -77,7 +77,7 @@ final class NotificationManager {
 
     private func reminderLabel(_ minutes: Int) -> String {
         if minutes < 60 {
-            return "\(minutes) min"
+            return "\(minutes) minutes"
         } else {
             let hours = minutes / 60
             return "\(hours) hour\(hours > 1 ? "s" : "")"
