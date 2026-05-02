@@ -101,13 +101,7 @@ struct Race: Identifiable, Codable {
         let ordered = sessions.sorted {
             ($0.startDate ?? .distantPast) < ($1.startDate ?? .distantPast)
         }
-        // Live session takes priority
-        if let live = ordered.first(where: {
-            ($0.startDate ?? .distantPast) <= now && ($0.endDate ?? .distantPast) > now
-        }) {
-            return sessionBadgeLabel(live.name)
-        }
-        // Otherwise next upcoming
+        // Skip live, show next upcoming
         if let next = ordered.first(where: { ($0.startDate ?? .distantPast) > now }) {
             return sessionBadgeLabel(next.name)
         }
