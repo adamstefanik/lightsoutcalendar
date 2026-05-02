@@ -61,7 +61,6 @@ struct RaceDetailView: View {
                     .frame(height: 0)
 
                     RaceHeaderView(race: race)
-                        // .padding(.top, 90) // Removed the old padding for custom top bar
 
                     // Divider
                     Rectangle()
@@ -71,7 +70,7 @@ struct RaceDetailView: View {
                         .padding(.bottom, 10)
                         .padding(.leading, 20)
                         .padding(.trailing, 20)
-                    
+
                     // Session rows
                     VStack(spacing: 0) {
                         ForEach(Array(race.sessions.enumerated()), id: \.offset) { _, session in
@@ -148,7 +147,7 @@ struct RaceDetailView: View {
                 await loadWeather()
                 await loadResults()
             }
-            
+
             // Custom Top Bar with Gradient Fade
             HStack {
                 #if os(iOS)
@@ -162,15 +161,15 @@ struct RaceDetailView: View {
                 }
                 .disabled(!canGoBack)
                 #endif
-                
+
                 Spacer()
-                
+
                 Text("RACE \(race.round)")
                     .font(.system(size: 17, weight: .semibold))
                     .foregroundColor(.white)
-                    
+
                 Spacer()
-                
+
                 #if os(iOS)
                 Button { onForward?() } label: {
                     Image(systemName: "chevron.right")
