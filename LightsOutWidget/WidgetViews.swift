@@ -224,8 +224,13 @@ struct SessionRowView: View {
         return end < Date()
     }
 
+    private var isProcessing: Bool {
+        guard let end = session.endDate else { return false }
+        return end < Date() && Date() < end.addingTimeInterval(30 * 60)
+    }
+
     private var hasResults: Bool {
-        isCompleted && session.sessionKey != nil
+        isCompleted && !isProcessing && session.sessionKey != nil
     }
 
     var body: some View {
@@ -254,6 +259,11 @@ struct SessionRowView: View {
                     .padding(.horizontal, 7)
                     .padding(.vertical, 3)
                     .background(RoundedRectangle(cornerRadius: 3).fill(Color.f1Red))
+                    .frame(width: 100, alignment: .trailing)
+            } else if isProcessing {
+                Text("RESULTS SOON")
+                    .font(.system(size: 10, weight: .medium))
+                    .foregroundColor(.f1SecondaryText)
                     .frame(width: 100, alignment: .trailing)
             } else if hasResults {
                 HStack(spacing: 4) {

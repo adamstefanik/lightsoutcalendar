@@ -40,6 +40,12 @@ struct RaceDetailView: View {
         }
     }
 
+    private var showQualifyingRecord: Bool {
+        let qualifying = race.sessions.first { $0.name == "QUALIFYING" }
+        guard let end = qualifying?.endDate else { return false }
+        return Date() < end
+    }
+
     private var isWeatherAvailable: Bool {
         guard !race.isCompleted else { return false }
         let daysUntilWeekend = race.weekendStart.timeIntervalSinceNow / 86400
@@ -74,8 +80,28 @@ struct RaceDetailView: View {
                     // Session rows
                     VStack(spacing: 0) {
                         ForEach(Array(race.sessions.enumerated()), id: \.offset) { _, session in
-                            AppSessionRowView(session: session, isCanceled: race.isCanceled)
+                            AppSessionRowView(
+                                session: session,
+                                isCanceled: race.isCanceled,
+                                resultsAvailable: !raceResults.isEmpty && resultsSessionName == session.name
+                            )
                         }
+                    }
+
+                    // Weather
+                    if isWeatherAvailable {
+                        Rectangle()
+                            .fill(Color.f1Divider)
+                            .frame(height: 1)
+                            .padding(.top, 10)
+                            .padding(.leading, 20)
+                            .padding(.trailing, 20)
+
+                        WeatherSectionView(state: weatherState, temperatureUnit: settings.temperatureUnit)
+                            .padding(.top, 20)
+                            .padding(.bottom, 10)
+                            .padding(.leading, 20)
+                            .padding(.trailing, 20)
                     }
 
                     // Race results
@@ -98,22 +124,6 @@ struct RaceDetailView: View {
                         }
                     }
 
-                    // Weather
-                    if isWeatherAvailable {
-                        Rectangle()
-                            .fill(Color.f1Divider)
-                            .frame(height: 1)
-                            .padding(.top, 10)
-                            .padding(.leading, 20)
-                            .padding(.trailing, 20)
-
-                        WeatherSectionView(state: weatherState, temperatureUnit: settings.temperatureUnit)
-                            .padding(.top, 20)
-                            .padding(.bottom, 10)
-                            .padding(.leading, 20)
-                            .padding(.trailing, 20)
-                    }
-
                     // Circuit info
                     if let info = circuitInfo {
                         Rectangle()
@@ -123,7 +133,7 @@ struct RaceDetailView: View {
                             .padding(.leading, 20)
                             .padding(.trailing, 20)
 
-                        CircuitInfoView(circuit: info, raceName: race.name)
+                        CircuitInfoView(circuit: info, raceName: race.name, showQualifyingRecord: showQualifyingRecord)
                             .padding(.top, 20)
                             .padding(.leading, 20)
                             .padding(.trailing, 20)

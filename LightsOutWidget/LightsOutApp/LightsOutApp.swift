@@ -127,7 +127,7 @@ final class CatalystSceneDelegate: NSObject, UIWindowSceneDelegate {
 // MARK: - Race Store
 
 final class RaceStore: ObservableObject {
-    @Published var races: [Race] = F1Calendar.fallbackRaces
+    @Published var races: [Race] = F1APIService.shared.cachedRaces() ?? F1Calendar.fallbackRaces
     @Published var isLoading = true
     var nextRace: Race? { races.first { !$0.isCompleted } }
 

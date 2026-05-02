@@ -283,10 +283,12 @@ final class F1APIService {
         }
     }
 
-    private func loadCachedRaces() -> [Race]? {
+    func cachedRaces() -> [Race]? {
         guard let data = defaults.data(forKey: cacheKey) else { return nil }
         return try? JSONDecoder().decode([Race].self, from: data)
     }
+
+    private func loadCachedRaces() -> [Race]? { cachedRaces() }
 
     // MARK: - Lookup Tables
 
