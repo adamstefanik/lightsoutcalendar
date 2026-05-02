@@ -7,33 +7,31 @@ struct RaceHeaderView: View {
         HStack(alignment: .top, spacing: 20) {
             // Track box
             DynamicTrackView(raceShortName: race.shortName)
-                .frame(width: 85, height: 85)
+                .frame(width: 95, height: 95)
                 .padding(2)
-            
+
             // Race info
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: 6) {
                 Text(race.city)
-                    .font(.system(size: 18, weight: .bold))
+                    .font(.system(size: 22, weight: .bold))
                     .foregroundColor(.f1Text)
-                    .padding(.top, 10)
+                    .padding(.top, 14)
                     .lineLimit(1)
                     .minimumScaleFactor(0.5)
-                
+
                 Text("\(race.name.uppercased()) 2026")
-                    .font(.system(size: 9, weight: .medium))
+                    .font(.system(size: 11, weight: .medium))
                     .foregroundColor(.f1SecondaryText)
-                    .frame(maxWidth: 120, alignment: .leading)
                     .lineLimit(2)
-                
+
                 Text("\(race.weekendDayRange) \(race.monthLabel)")
-                    .font(.system(size: 10, weight: .regular))
+                    .font(.system(size: 12, weight: .regular))
                     .foregroundColor(.f1SecondaryText)
                     .lineLimit(1)
 
             }
-            .padding(.leading, 8)
-
-            Spacer()
+            .padding(.leading, 4)
+            .frame(maxWidth: .infinity, alignment: .leading)
 
             // Countdown + session badge
             VStack(alignment: .trailing, spacing: 6) {
@@ -47,10 +45,12 @@ struct RaceHeaderView: View {
                     .padding(.top, 35)
 
                 // Countdown
-                HStack(alignment: .bottom, spacing: 6) {
-                    CountdownBlock(value: race.isCanceled ? "00" : countdownDays, label: "DAYS")
-                    CountdownBlock(value: race.isCanceled ? "00" : countdownHours, label: "HRS")
-                    CountdownBlock(value: race.isCanceled ? "00" : countdownMins, label: "MINS")
+                TimelineView(.periodic(from: .now, by: 60)) { context in
+                    HStack(alignment: .bottom, spacing: 6) {
+                        CountdownBlock(value: race.isCanceled ? "00" : countdownDays(now: context.date), label: "DAYS")
+                        CountdownBlock(value: race.isCanceled ? "00" : countdownHours(now: context.date), label: "HRS")
+                        CountdownBlock(value: race.isCanceled ? "00" : countdownMins(now: context.date), label: "MINS")
+                    }
                 }
             }
         }
@@ -67,21 +67,21 @@ struct RaceHeaderView: View {
 
     // MARK: - Countdown
 
-    private var secondsUntilNext: Int {
+    private func secondsUntilNext(now: Date) -> Int {
         let target = race.nextSessionDate ?? race.raceDate
-        return max(0, Int(target.timeIntervalSinceNow))
+        return max(0, Int(target.timeIntervalSince(now)))
     }
 
-    private var countdownDays: String {
-        String(format: "%02d", secondsUntilNext / 86400)
+    private func countdownDays(now: Date) -> String {
+        String(format: "%02d", secondsUntilNext(now: now) / 86400)
     }
 
-    private var countdownHours: String {
-        String(format: "%02d", (secondsUntilNext % 86400) / 3600)
+    private func countdownHours(now: Date) -> String {
+        String(format: "%02d", (secondsUntilNext(now: now) % 86400) / 3600)
     }
 
-    private var countdownMins: String {
-        String(format: "%02d", (secondsUntilNext % 3600) / 60)
+    private func countdownMins(now: Date) -> String {
+        String(format: "%02d", (secondsUntilNext(now: now) % 3600) / 60)
     }
 }
 

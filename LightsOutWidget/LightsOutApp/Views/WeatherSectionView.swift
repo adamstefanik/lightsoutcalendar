@@ -61,12 +61,17 @@ struct WeatherSectionView: View {
                 .padding(.vertical, 16)
                 
             case .loaded(let forecasts):
-                HStack(spacing: 8) {
-                    ForEach(forecasts) { forecast in
-                        WeatherDayCard(forecast: forecast, temperatureUnit: temperatureUnit, isPlaying: isPlaying)
+                GeometryReader { geo in
+                    let cardWidth = (geo.size.width - 8 * 2) / 3
+                    HStack(spacing: 8) {
+                        ForEach(forecasts) { forecast in
+                            WeatherDayCard(forecast: forecast, temperatureUnit: temperatureUnit, isPlaying: isPlaying)
+                                .frame(width: cardWidth)
+                        }
                     }
+                    .frame(maxWidth: .infinity, alignment: .center)
                 }
-                .frame(maxWidth: .infinity, alignment: .center)
+                .frame(height: 95)
                 
             case .error:
                 Text("Weather unavailable")

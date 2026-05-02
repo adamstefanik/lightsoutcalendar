@@ -138,7 +138,7 @@ struct SessionResultsLoader: View {
                 case "GRAND PRIX": return .race
                 case "SPRINT": return .sprint
                 case "PRACTICE 1", "PRACTICE 2", "PRACTICE 3": return .practice
-                case "SPRINT QUALI": return .sprintTiming
+                case "SPRINT QUALIFYING": return .sprintTiming
                 default: return .timing
                 }
             }()
