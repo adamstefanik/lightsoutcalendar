@@ -78,9 +78,10 @@ struct SessionResultsView: View {
                     Text("POS.")
                         .frame(width: 37, alignment: .center)
                     Text("DRIVER")
-                        .frame(width: 90, alignment: .leading).padding(.leading, 25)
+                        .frame(width: 95, alignment: .leading).padding(.leading, 25)
                     Text("TIRE")
                         .frame(width: 27, alignment: .center)
+                        .padding(.leading, 5)
                     Spacer()
                     HStack(spacing: 0) {
                         Text("Q")
@@ -202,12 +203,12 @@ private struct TimingRow: View {
             Text(driver.shortName)
                 .font(.system(size: 13, weight: .medium))
                 .foregroundColor(.white)
-                .frame(width: 90, alignment: .leading)
+                .frame(width: 95, alignment: .leading)
                 .lineLimit(1)
 
             CompoundBadge(compound: driver.compound)
                 .frame(width: 20, alignment: .leading)
-                .padding(.leading, 4)
+                .padding(.leading, 6)
 
             Spacer()
 
@@ -305,12 +306,12 @@ private struct PodiumRow: View {
                     Text(driver.shortName)
                         .font(.system(size: 13, weight: .semibold))
                         .foregroundColor(.f1Text)
-                        .frame(width: 90, alignment: .leading)
+                        .frame(width: 95, alignment: .leading)
                         .lineLimit(1)
 
                     CompoundBadge(compound: driver.compound)
                         .frame(width: 20, alignment: .leading)
-                        .padding(.leading, 4)
+                        .padding(.leading, 6)
 
                     Spacer()
 
