@@ -20,6 +20,10 @@ struct Session: Codable, Identifiable, Hashable {
         self.sessionKey = sessionKey
     }
 
+    var displayName: String {
+        name == "SPRINT QUALIFYING" ? "SPRINT QUALI" : name
+    }
+
     var isLive: Bool {
         guard let start = startDate, let end = endDate else { return false }
         let now = Date()

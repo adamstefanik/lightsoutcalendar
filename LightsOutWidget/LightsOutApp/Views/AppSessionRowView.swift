@@ -35,7 +35,7 @@ struct AppSessionRowView: View {
 
     private var sessionContent: some View {
         HStack(spacing: 0) {
-            Text(session.name)
+            Text(session.displayName)
                 .font(.system(size: 12, weight: .semibold))
                 .foregroundColor(.f1Text)
                 .frame(maxWidth: .infinity, alignment: .leading)

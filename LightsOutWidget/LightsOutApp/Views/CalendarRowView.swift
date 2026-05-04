@@ -29,7 +29,7 @@ struct CalendarRowView: View {
 
     private var nextSessionLabel: String {
         guard let session = nextSession else { return "" }
-        return "\(session.name) STARTS IN"
+        return "\(session.displayName) STARTS IN"
     }
 
     var body: some View {
