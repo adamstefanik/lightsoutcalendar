@@ -128,50 +128,57 @@ struct F1Calendar {
              raceDate: date(2026,9,26), qualifyingDate: date(2026,9,25),
              weekendStart: date(2026,9,24), sprint: false),
 
-        // R16 — Oct 9-11 (Sprint)
+        // R16 — Oct 2-4 (Bahrain GP relocated to Malaysia)
         Race(id: 16, round: 16,
+             name: "Bahrain Grand Prix", shortName: "BHR", city: "Kuala Lumpur",
+             circuit: "Sepang International Circuit", country: "Malaysia", countryFlag: "🇲🇾",
+             raceDate: date(2026,10,4), qualifyingDate: date(2026,10,3),
+             weekendStart: date(2026,10,2), sprint: false),
+
+        // R17 — Oct 9-11 (Sprint)
+        Race(id: 17, round: 17,
              name: "Singapore Grand Prix", shortName: "SGP", city: "Singapore",
              circuit: "Marina Bay Street Circuit", country: "Singapore", countryFlag: "🇸🇬",
              raceDate: date(2026,10,11), qualifyingDate: date(2026,10,10),
              weekendStart: date(2026,10,9), sprint: true),
 
-        // R17 — Oct 23-25
-        Race(id: 17, round: 17,
+        // R18 — Oct 23-25
+        Race(id: 18, round: 18,
              name: "United States Grand Prix", shortName: "USA", city: "Austin",
              circuit: "Circuit of the Americas", country: "USA", countryFlag: "🇺🇸",
              raceDate: date(2026,10,25), qualifyingDate: date(2026,10,24),
              weekendStart: date(2026,10,23), sprint: false),
 
-        // R18 — Oct 30-Nov 1
-        Race(id: 18, round: 18,
+        // R19 — Oct 30-Nov 1
+        Race(id: 19, round: 19,
              name: "Mexico City Grand Prix", shortName: "MEX", city: "Mexico City",
              circuit: "Autodromo Hermanos Rodriguez", country: "Mexico", countryFlag: "🇲🇽",
              raceDate: date(2026,11,1), qualifyingDate: date(2026,10,31),
              weekendStart: date(2026,10,30), sprint: false),
 
-        // R19 — Nov 6-8
-        Race(id: 19, round: 19,
+        // R20 — Nov 6-8
+        Race(id: 20, round: 20,
              name: "São Paulo Grand Prix", shortName: "BRA", city: "São Paulo",
              circuit: "Autodromo Jose Carlos Pace", country: "Brazil", countryFlag: "🇧🇷",
              raceDate: date(2026,11,8), qualifyingDate: date(2026,11,7),
              weekendStart: date(2026,11,6), sprint: false),
 
-        // R20 — Nov 19-21 (Saturday race)
-        Race(id: 20, round: 20,
+        // R21 — Nov 19-21 (Saturday race)
+        Race(id: 21, round: 21,
              name: "Las Vegas Grand Prix", shortName: "LVG", city: "Las Vegas",
              circuit: "Las Vegas Strip Circuit", country: "USA", countryFlag: "🇺🇸",
              raceDate: date(2026,11,21), qualifyingDate: date(2026,11,20),
              weekendStart: date(2026,11,19), sprint: false),
 
-        // R21 — Nov 27-29
-        Race(id: 21, round: 21,
+        // R22 — Nov 27-29
+        Race(id: 22, round: 22,
              name: "Qatar Grand Prix", shortName: "QAT", city: "Lusail",
              circuit: "Lusail International Circuit", country: "Qatar", countryFlag: "🇶🇦",
              raceDate: date(2026,11,29), qualifyingDate: date(2026,11,28),
              weekendStart: date(2026,11,27), sprint: false),
 
-        // R22 — Dec 4-6
-        Race(id: 22, round: 22,
+        // R23 — Dec 4-6
+        Race(id: 23, round: 23,
              name: "Abu Dhabi Grand Prix", shortName: "ABU", city: "Abu Dhabi",
              circuit: "Yas Marina Circuit", country: "UAE", countryFlag: "🇦🇪",
              raceDate: date(2026,12,6), qualifyingDate: date(2026,12,5),
