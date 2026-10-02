@@ -316,7 +316,7 @@ final class F1APIService {
         "UAE": "ABU", "HUN": "HUN", "NED": "NED", "MON": "MON",
     ]
 
-    private static let canceledRaces: Set<String> = ["BRN", "KSA"]
+    private static let canceledRaces: Set<String> = ["KSA"]
 
     // Use team name exactly as returned by upstream API to avoid adding
     // sponsor/commercial trademarks ourselves.
