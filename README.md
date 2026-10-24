@@ -60,7 +60,7 @@ A sleek iOS app and widget for the 2026 season. Track every race weekend with li
 ## Structure
 ```
 lightsoutcalendar/
-├── LightsOutWidget/                    # Widget extension + app source
+├── LightsOutWidget/         
 │   ├── LightsOutApp/
 │   │   ├── Views/
 │   │   │   ├── TrackShapes/
@@ -76,7 +76,7 @@ lightsoutcalendar/
 │   │   │   ├── SessionResultsView.swift
 │   │   │   ├── SettingsView.swift
 │   │   │   └── WeatherSectionView.swift
-│   │   ├── Lottie/                     # Animated weather icons
+│   │   ├── Lottie/                  
 │   │   ├── ContentView.swift
 │   │   └── LightsOutApp.swift
 │   ├── Assets.xcassets/
