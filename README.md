@@ -46,15 +46,15 @@ A sleek iOS app and widget for the 2026 season. Track every race weekend with li
 ## How to Run
 
 **Xcode**
-    1. Clone the repository
-    2. Open `LightsOutCalendar.xcodeproj` in Xcode
-    3. Build and run on a simulator or device
-    4. Add the widget to your Home Screen
+1. Clone the repository
+2. Open `LightsOutCalendar.xcodeproj` in Xcode
+3. Build and run on a simulator or device
+4. Add the widget to your Home Screen
 
 **SideStore (Sideloading)**
-    1. Download or export the `.ipa` file
-    2. Open the `.ipa` in SideStore on your iOS device to install
-    3. Add the widget to your Home Screen
+1. Download or export the `.ipa` file
+2. Open the `.ipa` in SideStore on your iOS device to install
+3. Add the widget to your Home Screen
 
 
 ## Structure
