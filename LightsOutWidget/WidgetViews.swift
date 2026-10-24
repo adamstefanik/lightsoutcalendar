@@ -218,6 +218,7 @@ struct F1MediumView: View {
 struct SessionRowView: View {
     let session: Session
     let raceId: Int
+    @Environment(\.widgetRenderingMode) var renderingMode
 
     private var isCompleted: Bool {
         guard let end = session.endDate else { return false }
@@ -255,10 +256,16 @@ struct SessionRowView: View {
             if session.isLive {
                 Text("LIVE")
                     .font(.system(size: 10, weight: .bold))
-                    .foregroundColor(.white)
+                    .foregroundColor(renderingMode == .fullColor ? .white : .primary)
                     .padding(.horizontal, 7)
                     .padding(.vertical, 3)
-                    .background(RoundedRectangle(cornerRadius: 3).fill(Color.f1Red))
+                    .background {
+                        if renderingMode == .fullColor {
+                            RoundedRectangle(cornerRadius: 3).fill(Color.f1Red)
+                        } else {
+                            RoundedRectangle(cornerRadius: 3).stroke(Color.primary, lineWidth: 1)
+                        }
+                    }
                     .frame(width: 100, alignment: .trailing)
             } else if isProcessing {
                 Text("RESULTS SOON")
