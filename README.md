@@ -56,7 +56,6 @@ A sleek iOS app and widget for the 2026 season. Track every race weekend with li
 2. Open the `.ipa` in SideStore on your iOS device to install
 3. Add the widget to your Home Screen
 
-
 ## Structure
 ```
 lightsoutcalendar/
