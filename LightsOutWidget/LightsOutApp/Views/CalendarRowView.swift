@@ -65,6 +65,13 @@ struct CalendarRowView: View {
                                 .padding(.horizontal, 5)
                                 .padding(.vertical, 2)
                                 .background(RoundedRectangle(cornerRadius: 3).stroke(Color.f1SecondaryText, lineWidth: 1))
+                        } else if race.isLive {
+                            Text("LIVE")
+                                .font(.system(size: 8, weight: .bold))
+                                .foregroundColor(.white)
+                                .padding(.horizontal, 5)
+                                .padding(.vertical, 2)
+                                .background(RoundedRectangle(cornerRadius: 3).fill(Color.f1Red))
                         } else if isCompleted {
                             Text("COMPLETED")
                                 .font(.system(size: 8, weight: .bold))
@@ -83,8 +90,18 @@ struct CalendarRowView: View {
 
                 Spacer()
 
-                // Right side: countdown for next race, race date for others
-                if isNextRace {
+                // Right side: live indicator or countdown for next race, race date for others
+                if let live = race.liveSession {
+                    VStack(alignment: .trailing, spacing: 2) {
+                        Text("LIVE")
+                            .font(.system(size: 15, weight: .bold, design: .monospaced))
+                            .foregroundColor(.f1Red)
+                        Text(live.displayName)
+                            .font(.system(size: 9, weight: .medium))
+                            .foregroundColor(.f1Red)
+                            .lineLimit(1)
+                    }
+                } else if isNextRace && nextSession != nil {
                     VStack(alignment: .trailing, spacing: 2) {
                         Text(countdownText(now: context.date))
                             .font(.system(size: 15, weight: .bold, design: .monospaced))
@@ -102,7 +119,7 @@ struct CalendarRowView: View {
             }
             .padding(.horizontal, 20)
             .padding(.vertical, 12)
-            .opacity(isCompleted ? 0.45 : 1.0)
+            .opacity(isCompleted && !race.isLive ? 0.45 : 1.0)
         }
     }
 

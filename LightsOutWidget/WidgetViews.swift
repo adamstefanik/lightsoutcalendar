@@ -345,9 +345,21 @@ struct DynamicTrackView: View {
     F1WidgetEntry(date: .now, nextRace: F1Calendar.fallbackRaces[3])
 }
 
+#Preview("Large – Live GP", as: .systemLarge) {
+    F1CalendarWidget()
+} timeline: {
+    F1WidgetEntry(date: .now, nextRace: .previewLiveGrandPrix)
+}
+
 #Preview("Medium", as: .systemMedium) {
     F1CalendarWidget()
 } timeline: {
     F1WidgetEntry(date: .now, nextRace: F1Calendar.fallbackRaces[3])
+}
+
+#Preview("Medium – Live GP", as: .systemMedium) {
+    F1CalendarWidget()
+} timeline: {
+    F1WidgetEntry(date: .now, nextRace: .previewLiveGrandPrix)
 }
 #endif

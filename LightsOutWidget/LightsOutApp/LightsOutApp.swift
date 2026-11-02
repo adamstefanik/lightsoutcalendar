@@ -129,7 +129,7 @@ final class CatalystSceneDelegate: NSObject, UIWindowSceneDelegate {
 final class RaceStore: ObservableObject {
     @Published var races: [Race] = F1APIService.shared.cachedRaces() ?? F1Calendar.fallbackRaces
     @Published var isLoading = true
-    var nextRace: Race? { races.first { !$0.isCompleted } }
+    var nextRace: Race? { races.first { !$0.isWeekendOver } ?? races.first { !$0.isCompleted } }
 
     @MainActor
     func loadRaces() async {
@@ -139,7 +139,7 @@ final class RaceStore: ObservableObject {
             F1Calendar.cachedRaces = apiRaces
         }
         isLoading = false
-        let next = races.first { !$0.isCompleted }
+        let next = nextRace
         print("[RaceStore] next race: \(next?.name ?? "none") completed=\(next?.isCompleted ?? true) raceDate=\(next?.raceDate ?? Date())")
     }
 }

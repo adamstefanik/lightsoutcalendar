@@ -67,7 +67,41 @@ struct Race: Identifiable, Codable {
         self.apiSessions = apiSessions
     }
 
-    var isCompleted: Bool { isCanceled || raceDate < Date() }
+    var raceEndDate: Date {
+        if let gp = sessions.first(where: { $0.name == "GRAND PRIX" }),
+           let end = gp.endDate {
+            return end
+        }
+        if let lastEnd = sessions.compactMap({ $0.endDate }).max() {
+            return lastEnd
+        }
+        return raceDate.addingTimeInterval(2.5 * 3600)
+    }
+
+    var isLive: Bool {
+        liveSession != nil
+    }
+
+    var isCompleted: Bool {
+        if isCanceled { return true }
+        if isLive { return false }
+        return raceEndDate < Date()
+    }
+
+    /// Whether the race weekend is completely over and the app/widget should move on to the next race.
+    /// The race stays active while ongoing (LIVE), and for a smart buffer after finishing
+    /// (until Monday 06:00 AM or at least 6 hours after race ends) so users can see results/podium.
+    var isWeekendOver: Bool {
+        if isCanceled { return true }
+        if isLive { return false }
+        guard isCompleted else { return false }
+
+        let minBuffer = raceEndDate.addingTimeInterval(6 * 3600)
+        let cal = Calendar.current
+        let nextMorning = cal.date(bySettingHour: 6, minute: 0, second: 0, of: cal.date(byAdding: .day, value: 1, to: raceEndDate) ?? raceEndDate) ?? minBuffer
+        let transitionTime = max(minBuffer, nextMorning)
+        return Date() >= transitionTime
+    }
 
     /// Changes when sessionKeys become available (triggers task re-fire)
     var sessionKeyHash: Int {
@@ -109,7 +143,15 @@ struct Race: Identifiable, Codable {
         if let next = ordered.first(where: { ($0.startDate ?? .distantPast) > now }) {
             return sessionBadgeLabel(next.name)
         }
-        // All sessions passed — show last one
+        // If a session is currently live (e.g. Grand Prix), show LIVE
+        if isLive {
+            return "LIVE"
+        }
+        // All sessions passed — if race completed, show FINISHED
+        if isCompleted {
+            return "FINISHED"
+        }
+        // Otherwise show last one
         if let last = ordered.last {
             return sessionBadgeLabel(last.name)
         }
@@ -236,6 +278,39 @@ extension Race {
             raceDate: cal.date(byAdding: .day, value: 2, to: now)!,
             qualifyingDate: cal.date(byAdding: .day, value: 1, to: now)!,
             weekendStart: now,
+            sprint: false,
+            apiSessions: sessions
+        )
+    }
+
+    /// Creates a mock race where GRAND PRIX is currently live (for SwiftUI previews and testing)
+    static var previewLiveGrandPrix: Race {
+        let now = Date()
+        let cal = Calendar.current
+        let sessions = [
+            Session(name: "PRACTICE 1", day: "FRIDAY", time: "13:30 - 14:30", isHighlighted: false,
+                    startDate: cal.date(byAdding: .day, value: -2, to: now),
+                    endDate: cal.date(byAdding: .hour, value: -47, to: now)),
+            Session(name: "PRACTICE 2", day: "FRIDAY", time: "17:00 - 18:00", isHighlighted: false,
+                    startDate: cal.date(byAdding: .hour, value: -43, to: now),
+                    endDate: cal.date(byAdding: .hour, value: -42, to: now)),
+            Session(name: "PRACTICE 3", day: "SATURDAY", time: "12:30 - 13:30", isHighlighted: false,
+                    startDate: cal.date(byAdding: .day, value: -1, to: now),
+                    endDate: cal.date(byAdding: .hour, value: -23, to: now)),
+            Session(name: "QUALIFYING", day: "SATURDAY", time: "16:00 - 17:00", isHighlighted: true,
+                    startDate: cal.date(byAdding: .hour, value: -20, to: now),
+                    endDate: cal.date(byAdding: .hour, value: -19, to: now)),
+            Session(name: "GRAND PRIX", day: "SUNDAY", time: "15:00", isHighlighted: true,
+                    startDate: cal.date(byAdding: .minute, value: -45, to: now),
+                    endDate: cal.date(byAdding: .minute, value: 75, to: now)),
+        ]
+        return Race(
+            id: 99, round: 3,
+            name: "Japanese Grand Prix", shortName: "JPN", city: "Suzuka",
+            circuit: "Suzuka International Racing Course", country: "Japan", countryFlag: "🇯🇵",
+            raceDate: cal.date(byAdding: .minute, value: -45, to: now)!,
+            qualifyingDate: cal.date(byAdding: .hour, value: -20, to: now)!,
+            weekendStart: cal.date(byAdding: .day, value: -2, to: now)!,
             sprint: false,
             apiSessions: sessions
         )

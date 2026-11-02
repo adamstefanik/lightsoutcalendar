@@ -10,7 +10,8 @@ struct F1Calendar {
         cachedRaces ?? fallbackRaces
     }
 
-    static var nextRace: Race? { races.first { !$0.isCompleted } }
+    static var currentRace: Race? { races.first { !$0.isWeekendOver } ?? races.first { !$0.isCompleted } ?? races.last }
+    static var nextRace: Race? { currentRace }
     static var upcomingRaces: [Race] { races.filter { !$0.isCompleted } }
 
     // MARK: - Fallback (hardcoded)

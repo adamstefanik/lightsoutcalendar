@@ -23,7 +23,7 @@ struct F1WidgetProvider: TimelineProvider {
             let races = await F1APIService.shared.fetchRaces()
             F1Calendar.cachedRaces = races
 
-            let nextRace = races.first { !$0.isCompleted } ?? races.first ?? Self.fallbackRace
+            let nextRace = races.first { !$0.isWeekendOver } ?? races.first { !$0.isCompleted } ?? races.first ?? Self.fallbackRace
             print("[F1Widget] Next race: \(nextRace.name), sessions: \(nextRace.sessions.count), apiSessions: \(nextRace.apiSessions?.count ?? -1)")
             if let first = nextRace.sessions.first {
                 print("[F1Widget] First session: \(first.name) \(first.day) \(first.time)")

@@ -11,7 +11,8 @@ struct ContentView: View {
 
     private var raceIndex: Int {
         if let idx = currentRaceIndex { return idx }
-        let nextIdx = raceStore.races.firstIndex { !$0.isCompleted }
+        let nextIdx = raceStore.races.firstIndex { !$0.isWeekendOver }
+            ?? raceStore.races.firstIndex { !$0.isCompleted }
         return nextIdx ?? 0
     }
 
